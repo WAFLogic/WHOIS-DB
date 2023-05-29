@@ -1,0 +1,960 @@
+#!/bin/bash
+####################################################
+# This script finds all WHOIS output that has completed in the n00b_queries/process folder
+# adds IP/subnet/network info, corrects sources, does initial normalization needed 
+# prior normalization for file output. The second script is normalization for 
+# json and finally DBCSV or CSV 
+# all files without known registrar sources, exceed query limits, and incomplete inetnum info files
+# are moved to not_processed folder. 
+# If new CSV files are found after normalization, then move new CSV to ready_db for loading
+# A diff is also done to find files that exist already and compare. If new ones found then they are 
+# tagged and loaded. Diff CSV files i.e. files with updates will be copied to 
+# ready_db_updated for loading as well.
+#
+# If files in output directories norm, json, csv, or loadable, remain, then these files exist 
+# in their destination folder, and the move for updated files was complete. The remaining files 
+# are moved to not_processed_eikr (eikr = exists in known registrars)
+####################################################
+
+date=$(date -u +'%Y-%m-%d')
+time=$(date -u +'%T')
+datetime=$(date -u +'%Y-%m-%d %T %Z')
+reg_dir=~/whois_output/registrars
+cat_dir=~/whois_output/catalog
+info_dir=~/whois_output/info_registrars
+nq_dir=~/whois_output/new_query
+nb_dir=~/whois_output/n00b_queries
+eikr_dir=~/whois_output/n00b_queries/not_processed_eikr
+js_dir=~/whois_output/json_registrars
+csv_dir=~/whois_output/csv_registrars
+nrml_dir=~/whois_output/normalized_registrars
+og_reg_dir=~/whois_output/og_registrars
+who_dir=~/whois_output
+script_dir=~/whois_output/scripts
+goo_dir=~/whois_output/goo_dir
+####################################################
+
+####################################################
+# Add IP 
+(cd $nb_dir/process ; for ipaddr in * ; do echo "Host: $ipaddr" >> $ipaddr ; done)
+echo "Add IP Completed @ $(date)"
+####################################################
+
+####################################################
+# Fix referral stuff early on
+
+# Lowercase and remove spaces then change relevant inetnum values that are named otherwise to inetnum
+# Conversion for JPNIC columns
+(cd $nb_dir/process ; for orgv in * ; do sed -i 's#^organization;*i*: \+\|^network:organization;*i*: \+\|^.*orgname.i: \+\|^.*owner: \+\|^organization:Org-Name:#orgname: #gI' $nb_dir/process/$orgv ; done )
+(cd $nb_dir/process ; sed -i 's#^ *\[\(.*\)\] #\1: #' $nb_dir/process/*)
+(cd $nb_dir/process ; sed -i 's#^[a-z]\. *\[\(.*\)\] #\1: #' $nb_dir/process/*)
+# Convert = separator to : 
+(cd $nb_dir/process ; sed -i 's#\([[:alnum:]]\)=#\1: #' $nb_dir/process/*)
+# Remove dashes
+(cd $nb_dir/process ; sed -i "s#\(.*\)[ -]\(\S\+:\)#\1\2#I" $nb_dir/process/*)
+# Remove multiple spaces before : and replace with single space AFTER colon
+(cd $nb_dir/process ; sed -i 's#\s\+:#: #' $nb_dir/process/*)
+# Lower case columns
+(cd $nb_dir/process ; sed -i  's#\(\S\+:\)#\L\1#I' $nb_dir/process/*)
+# Remove IPCalc Info if added
+(cd $nb_dir/process ; sed -i '/^[Hh]ostmin:\|^[Hh]ostmax:\|^[Nn]etmask:\|^netcount:\|[Hh]osts\/[Nn]et:/Id' $nb_dir/process/*)
+# Space out items in ()
+(cd $nb_dir/process ; sed -i 's#(#( #g' $nb_dir/process/*)
+(cd $nb_dir/process ; sed -i 's#)# )#g' $nb_dir/process/*)
+echo "Basic Initial Normalization Completed @ $(date)"
+# Normalize inetnum values specifically KRNIC, RIPE, & ARIN since they do not use inetnum
+# Finally normalize inetnum as uniq_inet, sort, unique, remove all inetnum values and 
+# convert uniq_inet to inetnum so only unique useful values remain.
+(cd $nb_dir/process ; for nrmlz in * ; do sed -i "s#'\| \+# #g" $nb_dir/process/$nrmlz ; done)
+(cd $nb_dir/process ; sed -i 's#^.*netrange:*\|^ *netblock:*\|^networknumber:*\|^Net Range:*\|^inetrev:*\|^cidr:*\|^inetnum-up:*\|.*ipnetwork:#inetnum: #gI' $nb_dir/process/*)
+(cd $nb_dir/process ; sed -i 's#^%.*contact *for *[[:punct:]]*\([0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}[ -]*[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\)[[:punct:]]* *is *\(.*\)#inetnum:    \1\nABUSE:   \2\n#g' $nb_dir/process/*)
+(cd $nb_dir/process ; sed -i 's#^%.*contact.*for *[[:punct:]]*\([0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}[ -]*[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\)[[:punct:]]*\|^%.*Information *related *to *[[:punct:]]*\([0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}[ -]*[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\)\|^%.*contact\s*for\s*\([0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\/[0-9]\+\)\|^%.*Information\s*related\s*to\s*\([0-9]\{1,3\}\.[0-9]\{1,3\}\.*[0-9]\{0,3\}\.*[0-9]\{0,3\}\/[0-9]\+\)[[:punct:]]*#inetnum:    \1\2\3\4\n#gI' $nb_dir/process/*)
+(cd $nb_dir/process ; sed -i 's#^.*ipv4.*: #inetnum: #' $nb_dir/process/* )
+(cd $nb_dir/process ; sed -i 's#inetnum: *\([0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\)[ -]\+\([0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\)#inetnum:    \1-\2\n#g' $nb_dir/process/* )
+echo "Initial inetnum Extractions Completed @ $(date)"
+(cd $nb_dir/process ; for arr_ip in * ; do sed -i 's#, \+\([0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/[0-9]\{1,2\}\)#\ninetnum: \1\n#g' $nb_dir/process/$arr_ip ; done )
+(cd $nb_dir/process ; for arr_ip in * ; do sed -i 's#inetnum: *\+\([0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/[0-9]\{1,2\}\)#\ninetnum: \1\n#g' $nb_dir/process/$arr_ip ; done )
+echo "inetnum Comma Split Ranges Extraction & Normalization Completed @ $(date)"
+#####(cd $nb_dir/process ; for arr_ip in * ; do for arr_iv in $(grep -a inetnum: $arr_ip | sed 's# \+#\n#g' | sed '/inetnum:\|^$/Id' | sed 's#,##g' ) ; do sed -i "s# *$arr_iv[\, ]*#\ninetnum_array: $arr_iv\n#g" $nb_dir/process/$arr_ip ; done ; done )
+# Dropping the above line too for now since the below two lines hopefully correct the inetnum re-sorting issues.
+#### This uses an echo to insert which screws up the order too. So dropping that and re-wrote it with above line.
+#####(cd $nb_dir/process ; for arr_ip in * ; do grep -a inetnum $arr_ip | tr ' ' '\n' | sed 's#inetnum:##g' | sed 's#^\([0-9]\{1,2\}\)#inetnum_array:    \1#g' | sed 's#,##g' >> $nb_dir/process/$arr_ip ; done )
+#(cd $nb_dir/process ; for arr_ip in * ; do sed -i '/^inetnum:/d' $arr_ip ; done )
+#(cd $nb_dir/process ; for inetv in $(grep -a "inetnum.*:" * -Hl) ; do grep -a '^inetnum:\|inetnumup:\|inetnum_array:' $nb_dir/process/$inetv | sed 's# \+# #g' | awk '!a[$0]++' | sed 's#inetnum:\|inetnumup:\|inetnum_array:#uniq_inet:#' >> $nb_dir/process/$inetv ; sed -i '/^inetnum:\|inetnumup:\|inetnum_array:/d' $nb_dir/process/$inetv ; sed -i 's#uniq_inet:#inetnum:#' $nb_dir/process/$inetv ; done)
+#### Dropping the above two lines since they cause a resort and the two arr_ip lines above using CIDR notiation should take care of this need.
+# Convert origin to originas for BGP AS (Autonomous System) routing ID
+(cd $nb_dir/process ; sed -i 's#^origin:#originas:#gI' $nb_dir/process/*)
+# Find other BGP AS key/values and correct
+(cd $nb_dir/process ; for origin in * ; do sed -i '/^originas/! s/\(ASN*[0-9]\{2,10\}\.*[0-9]\{0,9\}\)\(.*$\)/\noriginas: \1\n\2/gI' $nb_dir/process/$origin ; done)
+(cd $nb_dir/process ; for origin in * ; do grep -a -ih '^originas: ' $nb_dir/process/$origin |sed 's# \+# #g' | awk '!a[$0]++' | sed '/AS[0-9]\+/!d' | sed 's#^originas: #sort_originas: #' >> $nb_dir/process/$origin ; done )
+(cd $nb_dir/process ; for origin in * ; do sed -i '/^originas: /d' $nb_dir/process/$origin ; done )
+(cd $nb_dir/process ; for origin in * ; do sed -i 's#^sort_originas: #originas: #g' $nb_dir/process/$origin ; done )
+echo "Originas BGP ASN Extraction & Normalization Completed @ $(date)"
+####################################################
+
+####################################################
+# Move Incomplete queries to not processed 
+# Move non-inetnum files to not_processed 
+(cd $nb_dir/process ; for noipv in * ; do grep -a -q "^inetnum" $noipv || mv $noipv $nb_dir/not_processed/$noipv ; done )
+echo "Queries With no inetnum Values Move to not_processed Completed @ $(date)"
+# Move query limit exceeded files to not_processed 
+(cd $nb_dir/process ; for exv in $(grep -a "exceeded" * -iHl) ; do mv $exv $nb_dir/not_processed/$exv ; done )
+(cd $nb_dir/process ; for exv in $(grep -a "query limit" * -iHl) ; do mv $exv $nb_dir/not_processed/$exv ; done )
+(cd $nb_dir/process ; for exv in $(grep -a "daily limit" * -iHl) ; do mv $exv $nb_dir/not_processed/$exv ; done )
+(cd $nb_dir/process ; for exv in $(grep -a "denied" * -iHl) ; do mv $exv $nb_dir/not_processed/$exv ; done )
+echo "Exceeded Limit Move Completed @ $(date)"
+####################################################
+
+####################################################
+# Continue initial normalization after initial incomplete moves 
+# Including remove commas , quotes " & tilde ~ !
+# Change remove network: and contact: for ARIN 
+#(cd $nb_dir/process ; for nrmlz in * ; do sed -i 's#.*rwhois#ref: rwhois#gI' $nb_dir/process/$nrmlz ; done)
+# Disabling below line since above line should cover and with proper order should negate issues
+#(cd $nb_dir/process ; for nrmlz in * ; do sed -i 's#.*rwhois.*v.*\.[0-9] *\|.*rwhois.*v.*00 *\|.*found *a *ref[a-z]* *to\|.*rwhois.*v.*\.[0-9] *://\|.*rwhois.*v.*00 *://\|.*found *a *ref[a-z]* *to *://\|.*rwhois.*v.*\.[0-9] *https*://\|.*rwhois.*v.*00 *http://\|.*found *a *ref[a-z]* *to *http://#rwhois: http://#gI' $nb_dir/process/$nrmlz ; done)
+#(cd $nb_dir/process ; for nrmlz in * ; do sed 's#.* rwhois\.#rwhois: rwhois.#I' ; done )
+(cd $nb_dir/process ; for nrmlz in * ; do sed -i "s# \+# #g" $nb_dir/process/$nrmlz ; done)
+(cd $nb_dir/process ; for nrmlz in * ; do sed -i 's#.*ound *a *referral *to *\|.*rwhois://\|.*ReferalServer: *#\nrwhois: #I' $nb_dir/process/$nrmlz ; done )
+(cd $nb_dir/process ; for nrmlz in * ; do sed -i 's#(*rwhois_ngd \+v[0-9\.:]\+)*\|(*rwhois_ngd \+v[0-9\.:]\+[a-z ]\+)*\|(*rwhois \+v[0-9\.:]\+)*\|(*rwhois \+v[0-9\.:]\+[a-z ]\+)*##gI' $nb_dir/process/$nrmlz ; done )
+(cd $nb_dir/process ; for nrmlz in * ; do sed -i 's#.* \+\([a-z0-9\.\-]\+\.[a-z]\{1,6\}:4321\)\.*\|.* \+\([a-z0-9\.\-]\+\.[a-z]\{1,6\}:4321[a-z0-9\-=\?/]*\)\|.* rwhois://\([a-z0-9\.\-]\+\.[a-z]\{1,6\}:4321\)\.*#\nrwhois: \1\2\3\n#gI' $nb_dir/process/$nrmlz ; done )
+(cd $nb_dir/process ; for nrmlz in * ; do sed -i '/^rwhois:/! s/\(rwhois\.[a-z0-9\-\.]\+\.[a-z]\{1,6\}\)/\nrwhois: \1\n/gI' $nb_dir/process/$nrmlz ; done )
+echo "Rwhois Referral Normalization Completed @ $(date)"
+# Moved to final normalization for loading to accommodate rwhois conversion
+#(cd $nb_dir/process ; for nrmlz in * ; do sed -i 's#^.*referral#ref: #gI' $nb_dir/process/$nrmlz ; done)
+(cd $nb_dir/process ; for nrmlz in * ; do sed -i 's#^network:\(\S\+:\)\|^contact:\(\S\+:\)#\1#gI'  $nb_dir/process/$nrmlz ; done )
+(cd $nb_dir/process ; for person in * ; do grep -a -hi '.*name: \+\S\+, \S\+ \S*' $nb_dir/process/$person | grep -a -iv 'NOC\|abuse\|admin\|tech\|desk' | sed 's#^.*: *\|\(\S\+\), *\(\S\+\)#person: \2 \1#g' | awk '!a[$0]++' >> $nb_dir/process/$person ; done )
+echo "Basic Contact Information Normalization Completed @ $(date)"
+#(cd $nb_dir/process ; for person in * ; do grep -a '.*org.*abuse.*name: ' $nb_dir/process/$person | sed 's#\S\+ \S\+ \S\+ .*##g' | grep -a -iv 'abuse\|admin\|tech\|desk\|handle\|host' | sed 's#^.*: #person: #g' | awk '!a[$0]++' >> $nb_dir/process/$person ; done )
+(cd $nb_dir/process ; for nrmlz in * ; do sed -i 's#^.*abuse.*:\|notify.*: #abuse: #gI' $nb_dir/process/$nrmlz ; done)
+(cd $nb_dir/process ; for nrmlz in * ; do sed -i 's#^.*handle.*: #nichdl: #gI' $nb_dir/process/$nrmlz ; done)
+(cd $nb_dir/process ; for nrmlz in * ; do sed -i 's#^.*organisation.*: #mnt: #gI' $nb_dir/process/$nrmlz ; done)
+(cd $nb_dir/process ; for nrmlz in * ; do sed -i 's#^orgname-c: #netname: #gI' $nb_dir/process/$nrmlz ; done)
+(cd $nb_dir/process ; for nrmlz in * ; do sed -i '/.*phone.*:\|.*fax.*:/! s/(.*)\|^ *\|\.$//g' $nb_dir/process/$nrmlz ; done)
+echo "Primary Column Name Normalization Completed @ $(date)"
+(cd $nb_dir/process ; for nrmlz in * ; do sed -i '/^x_notes:/! s/,\|"\|~/ /g' $nb_dir/process/$nrmlz ; done)
+(cd $nb_dir/process ; for nrmlz in * ; do sed -i 's#\(^\S\+:\)#\1 #' $nb_dir/process/$nrmlz ; done)
+#(cd $nb_dir/process ; for nrmlz in * ; do sed -i '/[Rr]eallocate\|[Dd]irect [Aa]llocation\|[Rr]eassign/Id' $nb_dir/process/$nrmlz ; done)
+(cd $nb_dir/process ; for nrmlz in * ; do sed -i 's#: //#://#g' $nb_dir/process/$nrmlz ; done)
+(cd $nb_dir/process ; for nrmlz in * ; do sed -i 's#http\(s\)*://\(\S*\)\| ://\(\S*\)\| //\(\S\+\)# http\1://\2\3\4#gI' $nb_dir/process/$nrmlz ; done)
+#(cd $nb_dir/process ; for nrmlz in * ; do sed -i 's#https://# https://#gI' $nb_dir/process/$nrmlz ; done)
+(cd $nb_dir/process ; for nrmlz in * ; do sed -i 's#\(\.[a-z]\+\) *: *\([0-9]\+\)#\1:\2#gI' $nb_dir/process/$nrmlz ; done)
+echo "Column Drop Spaces n Bad CharZ/Data Conversion Completed @ $(date)"
+(cd $nb_dir/process ; sed -i 's#( *at *)\|\[ *at *\]\|_at_#@#gI' $nb_dir/process/*)
+(cd $nb_dir/process ; sed -i 's#( *dot *)\|\[ *dot *\]\|_dot_#.#gI' $nb_dir/process/*)
+(cd $nb_dir/process ; for emailv in * ; do grep -a '@' $nb_dir/process/$emailv | sed 's#.*\s\([[:alnum:]].*@.*\..*[[:alpha:]] *\)#~extracted:   \1#' | awk '{print "~extracted:   "$2}' | awk '!a[$0]++' >> $nb_dir/process/$emailv; done )
+(cd $nb_dir/process ; for emailv in * ; do sed -i '/^.*email.*: /Id' $nb_dir/process/$emailv ; sed -i 's#^~extracted: *#email: #' $nb_dir/process/$emailv ; done )
+echo "E-Mail Extraction Completed @ $(date)"
+# Find Orgname Info info and inject as additional orgname info
+#(cd $nb_dir/process ; for orgllc in * ; do grep -a -ih 'S/A\|S\.A\.*\|[BC]\.V\.*\|[a-z]\{3,10\}net\|LLC\|S\.R\.L\.' $nb_dir/process/$orgllc | grep -a -v 'orgname:\|infrastructure\|^host_type:\|^x_notes:\|\.[a-z]\{2,3\}\|\@\|http://\|TELLC\| *sent *to\|Network *Operations *cent[re]\+\|^via' | awk '!a[$0]++' | sed 's#\[.*\]\|orgname:\|\S\+: \+\|MNT-\|MAINT-\|IRT-\|admin.*\|network *admin.*\| ip admin.*\| ip alloc.*\| technical admin.*\|ip network.*\| *by *\|net *block\|private *customer.*\|customer *alloc.*\|hostmaster.*\|noc.*master.*# #gI' | grep -a -v '\@\|http://' | sed 's#[[:punct:]]# #g' | sed 's#^\S\+: \+\|(.*$##g' | sed 's#(.*$##g' | sed 's#[0-9][0-9][0-9]\+\|\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ .*\|role.*##gI' | sed '/: *[0-9 ]\+$\|^$\|orgname: \+$/d' | sed 's#.*Network *Solutions *Inc#XXXXXXNetworkSolutionsIncXXXXXX#gI' | sed 's#^#sort_orgname: #g' | sed 's# \+# #g' | awk '!a[$0]++' >> $nb_dir/process/$orgllc ; done )
+#(cd $nb_dir/process ; for orgllc in * ; do grep -a -ih 'ISP\|web' $nb_dir/process/$orgllc | grep -a -v 'orgname:\|infrastructure\|^host_type:\|^x_notes:\|\.[a-z]\{2,3\}\|\@\|http://\|Internet *Service *Provider\| *sent *to\|Network *Operations *cent[re]\+' | awk '!a[$0]++' | sed 's#\[.*\]\|orgname:\|\S\+: \+\|MNT-\|MAINT-\|IRT-\|admin.*\|network *admin.*\| ip admin.*\| ip alloc.*\| technical admin.*\|ip network.*\| *by *\|net *block\|private *customer.*\|customer *alloc.*\|hostmaster.*\|noc.*master.*# #gI' | grep -a -v '\@\|http://' | sed 's#[[:punct:]]# #g' | sed 's#(.*$##g' | sed 's#.*\([a-z]+web\).*#\1#gI' | sed 's#^\S\+: \+\|(.*$##g' | sed 's#[0-9][0-9][0-9]\+\|\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ .*\|role.*##gI' | sed '/: *[0-9 ]\+$\|^$\|orgname: \+$/d' | sed 's#.*Network *Solutions *Inc#XXXXXXNetworkSolutionsIncXXXXXX#gI' | sed 's#^#sort_orgname: #g' | sed 's# \+# #g' | awk '!a[$0]++' >> $nb_dir/process/$orgllc ; done )
+#(cd $nb_dir/process ; for orgllc in * ; do grep -a -iho '[a-z0-9 ,]\{3,70\}inc\.\|[a-z0-9 ,]\{3,70\}inc$\|[a-z0-9 ,]\{3,70\}inc \|[a-z0-9 ,]\{3,70\}corp\.\|[a-z0-9 ,]\{3,70\}corp$\|[a-z0-9 ,]\{3,70\}corp ' $nb_dir/process/$orgllc | grep -a -v 'orgname:\|infrastructure\|^host_type:\|^x_notes:\|\@\|http://\|any *communication *sent *to\|Network *Operations *cent[re]\+' | sed 's#\[.*\]\|orgname:\|by\|MNT-\|MAINT-\|IRT-\|admin.*\|network *admin.*\| ip admin.*\| ip alloc.*\| technical admin.*\|ip network.*\| *by *\|[[:punct:]]\|net *block\|net *block.*\|private *customer.*\|customer *alloc.*\|hostmaster.*\|noc.*master.*# #g' | sed 's#^\S\+: \+\|(.*$##g' | sed 's#[0-9][0-9][0-9]\+\|\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ .*\|role.*##gI' | sed '/: *[0-9 ]\+$\|^$\|orgname: \+$/d' | sed 's#.*Network *Solutions *Inc#XXXXXXNetworkSolutionsIncXXXXXX#gI' | sed 's#^ *#sort_orgname: #g' | sed 's# \+# #g' | awk '!a[$0]++' >> $nb_dir/process/$orgllc ; done )
+#(cd $nb_dir/process ; for orgllc in * ; do grep -a -ih 'telephon\|company\|trading\|COMUNICAT\|COMUNICAC\|data *cent[re]\+\|digital\|limited\|solutions\|hosted\|hosting\|communication\|ltd\|servicios\|tell*e *com\|televis' $nb_dir/process/$orgllc | grep -a -iv 'orgname:\|infrastructure\|^host_type:\|^x_notes:\|\.[a-z]\{2,3\}\|\@\|http://\|ISP\|any *communication *sent *to\|Network *Operations *cent[re]\+' | awk '!a[$0]++' | sed 's#\[.*\]\|orgname:\|\S\+: \+\|MNT-\|MAINT-\|IRT-\|admin.*\|network *admin.*\| ip admin.*\| ip alloc.*\| technical admin.*\|ip network.*\| *by *\|net *block.*\|private *customer.*\|customer *alloc.*\|hostmaster.*\|noc.*master.*# #g' | sed 's#\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ .*\|role.*##gI' | sed 's#[0-9 ]\{3,70\}$\| *[[:punct:]]* *$\|[[:punct:]]\|(.*$# #g' | awk '!a[$0]++' | sed 's#^\S\+: \+\|[[:punct:]]$# #g' | sed 's#(.*$##g' | sed '/[0-9 ]\{3,70\}$\|: *[0-9 ]\+$\|^$\|orgname: \+$/d' | sed 's#.*Network *Solutions *Inc#XXXXXXNetworkSolutionsIncXXXXXX#gI' |  sed 's#^#sort_orgname: #g' | sed 's# \+# #g' | awk '!a[$0]++' >> $nb_dir/process/$orgllc ; done )
+#(cd $nb_dir/process ; for orgllc in * ; do for orgmail in $(grep -a -ql 'orgname:' $nb_dir/process/$orgllc ) ; do grep -a -iho '@\S\+' $nb_dir/process/$orgmail | sed 's#@\|\.[a-z ]\+$##g' | sed 's# \+# #g' | sed 's#^ *#mail_orgname: #g' | awk '!a[$0]++'  >> $nb_dir/process/$orgmail ; done ; done )
+
+# Sed Expression is
+# # *://.*\| *[a-z]\{1,3\}nic *\|\-*RIPE.*\|\-*ARIN.*\| *arin *\| *ripe *\| *MNT *$\|\-*MNT *$\| *MNT-.*\| *MAINT-.*\| *IRT-.*\|\-[0-9\-]\+\|\-*IP\-*network.*\|\-*[0-9]\{3,30\}\| *NETBLK.*\| *NET\-[0-9]\+.*\|^[a-z]\{1,4\}\-.*\|\[.*\]\|^\S\+: *\|[a-z]\{1,3\}nic\| *by *\| *network *admin.*\| *ip *admin.*\| *ip *alloc.*\| *technical *admin.*\| *ip *network.*\| *net *block.*\| *private *customer.*\| *customer *alloc.*\| *hostmaster.*\| *noc.*master.*\| *admin.*\| *whois *
+
+(cd $nb_dir/process ; for orgllc in * ; do grep -a -ih '^netname:' $nb_dir/process/$orgllc | grep -v '^owner-c:\|^ownerid:\|.*orgname:\|^orgname_goo:' | sed 's# *://\| *[a-z]\{1,3\}nic *\|\-*RIPE\|\-*ARIN\| *ripe.*\| *afrinic.*\|*nic\.*br.*\| *arin.*\| *ripe.*\| *apnic.*\| *jpnic.*\| *twnic.*\| *krnic.*\| *lacnic.*\| *MNT *$\|\-*MNT *$\| *MNT-\| *MAINT-\| *IRT-\|\-[0-9\-]\+\|\-*IP\-*network\|\-*[0-9]\{3,30\}\| *NETBLK\| *NET\-[0-9]\+\|^[a-z]\{1,4\}\-\|\[\]\|^\S\+: *\|[a-z]\{1,3\}nic\| *by *\| *network *admin\| *ip *admin\| *ip *alloc\| *technical *admin\| *ip *network\| *net *block\| *private *customer\| *customer *alloc\| *hostmaster\| *nocmaster\| *admin\| *whois *\| *whois *# #gI' | sed 's#\s\+# #g' | sed 's#\s\+$##g' | sed '/^ *$/d'| sed 's#^#net_orgname: #g' | awk '!a[$0]++' >> $nb_dir/process/$orgllc ; done )
+(cd $nb_dir/process ; for orgllc in * ; do grep -a -hi '^email:' $nb_dir/process/$orgllc | grep -a -io '@\S\+' | sed 's# *://\| *[a-z]\{1,3\}nic *\|\-*RIPE\|\-*ARIN\| *arin.*\| *ripe.*\| *afrinic.*\|*nic\.*br.*\| *ripe.*\| *apnic.*\| *jpnic.*\| *twnic.*\| *krnic.*\| *lacnic.*\| *MNT *$\|\-*MNT *$\| *MNT-\| *MAINT-\| *IRT-\|\-[0-9\-]\+\|\-*IP\-*network\|\-*[0-9]\{3,30\}\| *NETBLK\| *NET\-[0-9]\+\|^[a-z]\{1,4\}\-\|\[\]\|^\S\+: *\| *by *\| *network *admin\| *ip *admin\| *ip *alloc\| *technical *admin\| *ip *network\| *net *block\| *private *customer\| *customer *alloc\| *hostmaster\| *nocmaster\| *admin\|.*whois# #gI' | sed 's#[[:punct:]]\| \+# #g' | sed 's#^\.[a-z]\{1,3\}$\|@\|\s\+$##g' | sed 's#^ *\([a-z]\)# \u\1#gI' | sed 's# \+\([a-z]\)# \u\1#gI' | sed 's#\s\+# #g' | sed '/^ *$/d' | sed 's#^ *#email_orgname: #g' | awk '!a[$0]++'  >> $nb_dir/process/$orgllc ; done )
+(cd $nb_dir/process ; for orgllc in * ; do grep -a -ih 'vocation\|academy\|institut\|educat\|school\|university\|gmbh\|venture\|profess\|develop\| ead$\|entrepre\|holding\|teacher\|insurance\|association\|equit\|enterpris\| *m\.b\.h\.*\|^descr.*&\|fone\|battle \| mmorpg *\| game \|internet\|institu\+\| p\.*v\.*t\. \|s\.p\.a\.*\|d\.o\.o\.*\|s\.r\.o\.*\|technolog\|semesta\| pt\. \|ent[re]pr\|S/A\|S\.A\.*\|[BC]\.V\.*\|[a-z]\{3,10\}net\|LLC\|S\.R\.L\.\|ISP\|web\|[a-z0-9 ,]\{3,70\}inc\.\|[a-z0-9 ,]\{3,70\}inc$\|[a-z0-9 ,]\{3,70\}inc \|[a-z0-9 ,]\{3,70\}corp\.\|[a-z0-9 ,]\{3,70\}corp$\|[a-z0-9 ,]\{3,70\}corp \|telephon\|corporation\|company\|trad\(ing\|e\)\|COMUNICAT\|COMUNICAC\|data *cent[re]\+\|digital\|limited\|solution\|hosted\|hosting\|communication\|ltd\|servicios\|service\|tell*e *com\|televis' $nb_dir/process/$orgllc | grep -a -iv 'INTERNET *Service *POP\|^ *FOP *\|^ *P[PE] *\|shared hosting[- ]*block\|^ *Software *Company *$\|^ *services* *$\| *Dedicated .*hosting *services *\|^orgname_goo:\|service *activation\|IANA\|RIPE\|APNIC\|TWNIC\|LACNIC\|AFRINIC\|KRNIC\|JPNIC\|advertisement\|please\|trouble\|IP.*Internet *access\|Internet.*Access*Point\|This *is *the\| subpoena\|in .* and\|^orgname:\|^net_orgname:\|^email_orgname:\|.*orgname:\|.*netname:\|^email:\|infrastructure\|^host_type:\|^x_notes:\| *We *\|\@\|http://\|^ *ISP *$\|any *communication *sent *to\|Network *Op\+ *cent[re]\+\|Details\| *Regional *Registry\|Latin *Amer\S\+ *\S* *Carib\+\|Network *Coor\+ *Cent\+\|Afric\+ Net\+ Info\S\+\|For *more *info\|Internet.*Authority\|submit *report\|for *report\| send *mail\| send *to\|^ *ip.*services* *$\|^ *internet.*services* *$\| *[ip]* *Registration *Services* *[nis]*$\| *Hosting *Customers* *' | awk '!a[$0]++' | sed 's# *address *block *\| *xdsl *\| *pppoe *\| *allocated *and *assigned *to *\|aggregate *block *\| \+in \+.*anon.*\| \+in \+.*and.*\|\S\+ *director *\| *this *is *the *\| *this *is *\| *main *routes* [from]* \| *routes* *[from]* \+\| *building.*\|consumer.*dsl\|consumer.*cable\|consumer.*internet\|ip *block *[for]\+ *\|ip *block\| *a*dsl *internet *\|pool.*\| *ip *master *\| *route[ \-]*object *[ofr]\+ *\| *abuse *\| *route[ \-]*origin.*\| *complaint *\| *servic[eio]\+ *provider *\| route[ \-]*object *for *\| *IP *address *range.*\| network *operations *\|technical *department *\| *authoritative *for .*\| *data *customer\+ *\| *internet *register.*\| *used *for *\| *route[ \-]*object *\| \+floor.*\| \+room \+[0-9].*\| \+bldg.*\| \+sector *\S\+ *\| *https* *\| *://.*\|\-*RIPE.*\|\-*ARIN.*\| *arin.*\| *ripe.*\| *afrinic.*\|*nic\.*br.*\| *ripe.*\| *apnic.*\| *jpnic.*\| *twnic.*\| *krnic.*\| *lacnic.*\| *MNT *$\|\-*MNT *$\| *MNT-.*\| *MAINT-.*\| *IRT-.*\|\-[0-9\-]\+\|\-*IP\-*network.*\|\-*[0-9]\{3,30\}\| *NETBLK.*\| *NET\-[0-9]\+.*\|^[a-z]\{1,4\}\-.*\|\[.*\]\|^\S\+: *\| *by *\| *network *admin.*\| *ip *admin.*\| *ip *alloc.*\| *technical *admin.*\| *ip *network.*\| *net *block.*\| *private *customer.*\| *customer *alloc.*\| *\(customer\|customers\) *\| *hostmaster.*\| *noc.*master.*\| *admin.*\| *whois *\|\-*Pools.*\| for \| from # #gI' | sed 's#\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ .*\|role.*##gI' | sed 's#[0-9 ]\{3,70\}$\| *[[:punct:]]* *$\|(.*$##g' | sed 's#(.*$\|[[:punct:]]$##g' | sed '/[0-9 ]\{3,70\}$\|: *[0-9 ]\+$\|^$\|orgname: \+$/d' | sed 's#.*Network *Solutions *Inc#XXXXXXNetworkSolutionsIncXXXXXX#gI' | sed 's#\s\+# #g' | sed 's#\s\+$##g' | sed 's#\s\+$\|^ *n[ea]t *$\| *pool *\| *natpool\|^ *dedicated *hosting *$\| *dhcp *\| *internet *provide* *\|^ *internet *services* *$\| *internet *engineer\S\+ *$\| *route *$\| *public *subnet *$\| *subnet *$\|^ *services* *$\| *Virtual *Servers* *host\S\+ *\| *Internet *Security *Department *# #gI' | sed 's# \+# #g' | sed 's# \*$##g' | sed '/^ *$/d' | sed 's#^ *#sort_orgname: #g' | awk '!a[$0]++' >> $nb_dir/process/$orgllc ; done )
+#(cd $nb_dir/process ; for orgllc in * ; do grep -a -ih 'S/A\|S\.AC*\.*\|[BC]\.V\.*\|[a-z]\{3,10\}net\|LLC\|S\.R\.L\.' $nb_dir/process/$orgllc | grep -a -v 'orgname:\|infrastructure\|^host_type:\|^x_notes:\|\.[a-z]\{2,3\}\|\@\|http://\|TELLC\| *sent *to\|Network *Operations *cent[re]\+\|^via' | awk '!a[$0]++' | sed 's#\[.*\]\|orgname:\|\S\+: \+\|MNT-\|MAINT-\|IRT-\|admin.*\|network *admin.*\| ip admin.*\| ip alloc.*\| technical admin.*\|ip network.*\| *by *\|net *block\|private *customer.*\|customer *alloc.*\|hostmaster.*\|noc.*master.*# #gI' | grep -a -v '\@\|http://' | sed 's#[[:punct:]]# #g' | sed 's#^\S\+: \+\|(.*$# #g' | sed 's#(.*$# #g' | sed 's#[0-9][0-9][0-9]\+\|\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ .*\|role.*# #gI' | sed '/: *[0-9 ]\+$\|^$\|orgname: \+$/d' | sed 's#.*Network *Solutions *Inc#XXXXXXNetworkSolutionsIncXXXXXX#gI' | sed 's#^#sort_orgname: #g' | sed 's# \+# #g' | awk '!a[$0]++' >> $nb_dir/process/$orgllc ; done )
+#(cd $nb_dir/process ; for orgllc in * ; do grep -a -ih 'ISP\|web' $nb_dir/process/$orgllc | grep -a -v 'orgname:\|infrastructure\|^host_type:\|^x_notes:\|\.[a-z]\{2,3\}\|\@\|http://\|Internet *Service *Provider\| *sent *to\|Network *Operations *cent[re]\+' | awk '!a[$0]++' | sed 's#\[.*\]\|orgname:\|\S\+: \+\|MNT-\|MAINT-\|IRT-\|admin.*\|network *admin.*\| ip admin.*\| ip alloc.*\| technical admin.*\|ip network.*\| *by *\|net *block\|private *customer.*\|customer *alloc.*\|hostmaster.*\|noc.*master.*# #gI' | grep -a -v '\@\|http://' | sed 's#[[:punct:]]# #g' | sed 's#(.*$##g' | sed 's#.*\([a-z]+web\).*#\1#gI' | sed 's#^\S\+: \+\|(.*$# #g' | sed 's#[0-9][0-9][0-9]\+\|\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ .*\|role.*# #gI' | sed '/: *[0-9 ]\+$\|^$\|orgname: \+$/d' | sed 's#.*Network *Solutions *Inc#XXXXXXNetworkSolutionsIncXXXXXX#gI' | sed 's#^#sort_orgname: #g' | sed 's# \+# #g' | awk '!a[$0]++' >> $nb_dir/process/$orgllc ; done )
+#(cd $nb_dir/process ; for orgllc in * ; do grep -a -iho '[a-z0-9 ,]\{3,70\}inc\.\|[a-z0-9 ,]\{3,70\}inc$\|[a-z0-9 ,]\{3,70\}inc \|[a-z0-9 ,]\{3,70\}corp\.\|[a-z0-9 ,]\{3,70\}corp$\|[a-z0-9 ,]\{3,70\}corp ' $nb_dir/process/$orgllc | grep -a -v 'orgname:\|infrastructure\|^host_type:\|^x_notes:\|\@\|http://\|any *communication *sent *to\|Network *Operations *cent[re]\+' | sed 's#\[.*\]\|orgname:\|by\|MNT-\|MAINT-\|IRT-\|admin.*\|network *admin.*\| ip admin.*\| ip alloc.*\| technical admin.*\|ip network.*\| *by *\|[[:punct:]]\|net *block\|net *block.*\|private *customer.*\|customer *alloc.*\|hostmaster.*\|noc.*master.*# #g' | sed 's#^\S\+: \+\|(.*$##g' | sed 's#[0-9][0-9][0-9]\+\|\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ .*\|role.*# #gI' | sed '/: *[0-9 ]\+$\|^$\|orgname: \+$/d' | sed 's#.*Network *Solutions *Inc#XXXXXXNetworkSolutionsIncXXXXXX#gI' | sed 's#^ *#sort_orgname: #g' | sed 's# \+# #g' | awk '!a[$0]++' >> $nb_dir/process/$orgllc ; done )
+#(cd $nb_dir/process ; for orgllc in * ; do grep -a -ih 'telephon\|company\|trading\|COMUNICAT\|COMUNICAC\|data *cent[re]\+\|digital\|limited\|solutions\|hosted\|hosting\|communication\|ltd\|servicios\|tell*e *com\|televis' $nb_dir/process/$orgllc | grep -a -iv 'orgname:\|infrastructure\|^host_type:\|^x_notes:\|\.[a-z]\{2,3\}\|\@\|http://\|ISP\|any *communication *sent *to\|Network *Operations *cent[re]\+' | awk '!a[$0]++' | sed 's#\[.*\]\|orgname:\|\S\+: \+\|MNT-\|MAINT-\|IRT-\|admin.*\|network *admin.*\| ip admin.*\| ip alloc.*\| technical admin.*\|ip network.*\| *by *\|net *block.*\|private *customer.*\|customer *alloc.*\|hostmaster.*\|noc.*master.*# #g' | sed 's#\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ .*\|role.*# #gI' | sed 's#[0-9 ]\{3,70\}$\| *[[:punct:]]* *$\|[[:punct:]]\|(.*$# #g' | awk '!a[$0]++' | sed 's#^\S\+: \+\|[[:punct:]]$# #g' | sed 's#(.*$##g' | sed '/[0-9 ]\{3,70\}$\|: *[0-9 ]\+$\|^$\|orgname: \+$/d' | sed 's#.*Network *Solutions *Inc#XXXXXXNetworkSolutionsIncXXXXXX#gI' |  sed 's#^#sort_orgname: #g' | sed 's# \+# #g' | awk '!a[$0]++' >> $nb_dir/process/$orgllc ; done )
+
+# Orgname Extractions Complete, now on to the orgname cleanup
+echo "Orgname Extractions Completed @ $(date)"
+#(cd $nb_dir/process ; for orgllc in $( grep -a -l '^sort_orgname:\|^orgname:\|^net_orgname:' $nb_dir/process/* | sed 's#.*/# #g' ) ; do sed -i '/^email_orgname:/d' $nb_dir/process/$orgllc ; done )
+(cd $nb_dir/process ; for orgllc in $( grep -a -l '^sort_orgname:\|^orgname:' $nb_dir/process/* | sed 's#.*/# #g' ) ; do sed -i '/^net_orgname:/d' $nb_dir/process/$orgllc ; done )
+(cd $nb_dir/process ; for orgllc in * ; do grep -a -ih '^sort_orgname: \|^email_orgname: \|^net_orgname: ' $nb_dir/process/$orgllc | sed 's#INTERNET *Service *POP\|^ *FOP *\|^ *P[PE] *\|shared hosting[- ]*block\|^ *Software *Company *$\|^ *services* *$\| *Dedicated .*hosting *services *\|^orgname_goo:\|service *activation\|IANA\|RIPE\|APNIC\|TWNIC\|LACNIC\|AFRINIC\|KRNIC\|JPNIC\|advertisement\|please\|trouble\|IP.*Internet *access\|Internet.*Access*Point\|This *is *the\| subpoena\|in .* and\|^orgname:\|^net_orgname:\|^email_orgname:\|.*orgname:\|.*netname:\|^email:\|infrastructure\|^host_type:\|^x_notes:\| *We *\|\@\|http://\|^ *ISP *$\|any *communication *sent *to\|Network *Op\+ *cent[re]\+\|Details\| *Regional *Registry\|Latin *Amer\S\+ *\S* *Carib\S\+\|Network *Coor\S\+ *Cent\S\+\|Afric\S\+ Net\S\+ Info\S\+\|For *more *info\|Internet.*Authority\|submit *report\|for *report\| send *mail\| send *to\|^ *ip.*services* *$\|^ *internet.*services* *$\| *[ip]* *Registration *Services* *[nis]*$\| *Hosting *Customers* *\|*internet *registry *\| *internet *address *registry *\| *Dynamic *IP *assignment *\| *Broadband *Internet *ISP *\| *Broadband *Internet *Access *Provider *\|Organization  *name *\|Service *name *\|Network *name *\| *\+ISP *\| *consumer(isp\|dsl\|cable\|tele\S\+)\| *\+telecom\S\+ *\+com\S\+ *of *\+\| *\+route\+\| *dsl *pool\| *broadband *service *\| *broadband *internet *\S\+\| *natpool *\| *pool *\| *ISP *network *\| *suite *[0-9]\+ *\|\S\+ road\|\S\+ drive\|\S\+ ave\S*\| *consumer(isp\|dsl\|cable\|tele\S\+) *\| \+telecom\S\+ \+com\S\+ of \+\| \+route\+\| \+\(subnet\|is\|an\|for\|pop\|service\|internet\|cable\|dsl\|broadband\|isp\|route\|access\|provider\|internet *backbone *\| \+\)\+ in \+\|^\S\+: \+\| \+$\|[_:/<>|()$^@!\.\*%,+=]\|\[\|\]# #g' | sed 's#\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ .*##g' | sed 's#[0-9 ]\{3,70\}$\| *[[:punct:]]* *$\|[[:punct:]]\|(.*$##g' | sed 's#(.*$\|role.*##gI' | sed '/[0-9 ]\{3,70\}$\|: *[0-9 ]\+$\|^$\|orgname: \+$\|^ *ISP *$\|^ *LLC *$/d' | sed 's#.*Network *Solutions *Inc#XXXXXXNetworkSolutionsIncXXXXXX#gI' | sed 's# \+# #g' |  sed 's#\s\+# #g' | sed 's#\s\+$##g' | sed 's#^ *#final_orgname: #' | awk '!a[$0]++' >> $nb_dir/process/$orgllc ; done )
+(cd $nb_dir/process ; for orgllc in $(ls $nb_dir/process | sed 's#.*/##g' ) ; do for netsol in $(grep -a -Hil 'XXXXXXNetworkSolutionsIncXXXXXX' $nb_dir/process/$orgllc | sed 's#.*/##g' ) ; do sed -i '/XXXXXXNetworkSolutionsIncXXXXXX/Id' $nb_dir/process/$netsol && sed -i '1 i\final_orgname: Network Solutions Inc' $nb_dir/process/$netsol ; done ; done )
+
+# Swapping out with more strict filter
+#(cd $nb_dir/process ; for orgllc in * ; do grep -a -ih '^orgname: ' $nb_dir/process/$orgllc | sed 's#^\S\+: \+##g' | sed 's#^ *of \|^ *for # #g' | sed 's#^ \+#final_orgname: #g' | sed 's#\s\+# #g'| sed 's#\s\+$##g' | awk '!a[$0]++' >> $nb_dir/process/$orgllc ; done )
+(cd $nb_dir/process ; for orgllc in * ; do grep -a -ih '^orgname: ' $nb_dir/process/$orgllc | grep -a -iv 'INTERNET *Service *POP\|^ *FOP *\|^ *P[PE] *\|shared hosting[- ]*block\|^ *Software *Company *$\|^ *services* *$\| \+dr$\| \+st$\| \+ave$\|IANA\|RIPE\|APNIC\|TWNIC\|LACNIC\|AFRINIC\|KRNIC\|JPNIC\|advertisement\|please\|trouble\|IP.*Internet *access\|Internet.*Access *Point\|This *is *the\| subpoena\|in .* and \|^net_orgname:\|^email_orgname:\|^sort_orgname:\|^netname:\|^email:\|infrastructure\|^host_type:\|^x_notes:\| \+We \+\|\@\|http://\|^ *ISP *$\|any *communication *sent *to\|Network *Op\+ *cent[re]\+\|Details\| *Regional *Registry\|Latin *Amer\S\+ *\S* *Carib\+\|Network *Coor\+ *Cent\+\|Afric\+ Net\+ Info\S\+\|For *more *info\|Internet.*Authority\|submit *report\|for *report\| send *mail\| send *to\|^ *ip.*services* *$\|^ *internet.*services* *$\| *[ip]* *Registration *Services* *[nis]*$\| *Hosting *Customers* *' | awk '!a[$0]++' | sed 's# *hostmaster *of \+\| no\. *[0-9].*\| *this *is *the *\| *this *is *\| *main *routes* [from]* \| *routes* *[from]* \+\| *building.*\|consumer.*dsl\|consumer.*cable\|consumer.*internet\|ip *block *[form]\+ *\|ip *block\| *a*dsl *internet *\|pool.*\| *ip *master *\| *route[ \-]*object *[ofr]\+ *\| *abuse *\| *route[ \-]*origin.*\| *complaint *\| *servic[eio]\+ *provider *\| *internet\+ *provider *\| *tele\+ *provider *\| *cable *provider *\| route[ \-]*object *[from]* *\| *IP *address *range.*\| network *operations* Center*\| network *operations* *\|technical *department *\| *authoritative *for .*\| *data *customer\+ *\| *internet *register.*\| *used *for *\| *route[ \-]*object *\| \+floor.*\| \+room \+[0-9].*\| \+bldg.*\| \+sector *\S\+ *\| *https* *\| *://.*\|\-*RIPE.*\|\-*ARIN.*\| *arin.*\| *ripe.*\| *afrinic.*\|*nic\.*br.*\| *ripe.*\| *apnic.*\| *jpnic.*\| *twnic.*\| *krnic.*\| *lacnic.*\| *MNT *$\|\-*MNT *$\| *MNT-.*\| *MAINT-.*\| *IRT-.*\|\-[0-9\-]\+\|\-*IP\-*network.*\|\-*[0-9]\{3,30\}\| *NETBLK.*\| *NET\-[0-9]\+.*\|^[a-z]\{1,4\}\-.*\|\[.*\]\|^\S\+: *\| *by *\| *network *admin.*\| *ip *admin.*\| *ip *alloc.*\| *technical *admin.*\| *ip *network.*\| *net *block.*\| *private *customer.*\| *customer *alloc.*\| *hostmaster.*\| *noc.*master.*\| *admin.*\| *whois *\|\-*Pools.*\| for \| from \|^ *for \|^ *from \|^ *of *\| *Internet *Registry *\| *Personal *Internet *\|^ns[0-9]\| *address *space *\| *High *Speed *Internet *Customers* *\| *internet *solutions* *provider *# #gI' | sed 's#\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ \+\S\+ .*\|role.*\|^ *internet *$\|^ *internet *\| *branch *[for]* *##gI' | sed 's#\s\+# #g' | sed 's#\s\+$\|^ *n[ea]t *$\| *natpool$\|^ *dedicated *hosting *$\|^ *dhcp *$\|^ *internet *provide* *$\|^ *internet *services* *$\|^ *internet *engineer\S\+ *$\|^ *route *$\|^ *public *subnet *$\|^ *subnet *$\|^ *services* *$\| *Virtual *Servers* *host\S\+ *\| *Internet *Security *Department *##gI' | sed '/^ *$/d' | awk '!a[$0]++' | sed 's#^ \+#final_orgname: #g' | sed 's#\s\+# #g'| sed 's#\s\+$##g' | awk '!a[$0]++' >> $nb_dir/process/$orgllc ; done )
+(cd $nb_dir/process ; for orgllc in * ; do tac $nb_dir/process/$orgllc | grep '^final_orgname:' | awk '!a[$0]++' | tac | sed 's#^final_orgname:#done_orgname:#g' >> $nb_dir/process/$orgllc ; done )
+(cd $nb_dir/process ; for orgllc in * ; do sed -i '/^orgname:\|^sort_orgname:\|^email_orgname:\|^net_orgname:\|^final_orgname:/d' $nb_dir/process/$orgllc ; done )
+(cd $nb_dir/process ; for orgllc in * ; do sed -i 's#^done_orgname: \+#orgname: #g' $nb_dir/process/$orgllc ; done )
+(cd $nb_dir/process ; for orgllc in * ; do sed -E -i '/^orgname: +(department|exchange|national|is |a |an |for|pop|adsl|xdsl|service|internet|cable|dsl|broadband|isp|route|access|provider| +) +in +|^orgname: *(\S+ +(plaza|blvd|parkway|pkwy|road|avenue|street|drive|st\.*|dr\.*|ave\.*|rd.*) *$| is | lir| of | in |department|exchange|national|satellite|voip|all| data | and |dynamic|ip|telephone|consumer|adsl|ipsystem|natpool|corporation|service|dedicated|hosting|name|network|engineering|engineer|pool|is|an|for|pop|services|operations|internet|cable|dsl|broadband|isp|route|access|space|provider|subnet|servicenetwork|llc| +|[a-z] \+|Network name|Service name|hotmail com| gmail com|yahoo com|earthlink (net|com))+ *$|americ.* regist.*inter.*numb|latin amer.*network info.* cent|afri.*network.*info.*cent|asia.*network.*info.*cent|^orgname: *ripe|^orgname: *arin|orgname: *lacnic|^orgname: *apnic|orgname: *afrinic|^orgname: *[0-9][0-9]\.*:*[0-9].*|^orgname: *[0-9]{1,2}[a-z]{1,2} *$|^orgname: *[a-z] *$|^orgname: *[a-z0-9]{1,2} *$|^orgname: *om[a-z][a-z] *$|^orgname: *(|network+ services.*|network name.*|news|vpn|this|internet|university|telecomm services|tech services|technology division|technical service+|technical internet|telecom services provider|service operation data center|Servers network devices at Data Center|premier broadband service) *$|^orgname: *[0-9][stndr]{2} *$|^orgname: *([[:punct:]]\+ *[0-9]*|[[:punct:]]* *[0-9]\+)\+ *$/Id' $nb_dir/process/$orgllc ; done )
+echo "Orgname Cleanup Completed @ $(date)"
+#(cd $nb_dir/process ; for goofi in * ; do for googleorg in $(grep -hi '^orgname:' $nb_dir/process/$goofi | sed 's#^orgname: \+##g' ) ; do $script_dir/googler/googler -C '$googleorg' -n 1 --np | sed ':a;N;$!ba;s#\n# ~ #g'|  sed 's#^ *[0-9] *\| *\.\+ *~##g' | sed 's#<\|>\|(\|)\|\*\|,\|\"\|\'"'"'##g' | sed 's# \+# #g' | sed 's#^ *#orgname_goo:#g' >> $nb_dir/process/$goofi ; done ; done )
+# Find all email values, remove them after extraction and rename ~extracted to email:
+(cd $nb_dir/process ; for changed in * ; do grep -a -hi 'last-*updated:\|^updated: \|changed: ^' $nb_dir/process/$changed | grep -a -o '[0-9]\{8\}' | sort -r | uniq | sed "s#^#x_changed_date: #" >> $nb_dir/process/$changed ; done )
+echo "Initial Normalizations & Extractions Completed @ $(date)"
+# Remove useless information
+(cd $nb_dir/process ; sed -i '/^.*: *[Nn]etwork$\|^.*: *[Aa][Bb][Uu][Ss][Ee]$\|^.*: *[Aa][Bb][Uu][Ss][Ee] *[Tt][Ee][Aa][Mm]$\|^.*: *[Aa]buse [Dd]epartment$\|^.*: *[Nn]ational [Ii][Pp] [Aa]dministrator$\|^.*: *[Ii][Pp] [Aa]ddress [Aa]dministator$\|^.*: *[Ii][Pp] [Aa]ddress [Aa]dmin$\|^.*: *[Ii][Pp] [Aa]ddress [Aa]dministration$\|^.*: *[Nn][Oo][Cc]$ \|^.*: *[Aa]dmin$\|^.*: *[Ii][Pp] [Aa][Dd][Mm][Ii][Nn]$\|^.*: *[Nn]etwork [Oo]peration.*[Cc]enter$\|^.*: *[Ii][Pp] [Nn]etwork [Oo]perations$\|^.*: *[Nn]etwork [Oo]perations$\|^.*: *[Rr]eassigned$\|^.*: *[Rr]eallocated$\|^.*: *[Aa]llocated$\|^.*: *# *[Ff]iltered$\|: \+Hostmaster *NOC$\|: \+Abuse *Desk$\|: \+IP *Admin\+$\|: \+Direct *Allocat*$\|: \+Reassigned$\|: \+Abuse *Desk$\|: \+Help *Desk$\|: \+Antiabuse *Helpdesk$/Id' $nb_dir/process/*)
+echo "Remove Useless Information and All Initial Cleanup Tasks Completed @ $(date)"
+####################################################
+# Sort data in reverse. Only focusing on columns in below expression
+# '^abuse: \|^cidr: \|^city: \|^country: \|^customer: \|^email: \|^fax: \|^host_type: \|^mnt: \|^netname: \|^nichdl: \|^nserver: \|^nslastaa: \|^organization: \|^parent: \|^person: \|^phone: \|^postalcode: \|^ref: \|^regdate: \|^route: \|^rwhois: \|^state: \|^updated: '
+# The idea is that the most generic information is at the top and the most specific is near the bottom
+# especially as you pull multiple records of similar fields i.e. the ones we're reversing
+#(cd $nb_dir/process/ ; for revord in * ; do grep -a -hi '^abuse: \|^cidr: \|^city: \|^country: \|^customer: \|^email: \|^fax: \|^mnt: \|^netname: \|^nichdl: \|^nserver: \|^nslastaa: \|^organization: \|^parent: \|^person: \|^phone: \|^postalcode: \|^ref: \|^regdate: \|^route: \|^rwhois: \|^state: \|^updated: ' $nb_dir/process/$revord | sed 's#^#XXXZZZXXX#g' | awk '!a[$0]++' | tac >> $nb_dir/process/$revord ; done )
+#(cd $nb_dir/process/ ; for revord in * ; do sed -i '/^abuse: \|^cidr: \|^city: \|^country: \|^customer: \|^email: \|^fax: \|^mnt: \|^netname: \|^nichdl: \|^nserver: \|^nslastaa: \|^organization: \|^parent: \|^person: \|^phone: \|^postalcode: \|^ref: \|^regdate: \|^route: \|^rwhois: \|^state: \|^updated: /d' $nb_dir/process/$revord ; done )
+#(cd $nb_dir/process/ ; for revord in * ; do sed -i 's#^XXXZZZXXX##g' $nb_dir/process/$revord ; done )
+
+####################################################
+# Normalize inetnum info with CIDR blocks then add IP calc info
+# Find all inetnum with ranges not cidr block and call it out for replacement
+# Latest addition hopefully does not re-order inetnums
+# Update: Just commented this out since this doesn't seem necssary since I focus on a CIDR block, not the column name 
+# and CIDR block for the ipcalc of a net range
+#(cd $nb_dir/process ; for ipfilev in * ; do for inetv in $(awk -F": " '/^inetnum.*\-/ {print $2}' $ipfilev | sed 's/ *\- */\-/g' | awk '{print $1}') ; do sed -i 's#.*'$inetv'#inetnum_range:   '$inetv'#gI' $ipfilev ; done ; done)
+#(cd $nb_dir/process ; for ipfilev in * ; do for inetv in $(awk -F": " '/^inetnum.*\-/ {print $2}' $ipfilev | sed 's/ \- /\-/g') ; do echo "inetnum_range: $inetv" >> $ipfilev ; done ; done)
+#echo "inetnum_range Add for Incompatible inetnum Values Completed @ $(date)"
+
+###### If inetnum_range added, then remove original inetnum
+###### This seems useless now after adjusting above line
+######(cd $nb_dir/process ; for inetfix in $(grep -a "^inetnum_range" * -Hl) ; do sed -i '/^inetnum: .*\-.*/d' $inetfix ; done)
+#echo "Remove Incompatible inetnum values Completed @ $(date)"
+# Add real CIDR block then remove inetnum original that was range
+# Find all CIDR blocks, set them as inetnum values.
+####### Removing this since I fixed this too
+#######(cd $nb_dir/process ; for find in $(grep -a '^inetnum_range:' -Hl * ) ; do for fix in $(grep -a '^inetnum_range:' $nb_dir/process/$find | awk '{ print $2 }') ; do for inetv in $(ipcalc -b $fix | grep -a -v deaggregate) ; do sed -i '1s#^#inetnum_fix: '$inetv'\n#' $nb_dir/process/$find ; done ; done ; done)
+###### Removing this line because this is an echo which 
+###### doesn't help in keeping the inet original order
+######(cd $nb_dir/process ; for find in $(grep -a '^inetnum_range:' -Hl * ) ; do for fix in $(grep -a '^inetnum_range:' $nb_dir/process/$find | awk '{ print $2 }') ; do for inetv in $(ipcalc -b $fix | grep -a -v deaggregate) ; do echo "inetnum: $inetv" >> $find ; done ; done ; done)
+#(cd $nb_dir/process ; for cidrv in * ; do for cidri in $(grep -a -vHl inetnum $nb_dir/process/$cidrv); do grep -a -oE  '(?!^inetnum:.*([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\/[0-9]{1,3}))' $nb_dir/process/$cidri ; done ; done )
+#(cd $nb_dir/process ; for inetfix in * ; do sed -i "s#inetnum_fix:#inetnum: #" $nb_dir/process/$inetfix ; done)
+#(cd $nb_dir/process ; for find in $(grep -a '^inetnum_fix:' -Hl * ) ; do for fix in $(grep -a '^inetnum_fix:' $nb_dir/process/$find | awk '{ print $2 }' ) ; do sed -i '#^inetnum_fix:.*#inetnum: '$fix'\n#' $nb_dir/process/$find ; done ; done )
+#echo "Real CIDRs for inetnum Add Completed @ $(date)"
+
+# Correct spacing in net ranges for ipcalc handling since white spaces causes multiple variables
+(cd $nb_dir/process ; for ipfilev in * ; do sed -i 's#\([0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\) *- *\([0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\)#\1-\2#g' $ipfilev ; done )
+# Sort and remove duplicate inetnum values & extra spacing again 
+(cd $nb_dir/process ; for inetv in $( ls $nb_dir/process ) ; do sed -i 's#inetnum: *#inetnum: #' $nb_dir/process/$inetv ; done )
+echo "Convert Network Ranges Into IPCalc Friendly Ranges Completed @ $(date)"
+
+#### Disabling because this is causing a resort of inetnum
+#(cd $nb_dir/process ; for inetv in $( ls $nb_dir/process ) ; do grep -a '^inetnum:' $nb_dir/process/$inetv | sed 's# \+# #g' | sed 's# \+$##g' | awk '!a[$0]++' | sed 's#inetnum: *#uniq_inet: #' >> $nb_dir/process/$inetv ; sed -i '/^inetnum:\|inetnumup:/d' $nb_dir/process/$inetv ; done)
+# Add all IPcalc info to inetnum_range
+# 2 octect CIDR to 4
+(cd $nb_dir/process ; for ifix in * ; do sed -i '/[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{0,3\}\.*\/[0-9]\{1,2\}\|owner-*id\|[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/! s/\([0-9]\{1,3\}\.[0-9]\{1,3\}\)\.*\(\/[0-9]\{1,2\}\)/ \1.0.0\2 /g' $nb_dir/process/$ifix ; done )
+# 3 octect CIDR to 4
+(cd $nb_dir/process ; for ifix in * ; do sed -i '/[0-9]\{1,3\}\.[0-9]\{1,3\}\.*\/[0-9]\{1,2\}\|owner-*id\|[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/! s/\([0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{0,3\}\)\.*\(\/[0-9]\{1,2\}\)/ \1.0\2 /g' $nb_dir/process/$ifix ; done )
+echo "CIDRs With Less than 4 Octects to Full Conversion Completed @ $(date)"
+
+# Check IP Network Ranges to see if they'll convert nicely or not. If they do, you have 2 lines in the ipcalc output otherwise
+# you have a lot more. If you have a lot more, ipv4calc is used instead to process the range.
+# This is done with writing two files based on the count, and then 
+#(cd $nb_dir/ ; touch $nb_dir/ipv4calc_temp $nb_dir/ipcalc_temp )
+#(cd $nb_dir/ ; rm -f $nb_dir/ipv4calc_temp $nb_dir/ipcalc_temp )
+#(cd $nb_dir/process ; for ipfilev in * ; do for inetr in $(grep -a -ho '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\} *- *[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}'  $nb_dir/process/$ipfilev | awk '!a[$0]++' ) ; do for irangec in $( ipcalc "$inetr" | wc -l ) ; do if [ $irangec -gt 3 ]; then  echo "$ipfilev $inetr" | sed 's#\s\+# #g' | sed 's#\s\+$##g' >> $nb_dir/ipv4calc_temp ; fi ; if [ $irangec -lt 4 ]; then  echo "$ipfilev $inetr" | sed 's#\s\+# #g' | sed 's#\s\+$##g' >> $nb_dir/ipv4calc_temp ; fi ; done ; done ; done )
+#echo "Determined Which Ranges Need IPV4Calc and Which Need IPCalc Completed @ $(date)"
+#(cd $nb_dir/process ; for ipfilev in $(cat $nb_dir/ipv4calc_temp | awk '{print $1}' ) ; do for inetv in $(grep -a -hi "$ipfilev" $nb_dir/ipv4calc_temp | awk '{print $2}' ) ; do for ipcalcv in $(ipv4calc $inetv | sed '2!d' | grep -a -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/[0-9]\{1,2\}' ) ; do sed -i 's#'$inetv'#'$ipcalcv'#g' $nb_dir/process/$ipfilev ; done ; done ; done )  
+#(cd $nb_dir/process ; for ipfilev in $(cat $nb_dir/ipcalc_temp | awk '{print $1}' ) ; do for inetv in $(grep -a -hi "$ipfilev" $nb_dir/ipcalc_temp | awk '{print $2}' ) ; do for ipcalcv in $(ipcalc $inetv | sed '2!d' | grep -a -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/[0-9]\{1,2\}' ) ; do sed -i 's#'$inetv'#'$ipcalcv'#g' $nb_dir/process/$ipfilev ; done ; done ; done ) 
+#echo "Injected IPCalc and IPV4Calc CIDR Conversions for Ranges Completed @ $(date)"
+#(cd $nb_dir/process ; for ipfilev in $(cat $nb_dir/ipv4calc_temp | awk '{print $1}' ) ; do for inetv in $(grep -a -hi "$ipfilev" $nb_dir/ipv4calc_temp | awk '{print $2}' ) ; do echo "inet_range: $inetv" | sed 's#\s\+# #g' | sed 's#\s\+$##g' >> $nb_dir/process/$ipfilev ; done ; done )
+#(cd $nb_dir/process ; for ipfilev in $(cat $nb_dir/ipcalc_temp | awk '{print $1}' ) ; do for inetv in $(grep -a -hi "$ipfilev" $nb_dir/ipcalc_temp | awk '{print $2}' ) ; do echo "inet_range: $inetv" | sed 's#\s\+# #g' | sed 's#\s\+$##g' >> $nb_dir/process/$ipfilev ; done ; done )
+#(cd $nb_dir/ ; rm -f $nb_dir/ipv4calc_temp $nb_dir/ipcalc_temp )
+echo "Injected Original Ranges in inet_range Completed @ $(date)"
+
+# Testing
+(cd $nb_dir/process ; for ipfilev in * ; do sed -i '/0.0.0.0-/d' $ipfilev ; done )
+(cd $nb_dir/process ; for ipfilev in * ; do for inetv in $(grep -a -ho '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\} *- *[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' $ipfilev | awk '!a[$0]++' ) ; do for ipcalcv in $(ipcalc -b $inetv | sed '2!d' | grep -a -ho '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/[0-9]\{1,2\}' ) ; do sed -i 's#'$inetv'#'$ipcalcv'#g' $ipfilev  ; echo "inet_range: $inetv" >> $nb_dir/process/$ipfilev ; done ; done ; done )
+(cd $nb_dir/process ; for ipfilev in * ; do for inetv in $(grep -a -h '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\} *- *[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' $ipfilev | sed 's#^\S\+: *##g' | awk '!a[$0]++' ) ; do for ipcalcv in $(ipcalc -b $inetv | grep -a -ho '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/[0-9]\{1,2\}' ) ; do echo "inetnum: $ipcalcv" >> $nb_dir/process/$ipfilev ; done ; done ; done )
+
+
+#(cd $nb_dir/process ; for ipfilev in * ; do for inetv in $(grep -a -ho '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\} *- *[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' $ipfilev | awk '!a[$0]++' ) ; do for ipcalcv in $(ipcalc -b $inetv | sed '2!d' | grep -a -ho '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/[0-9]\{1,2\}' ) ; do sed -i 's#'$inetv'#'$ipcalcv'#g' $ipfilev ; done ; done ; done )
+(cd $nb_dir/process ; for parent in * ; do grep -a -h 'parent: *[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/[0-9]\{1,2\}' $nb_dir/process/$parent | sed 's#\s\+# #g' | sed 's#\s\+$##g' | sed 's#parent: *#inetnum: #g' | echo >> $nb_dir/process/$parent ;done )
+(cd $nb_dir/process ; for inetv in * ; do grep -a -h -e 'inetnum_range:\|inetnum:' $nb_dir/process/$inetv | sed 's#\s\+# #g' | sed 's#\s\+$##g' | sed 's#^inetnum_range: *\|^inetnum: *#uniq_inet: #' | awk '!a[$0]++' >> $nb_dir/process/$inetv ; done )
+#(cd $nb_dir/process ; for inetd in * ; do sed -i '/^inetnum_range:\|^inetnum:/d' $nb_dir/process/$inetd ; done )
+(cd $nb_dir/process ; for xinet in * ; do grep -a -v '^uniq_inet:\|^inetnum_range:\|^inetnum:\|^parent:' $nb_dir/process/$xinet | grep -a -ho '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/[0-9]\{1,2\}' | awk '{print "uniq_inet: " $1}' | awk '!a[$0]++' >> $nb_dir/process/$xinet ; done )
+echo "Non-inetnum CIDR Extraction for Extra inetnum Values Completed @ $(date)"
+
+#(cd $nb_dir/process ; for uniqv in * ; do sed -i 's#uniq_inet:#inetnum:#g' $nb_dir/process/$uniqv ; done )
+(cd $nb_dir/process ; for uniqi in * ; do grep -a -h '^uniq_inet:\|^inetnum:' $nb_dir/process/$uniqi | sed 's#\s\+# #g' | sed 's#\s\+$##g' | sed 's#^\S\+:\s\+#final_inet: #g' | awk '!a[$0]++' >> $nb_dir/process/$uniqi ; done )
+(cd $nb_dir/process ; for inetd in * ; do sed -i '/^uniq_inet:\|^inetnum_range:\|^inetnum:/d' $nb_dir/process/$inetd ; done )
+(cd $nb_dir/process ; for uniqv in * ; do sed -i 's#final_inet:#inetnum:#g' $nb_dir/process/$uniqv ; done )
+####I think I can remove the above two lines as well because I've done away with the need for all the random inetnum variables.
+echo "Conversions for Extra inetnum Extractions & inetnum Cleanup Completed @ $(date)"
+
+# Cleanup inetnum_range
+# Deleted since I added an or statement to the uniq_inet above to handle this
+#(cd $nb_dir/process ; for drange in * ; do sed -i 's#^inetnum_range:#inetnum:#' $drange ; done)
+# Add all IPcalc info to inetnum post cleanup
+(cd $nb_dir/process ; for cidr in * ; do for ipcalc in $(awk -F": " '/^inetnum:/ {print $2}' $cidr) ; do ipcalc -b $ipcalc | grep -a "Netmask:\|^HostMin:\|^HostMax:\|Hosts/Net:" | awk '{print $1 " " $2 }' >> $cidr ; done ; done)
+echo "IPCalc Info Add Completed @ $(date)"
+
+# Correct Hosts/Net & lower case columns again
+(cd $nb_dir/process ; for hostnet in * ; do sed -i 's#Hosts/Net#netcount#' $hostnet ; done)
+(cd $nb_dir/process ; sed -i 's#\(\S\+:\)#\L\1#I' $nb_dir/process/*)
+echo "All IPCalc Injections for IP/Network Info Cleanup Completed @ $(date)"
+
+# Move non-inetnum files to not_processed for second time after all inetnum info is complete
+(cd $nb_dir/process ; for noipv in * ; do grep -a -q "^inetnum" $noipv || mv $noipv $nb_dir/not_processed/$noipv ; done )
+echo "Final Incomplete inetnum Move Completed @ $(date)"
+####################################################
+
+####################################################
+# Create New Load Catalogs
+#grep -a upgrade $nb_dir/process/* -Hl > $cat_dir/upgrade_files_toload_done
+#grep -a -P '\000' $nb_dir/process/* -Hl > $cat_dir/null_files_toload_done
+#grep -a 'limit exceeded' $nb_dir/process/* -Hl >>$cat_dir/limit_files_toload_done
+#grep -a TWNIC $nb_dir/process/* -Hl > $cat_dir/TWNIC_files_toload_done
+#grep -a Nic.br $nb_dir/process/* -Hl > $cat_dir/Nic.br_files_toload_done
+#grep -a KRNIC $nb_dir/process/* -Hl > $cat_dir/KRNIC_files_toload_done
+#grep -a JPNIC $nb_dir/process/* -Hl > $cat_dir/JPNIC_files_toload_done
+#grep -a AfriNIC $nb_dir/process/* -Hl > $cat_dir/AfriNIC_files_toload_done
+#grep -a APNIC $nb_dir/process/* -Hl > $cat_dir/APNIC_files_toload_done
+#grep -a RIPE $nb_dir/process/* -Hl > $cat_dir/RIPE_files_toload_done
+#grep -a LACNIC $nb_dir/process/* -Hl > $cat_dir/LACNIC_files_toload_done
+#grep -a ARIN $nb_dir/process/* -Hl > $cat_dir/ARIN_files_toload_done
+
+#grep -a TWNIC $nb_dir/norm/* -Hl >> $cat_dir/TWNIC_files_toload_norm
+#grep -a Nic.br $nb_dir/norm/* -Hl >> $cat_dir/Nic.br_files_toload_norm
+#grep -a KRNIC $nb_dir/norm/* -Hl >> $cat_dir/KRNIC_files_toload_norm
+#grep -a JPNIC $nb_dir/norm/* -Hl >> $cat_dir/JPNIC_files_toload_norm
+#grep -a AfriNIC $nb_dir/norm/* -Hl >> $cat_dir/AfriNIC_files_toload_norm
+#grep -a APNIC $nb_dir/norm/* -Hl >> $cat_dir/APNIC_files_toload_norm
+#grep -a RIPE $nb_dir/norm/* -Hl >> $cat_dir/RIPE_files_toload_norm
+#grep -a LACNIC $nb_dir/norm/* -Hl >> $cat_dir/LACNIC_files_toload_norm
+#grep -a ARIN $nb_dir/norm/* -Hl >> $cat_dir/ARIN_files_toload_norm
+
+#grep -a TWNIC $nb_dir/csv/* -Hl >> $cat_dir/TWNIC_files_toload_csv
+#grep -a Nic.br $nb_dir/csv/* -Hl >> $cat_dir/Nic.br_files_toload_csv
+#grep -a KRNIC $nb_dir/csv/* -Hl >> $cat_dir/KRNIC_files_toload_csv
+#grep -a JPNIC $nb_dir/csv/* -Hl >> $cat_dir/JPNIC_files_toload_csv
+#grep -a AfriNIC $nb_dir/csv/* -Hl >> $cat_dir/AfriNIC_files_toload_csv
+#grep -a APNIC $nb_dir/csv/* -Hl >> $cat_dir/APNIC_files_toload_csv
+#grep -a RIPE $nb_dir/csv/* -Hl >> $cat_dir/RIPE_files_toload_csv
+#grep -a LACNIC $nb_dir/csv/* -Hl >> $cat_dir/LACNIC_files_toload_csv
+#grep -a ARIN $nb_dir/csv/* -Hl >> $cat_dir/ARIN_files_toload_csv
+
+#grep -a TWNIC $nb_dir/json/* -Hl >> $cat_dir/TWNIC_files_toload_json
+#grep -a Nic.br $nb_dir/json/* -Hl >> $cat_dir/Nic.br_files_toload_json
+#grep -a KRNIC $nb_dir/json/* -Hl >> $cat_dir/KRNIC_files_toload_json
+#grep -a JPNIC $nb_dir/json/* -Hl >> $cat_dir/JPNIC_files_toload_json
+#grep -a AfriNIC $nb_dir/json/* -Hl >> $cat_dir/AfriNIC_files_toload_json
+#grep -a APNIC $nb_dir/json/* -Hl >> $cat_dir/APNIC_files_toload_json
+#grep -a RIPE $nb_dir/json/* -Hl >> $cat_dir/RIPE_files_toload_json
+#grep -a LACNIC $nb_dir/json/* -Hl >> $cat_dir/LACNIC_files_toload_json
+#grep -a ARIN $nb_dir/json/* -Hl >> $cat_dir/ARIN_files_toload_json
+
+#grep -a TWNIC $nb_dir/loadable/* -Hl >> $cat_dir/TWNIC_files_toload_loadable
+#grep -a Nic.br $nb_dir/loadable/* -Hl >> $cat_dir/Nic.br_files_toload_loadable
+#grep -a KRNIC $nb_dir/loadable/* -Hl >> $cat_dir/KRNIC_files_toload_loadable
+#grep -a JPNIC $nb_dir/loadable/* -Hl >> $cat_dir/JPNIC_files_toload_loadable
+#grep -a AfriNIC $nb_dir/loadable/* -Hl >> $cat_dir/AfriNIC_files_toload_loadable
+#grep -a APNIC $nb_dir/loadable/* -Hl >> $cat_dir/APNIC_files_toload_loadable
+#grep -a RIPE $nb_dir/loadable/* -Hl >> $cat_dir/RIPE_files_toload_loadable
+#grep -a LACNIC $nb_dir/loadable/* -Hl >> $cat_dir/LACNIC_files_toload_loadable
+#grep -a ARIN $nb_dir/loadable/* -Hl >> $cat_dir/ARIN_files_toload_loadable
+#echo "Load Catalog Completed @ $(date)"
+
+####################################################
+# Correct/Add Source and copy all to loadable and move files with known registrars to loaded
+# Then move remaining files to not_processed
+# JPNIC & KRNIC has a special set to accomodate the lack of country & source info provided in some queries
+# LACNIC has one exception for when country BR exists but no Source
+(cd $nb_dir/process ; for sourcev in  $(grep -a ARIN * -Hl) ; do sed '/^.*source:/d' $sourcev | sed '1i source: ARIN' | awk '/^inetnum:/{sub("inetnum", "inetnum_0"++v)}1' | awk '/^netmask:/{sub("netmask", "netmask_0"++v)}1' | awk '/^hostmin:/{sub("hostmin", "hostmin_0"++v)}1' | awk '/^hostmax:/{sub("hostmax", "hostmax_0"++v)}1' | awk '/^netcount:/{sub("netcount", "netcount_0"++v)}1' | awk '/^originas:/{sub("originas", "originas_0"++v)}1' > $nb_dir/loadable/$sourcev ; done)
+(cd $nb_dir/process ; for sourcev in  $(grep -a APNIC * -Hl) ; do sed '/^.*source:/d' $sourcev | sed '1i source: APNIC' | awk '/^inetnum:/{sub("inetnum", "inetnum_0"++v)}1' | awk '/^netmask:/{sub("netmask", "netmask_0"++v)}1' | awk '/^hostmin:/{sub("hostmin", "hostmin_0"++v)}1' | awk '/^hostmax:/{sub("hostmax", "hostmax_0"++v)}1' | awk '/^netcount:/{sub("netcount", "netcount_0"++v)}1' | awk '/^originas:/{sub("originas", "originas_0"++v)}1' > $nb_dir/loadable/$sourcev ; done)
+(cd $nb_dir/process ; for sourcev in  $(grep -a RIPE * -Hl) ; do sed '/^.*source:/d' $sourcev | sed '1i source: RIPE' | awk '/^inetnum:/{sub("inetnum", "inetnum_0"++v)}1' | awk '/^netmask:/{sub("netmask", "netmask_0"++v)}1' | awk '/^hostmin:/{sub("hostmin", "hostmin_0"++v)}1' | awk '/^hostmax:/{sub("hostmax", "hostmax_0"++v)}1' | awk '/^netcount:/{sub("netcount", "netcount_0"++v)}1' | awk '/^originas:/{sub("originas", "originas_0"++v)}1' > $nb_dir/loadable/$sourcev ; done)
+(cd $nb_dir/process ; for sourcev in  $(grep -a LACNIC * -Hl) ; do sed '/^.*source:/d' $sourcev | sed '1i source: LACNIC' | awk '/^inetnum:/{sub("inetnum", "inetnum_0"++v)}1' | awk '/^netmask:/{sub("netmask", "netmask_0"++v)}1' | awk '/^hostmin:/{sub("hostmin", "hostmin_0"++v)}1' | awk '/^hostmax:/{sub("hostmax", "hostmax_0"++v)}1' | awk '/^netcount:/{sub("netcount", "netcount_0"++v)}1' | awk '/^originas:/{sub("originas", "originas_0"++v)}1' > $nb_dir/loadable/$sourcev ; done)
+(cd $nb_dir/process ; for sourcev in  $(grep -a AfriNIC * -Hl) ; do sed '/^.*source:/d' $sourcev | sed '1i source: AfriNIC' | awk '/^inetnum:/{sub("inetnum", "inetnum_0"++v)}1' | awk '/^netmask:/{sub("netmask", "netmask_0"++v)}1' | awk '/^hostmin:/{sub("hostmin", "hostmin_0"++v)}1' | awk '/^hostmax:/{sub("hostmax", "hostmax_0"++v)}1' | awk '/^netcount:/{sub("netcount", "netcount_0"++v)}1' | awk '/^originas:/{sub("originas", "originas_0"++v)}1' > $nb_dir/loadable/$sourcev ; done)
+(cd $nb_dir/process ; for sourcev in  $(grep -a AFRINIC * -Hl) ; do sed '/^.*source:/d' $sourcev | sed '1i source: AfriNIC' | awk '/^inetnum:/{sub("inetnum", "inetnum_0"++v)}1' | awk '/^netmask:/{sub("netmask", "netmask_0"++v)}1' | awk '/^hostmin:/{sub("hostmin", "hostmin_0"++v)}1' | awk '/^hostmax:/{sub("hostmax", "hostmax_0"++v)}1' | awk '/^netcount:/{sub("netcount", "netcount_0"++v)}1' | awk '/^originas:/{sub("originas", "originas_0"++v)}1' > $nb_dir/loadable/$sourcev ; done)
+(cd $nb_dir/process ; for sourcev in  $(grep -a TWNIC * -Hl) ; do sed '/^.*source:/d' $sourcev | sed '1i source: TWNIC' | awk '/^inetnum:/{sub("inetnum", "inetnum_0"++v)}1' | awk '/^netmask:/{sub("netmask", "netmask_0"++v)}1' | awk '/^hostmin:/{sub("hostmin", "hostmin_0"++v)}1' | awk '/^hostmax:/{sub("hostmax", "hostmax_0"++v)}1' | awk '/^netcount:/{sub("netcount", "netcount_0"++v)}1' | awk '/^originas:/{sub("originas", "originas_0"++v)}1' > $nb_dir/loadable/$sourcev ; done)
+(cd $nb_dir/process ; for sourcev in  $(grep -a Nic.br * -Hl) ; do sed '/^.*source:/d' $sourcev | sed '1i source: Nic.br' | awk '/^inetnum:/{sub("inetnum", "inetnum_0"++v)}1' | awk '/^netmask:/{sub("netmask", "netmask_0"++v)}1' | awk '/^hostmin:/{sub("hostmin", "hostmin_0"++v)}1' | awk '/^hostmax:/{sub("hostmax", "hostmax_0"++v)}1' | awk '/^netcount:/{sub("netcount", "netcount_0"++v)}1' | awk '/^originas:/{sub("originas", "originas_0"++v)}1' > $nb_dir/loadable/$sourcev ; done)
+(cd $nb_dir/process ; for sourcev in  $(grep -a KRNIC * -Hl) ; do sed '/^.*source:/d' $sourcev | sed '1i source: KRNIC' | sed '1i country: KR' | awk '/^inetnum:/{sub("inetnum", "inetnum_0"++v)}1' | awk '/^netmask:/{sub("netmask", "netmask_0"++v)}1' | awk '/^hostmin:/{sub("hostmin", "hostmin_0"++v)}1' | awk '/^hostmax:/{sub("hostmax", "hostmax_0"++v)}1' | awk '/^netcount:/{sub("netcount", "netcount_0"++v)}1' | awk '/^originas:/{sub("originas", "originas_0"++v)}1' > $nb_dir/loadable/$sourcev ; done)
+(cd $nb_dir/process ; for sourcev in  $(grep -a JPNIC * -Hl) ; do sed '/^.*source:/d' $sourcev | sed '1i source: JPNIC' | sed '1i country: JP' | awk '/^inetnum:/{sub("inetnum", "inetnum_0"++v)}1' | awk '/^netmask:/{sub("netmask", "netmask_0"++v)}1' | awk '/^hostmin:/{sub("hostmin", "hostmin_0"++v)}1' | awk '/^hostmax:/{sub("hostmax", "hostmax_0"++v)}1' | awk '/^netcount:/{sub("netcount", "netcount_0"++v)}1' | awk '/^originas:/{sub("originas", "originas_0"++v)}1' > $nb_dir/loadable/$sourcev ; done)
+(cd $nb_dir/process ; for sourcev in  $(grep -a '( JST )' * -Hl) ; do sed '/^.*source:/d' $sourcev | sed '1i source: JPNIC' | sed '1i country: JP' | awk '/^inetnum:/{sub("inetnum", "inetnum_0"++v)}1' | awk '/^netmask:/{sub("netmask", "netmask_0"++v)}1' | awk '/^hostmin:/{sub("hostmin", "hostmin_0"++v)}1' | awk '/^hostmax:/{sub("hostmax", "hostmax_0"++v)}1' | awk '/^netcount:/{sub("netcount", "netcount_0"++v)}1' | awk '/^originas:/{sub("originas", "originas_0"++v)}1' > $nb_dir/loadable/$sourcev ; done)
+(cd $nb_dir/process ; for sourcev in  $(grep -a "country.*BR" * -iHl) ; do sed '/^.*source:/d' $sourcev | sed '1i source: LACNIC' | awk '/^inetnum:/{sub("inetnum", "inetnum_0"++v)}1' | awk '/^netmask:/{sub("netmask", "netmask_0"++v)}1' | awk '/^hostmin:/{sub("hostmin", "hostmin_0"++v)}1' | awk '/^hostmax:/{sub("hostmax", "hostmax_0"++v)}1' | awk '/^netcount:/{sub("netcount", "netcount_0"++v)}1' | awk '/^originas:/{sub("originas", "originas_0"++v)}1' > $nb_dir/loadable/$sourcev ; done)
+(cd $nb_dir/process ; for sourcev in  $(grep -a -E '\.\w+\.br' * -iHl) ; do sed '/^.*source:/d' $sourcev | sed '1i source: LACNIC' | sed '1i country: BR' | awk '/^inetnum:/{sub("inetnum", "inetnum_0"++v)}1' | awk '/^netmask:/{sub("netmask", "netmask_0"++v)}1' | awk '/^hostmin:/{sub("hostmin", "hostmin_0"++v)}1' | awk '/^hostmax:/{sub("hostmax", "hostmax_0"++v)}1' | awk '/^netcount:/{sub("netcount", "netcount_0"++v)}1' | awk '/^originas:/{sub("originas", "originas_0"++v)}1' > $nb_dir/loadable/$sourcev ; done)
+(cd $nb_dir/process ; for loadedv in $(ls -1 $nb_dir/loadable/) ; do rm -f $nb_dir/process/$loadedv ; done ) 
+(cd $nb_dir/process ; for otherv in $(ls -1 $nb_dir/process/) ; do mv $otherv $nb_dir/not_processed/$otherv ; done ) 
+# Remove * file if exists after move
+(cd $nb_dir/loadable/ ; rm -f '*' )
+(cd $nb_dir/not_processed/ ; rm -f '*' )
+echo "Source Correct/Add & Uniq Network Columns Increment Completed @ $(date)"
+####################################################
+
+####################################################
+# Normalize loadable files - Read from loadable convert all columns to known columns and then set unknown 
+#columns to OTHER then add incremental count to repeat items into normal data folder 
+
+# Remove all sentences i.e. lines with 5 spaces or more between words.
+#(cd $nb_dir/loadable ; for nrmlz in * ; do sed -i  '/.*: .*[[:alnum:]] .*[[:alnum:]] .*[[:alnum:]] .*[[:alnum:]] .*[[:alnum:]] .*[[:alnum:]] .*[[:alnum:]] .*[[:alnum:]]/d' $nrmlz ; done)
+#echo "Remove All Sentences Completed @ $(date)"
+
+# Capitalize Country and remove anything trailing
+(cd $nb_dir/loadable ; for nrmlz in * ; do sed -i 's#\(country.*: *\)\([a-zA-Z][a-zA-Z]\).*$#\1\U\2#I' $nrmlz ; done)
+echo "Capitalize Countries Completed @ $(date)"
+
+# Below command removed from Known/Unkown command since it was moved above in the Source Correct/Add section to ensure 
+# IP/Net & originas columns are incremented so sorting does not affect them since sorting is done below which 
+# WILL affect the netmask and netcount.
+# awk '/^inetnum:/{sub("inetnum", "inetnum_0"++v)}1' | awk '/^netmask:/{sub("netmask", "netmask_0"++v)}1' | awk '/^hostmin:/{sub("hostmin", "hostmin_0"++v)}1' | awk '/^hostmax:/{sub("hostmax", "hostmax_0"++v)}1' | awk '/^orgname_goo:/{sub("orgname_goo", "orgname_goo_0"++v)}1' | awk '/^netcount:/{sub("netcount", "netcount_0"++v)}1'  | awk '/^originas:/{sub("originas", "originas_0"++v)}1'
+
+# Known and unknown column conversion then move loadable files to normalized folder for further processing
+# Added exceptions for IP calc info values since they have already been incremented and would otherwise be 
+# converted to OTHER
+(cd $nb_dir/loadable ; for nrmlz in * ; do sed 's#^.*address.*: #w_address:   #I' $nb_dir/loadable/$nrmlz | sed 's#\s\+# #g' | sed 's#_010:#_10:#g' | sed 's#^.*referral#ref: #I' | sed 's#^host: #address:   #I' | sed 's#^.*fax.*: #fax:   #I' | sed 's#^host_type: *#host_type:   #I' | sed 's#^.*phone.*: #phone:   #I' | sed 's#^.*e.*mail.*: #email:   #I' | sed 's#^.*abuse.*: #abuse:   #I' | sed 's#^.*comment.*: #comments:   #I' | sed 's#^.*postal.*code: #postalcode:   #I' | sed 's#^.*zip.*code.*: #postalcode:   #I' | sed 's#^.*org\S\+name.*: #organization:   #I' | sed 's#^.*cust.*: #customer:   #I' | sed 's#^.*owner.*: #organization:   #I' | sed 's#^.*state.*: #state:   #I' | sed 's#^.*notify.*: #email:   #I' | sed 's#^.*ref.*: #ref:   #I' | sed 's#^.*referral.*: #ref:   #I' | sed 's#^.*referralto.*#ref:   #I' | sed 's#^.*person.*: #person:   #I' | sed 's#^.*responsible.*: #person:   #I' | sed 's#^.*mnt.*: #mnt:   #I' | sed 's#^.*reg.*date: #regdate:   #I' | sed 's#^.*created: #regdate:   #I' | sed 's#^.*description.*: #descr:   #I' | sed 's#^.*country.*: #country:   #I' | sed -e 's#^.*: *$##' | sed '/^ *$/d' | sed '/:/!d' | sed '/^#\|^%/d' |  sed 's#\s\+# #g' | sed 's# *[[:punct:]]\+$\|\s\+$##g' | awk '!a[$0]++' | sed '/^inet_range: \|^originas_[0][1-5]: \|^address: \|^netmask_[0-1][0-9]: \|^host_type: \|^hostmin_[0-1][0-9]: \|^hostmax_[0-1][0-9]: \|^orgname_goo_[0][1-3]: \|^netcount_[0-1][0-9]: \|^inetnum_[0-1][0-9]: \|^descr: \|^mnt: \|^ref: \|^comments: \|^email: \|^state: \|^orgname: \|^customer: \|^organization: \|^nichdl: \|^postalcode: \|^phone: \|^fax: \|^abuse: \|^w_address: \|^changed: \|^x_changed_date: \|^cidr: \|^city: \|^country: \|^netname: \|^nserver: \|^nslastaa: \|^parent: \|^person: \|^regdate: \|^remarks: \|^route: \|^rwhois: \|^state: \|^x_notes: \|^x_info: \|^source:/! s/^.*: /other: /' | sed 's#:\s*#: #' | sed '/.*: .*[[:alnum:]].*/!d' | awk '/^x_changed_date:/{sub("x_changed_date", "x_changed_date_0"++v)}1' | awk '/^host_type:/{sub("host_type", "host_type_0"++v)}1' | awk '/^inet_range:/{sub("inet_range", "inet_range_0"++v)}1' | awk '!a[$0]++' |   awk '/^descr:/{sub("descr", "descr_0"++v)}1' | awk '/^comments:/{sub("comments", "comments_0"++v)}1' | awk '/^w_address:/{sub("w_address", "w_address_0"++v)}1' | awk '/^remarks:/{sub("remarks", "remarks_0"++v)}1' | awk '/^other:/{sub("other", "other_0"++v)}1' | tac | awk '/^name:/{sub("name", "name_0"++v)}1' | awk '/^person:/{sub("person", "person_0"++v)}1' | awk '/^mnt:/{sub("mnt", "mnt_0"++v)}1' | awk '/^ref:/{sub("ref", "ref_0"++v)}1' | awk '/^route:/{sub("route", "route_0"++v)}1' | awk '/^rwhois:/{sub("rwhois", "rwhois_0"++v)}1' | awk '/abuse:/{sub("abuse", "abuse_0"++v)}1' | awk '/^email:/{sub("email", "email_0"++v)}1' | awk '/^state:/{sub("state", "state_0"++v)}1' | awk '/^orgname:/{sub("orgname", "orgname_0"++v)}1' | awk '/^customer:/{sub("customer", "customer_0"++v)}1' | awk '/^organization:/{sub("organization", "organization_0"++v)}1' | awk '/^nichdl:/{sub("nichdl", "nichdl_0"++v)}1' | awk '/^postalcode:/{sub("postalcode", "postalcode_0"++v)}1' | awk '/^phone:/{sub("phone", "phone_0"++v)}1' | awk '/^fax:/{sub("fax", "fax_0"++v)}1' | awk '/^changed:/{sub("changed", "changed_0"++v)}1' | awk '/^cidr:/{sub("cidr", "cidr_0"++v)}1' | awk '/^city:/{sub("city", "city_0"++v)}1' | awk '/^netname:/{sub("netname", "netname_0"++v)}1' | awk '/^nserver:/{sub("nserver", "nserver_0"++v)}1' | awk '/^nslastaa:/{sub("nslastaa", "nslastaa_0"++v)}1' | awk '/^parent:/{sub("parent", "parent_0"++v)}1' | awk '/^regdate:/{sub("regdate", "regdate_0"++v)}1' | awk '/^country:/{sub("country", "country_0"++v)}1'  > $nb_dir/norm/$nrmlz ; done)
+(cd $nb_dir/norm ; for nrmlz in * ; do sed -i '/^\S\+_0[1-9][1-9]:\|^\S\+_0[2-9][0]/d' $nb_dir/norm/$nrmlz ; done )
+echo "Known/Unknown Column Conversion & Key Normalization Completed @ $(date)"
+####################################################
+
+####################################################
+# Copy all normalized files to CSV folder for CSV normalization
+(cd $nb_dir/norm; cp --recursive --no-clobber $nb_dir/norm/* $nb_dir/csv/)
+# Remove * file if exists after move
+(cd $nb_dir/csv/ ; rm -f '*' '%' )
+echo "Move Normalized Files to CSV Folder Completed @ $(date)"
+####################################################
+# New diff to add in missing columns for CSV formatting
+# Should allow drop of 210 lines of code below
+(cd $nb_dir/csv; for missi in * ; do diff -B <( grep -a -ho "^\S\+: " $nb_dir/csv/$missi | sed 's#_010#_10#g' | sort ) <( printf "abuse_01: \nabuse_02: \nabuse_03: \nabuse_04: \nabuse_05: \naddress: \nchanged_01: \nchanged_02: \nchanged_03: \ncidr_01: \ncidr_02: \ncity_01: \ncity_02: \ncomments_01: \ncomments_02: \ncomments_03: \ncomments_04: \ncomments_05: \ncomments_06: \ncomments_07: \ncomments_08: \ncomments_09: \ncomments_10: \ncountry_01: \ncountry_02: \ncustomer_01: \ncustomer_02: \ncustomer_03: \ncustomer_04: \ncustomer_05: \ndescr_01: \ndescr_02: \ndescr_03: \ndescr_04: \ndescr_05: \ndescr_06: \ndescr_07: \ndescr_08: \ndescr_09: \ndescr_10: \nemail_01: \nemail_02: \nemail_03: \nemail_04: \nemail_05: \nemail_06: \nemail_07: \nemail_08: \nemail_09: \nemail_10: \nfax_01: \nfax_02: \nfax_03: \nhostmax_01: \nhostmax_02: \nhostmax_03: \nhostmax_04: \nhostmax_05: \nhostmax_06: \nhostmax_07: \nhostmax_08: \nhostmax_09: \nhostmax_10: \nhostmin_01: \nhostmin_02: \nhostmin_03: \nhostmin_04: \nhostmin_05: \nhostmin_06: \nhostmin_07: \nhostmin_08: \nhostmin_09: \nhostmin_10: \nhost_type_01: \nhost_type_02: \nhost_type_03: \ninetnum_01: \ninetnum_02: \ninetnum_03: \ninetnum_04: \ninetnum_05: \ninetnum_06: \ninetnum_07: \ninetnum_08: \ninetnum_09: \ninetnum_10: \ninet_range_01: \ninet_range_02: \ninet_range_03: \ninet_range_04: \ninet_range_05: \nx_info: \nmnt_01: \nmnt_02: \nmnt_03: \nmnt_04: \nmnt_05: \nmnt_06: \nname: \nnetcount_01: \nnetcount_02: \nnetcount_03: \nnetcount_04: \nnetcount_05: \nnetcount_06: \nnetcount_07: \nnetcount_08: \nnetcount_09: \nnetcount_10: \nnetmask_01: \nnetmask_02: \nnetmask_03: \nnetmask_04: \nnetmask_05: \nnetmask_06: \nnetmask_07: \nnetmask_08: \nnetmask_09: \nnetmask_10: \nnetname_01: \nnetname_02: \nnichdl_01: \nnichdl_02: \nnichdl_03: \nnichdl_04: \nnichdl_05: \nnserver_01: \nnserver_02: \nnserver_03: \nnslastaa_01: \nnslastaa_02: \norganization_01: \norganization_02: \norganization_03: \norganization_04: \norganization_05: \norgname_01: \norgname_02: \norgname_03: \norgname_04: \norgname_05: \norgname_goo_01: \norgname_goo_02: \norgname_goo_03: \noriginas_01: \noriginas_02: \noriginas_03: \noriginas_04: \noriginas_05: \nother_01: \nother_02: \nother_03: \nother_04: \nother_05: \nother_06: \nother_07: \nother_08: \nother_09: \nother_10: \nparent_01: \nparent_02: \nparent_03: \nperson_01: \nperson_02: \nperson_03: \nphone_01: \nphone_02: \nphone_03: \npostalcode_01: \npostalcode_02: \nref_01: \nref_02: \nref_03: \nref_04: \nref_05: \nref_06: \nref_07: \nref_08: \nref_09: \nref_10: \nregdate_01: \nregdate_02: \nremarks_01: \nremarks_02: \nremarks_03: \nremarks_04: \nremarks_05: \nremarks_06: \nremarks_07: \nremarks_08: \nremarks_09: \nremarks_10: \nroute_01: \nroute_02: \nrwhois_01: \nrwhois_02: \nrwhois_03: \nrwhois_04: \nrwhois_05: \nsource: \nstate_01: \nstate_02: \nupdated_01: \nupdated_02: \nupdated_03: \nupdated_at: \nw_address_01: \nw_address_02: \nw_address_03: \nw_address_04: \nw_address_05: \nw_address_06: \nw_address_07: \nw_address_08: \nw_address_09: \nw_address_10: \nx_changed_date_01: \nx_changed_date_02: \nx_changed_date_03: \nx_notes: \n" ) | grep -a '>' | sed 's#> ##g' >> $nb_dir/csv/$missi ; done )
+echo "All Missing Columns Added Completed @ $(date)"
+#####################################################
+## Add in columns that do not exist, sort, then remove all extra columns not in database. 
+## Also replace *_10 with *_A to facilitate sorting and ensure *_A matches *_10 column i.e. last in sort
+(cd $nb_dir/csv; for inips in * ; do grep -a -q '^created_at: ' $inips || echo "created_at: $datetime" >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^source: ' $inips || echo "source: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^address: ' $inips || echo "address: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^hostmax_01: ' $inips || echo "hostmax_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^hostmax_02: ' $inips || echo "hostmax_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^hostmax_03: ' $inips || echo "hostmax_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^hostmax_04: ' $inips || echo "hostmax_04: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^hostmax_05: ' $inips || echo "hostmax_05: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^hostmax_06: ' $inips || echo "hostmax_06: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^hostmax_06: ' $inips || echo "hostmax_06: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^hostmax_07: ' $inips || echo "hostmax_07: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^hostmax_08: ' $inips || echo "hostmax_08: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^hostmax_09: ' $inips || echo "hostmax_09: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^hostmax_010: ' $inips || echo "hostmax_010: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^hostmin_01: ' $inips || echo "hostmin_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^hostmin_02: ' $inips || echo "hostmin_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^hostmin_03: ' $inips || echo "hostmin_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^hostmin_04: ' $inips || echo "hostmin_04: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^hostmin_05: ' $inips || echo "hostmin_05: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^hostmin_06: ' $inips || echo "hostmin_06: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^hostmin_06: ' $inips || echo "hostmin_06: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^hostmin_07: ' $inips || echo "hostmin_07: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^hostmin_08: ' $inips || echo "hostmin_08: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^hostmin_09: ' $inips || echo "hostmin_09: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^hostmin_010: ' $inips || echo "hostmin_010: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^host_type_01: ' $inips || echo "host_type_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^host_type_02: ' $inips || echo "host_type_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^host_type_03: ' $inips || echo "host_type_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^inet_range_01: ' $inips || echo "inet_range_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^inet_range_02: ' $inips || echo "inet_range_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^inet_range_03: ' $inips || echo "inet_range_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^inet_range_04: ' $inips || echo "inet_range_04: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^inet_range_05: ' $inips || echo "inet_range_05: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^inetnum_01: ' $inips || echo "inetnum_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^inetnum_02: ' $inips || echo "inetnum_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^inetnum_03: ' $inips || echo "inetnum_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^inetnum_04: ' $inips || echo "inetnum_04: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^inetnum_05: ' $inips || echo "inetnum_05: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^inetnum_06: ' $inips || echo "inetnum_06: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^inetnum_07: ' $inips || echo "inetnum_07: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^inetnum_08: ' $inips || echo "inetnum_08: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^inetnum_09: ' $inips || echo "inetnum_09: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^inetnum_010: ' $inips || echo "inetnum_010: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^netcount_01: ' $inips || echo "netcount_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^netcount_02: ' $inips || echo "netcount_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^netcount_03: ' $inips || echo "netcount_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^netcount_04: ' $inips || echo "netcount_04: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^netcount_05: ' $inips || echo "netcount_05: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^netcount_06: ' $inips || echo "netcount_06: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^netcount_06: ' $inips || echo "netcount_06: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^netcount_07: ' $inips || echo "netcount_07: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^netcount_08: ' $inips || echo "netcount_08: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^netcount_09: ' $inips || echo "netcount_09: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^netcount_010: ' $inips || echo "netcount_010: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^netmask_01: ' $inips || echo "netmask_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^netmask_02: ' $inips || echo "netmask_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^netmask_03: ' $inips || echo "netmask_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^netmask_04: ' $inips || echo "netmask_04: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^netmask_05: ' $inips || echo "netmask_05: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^netmask_06: ' $inips || echo "netmask_06: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^netmask_06: ' $inips || echo "netmask_06: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^netmask_07: ' $inips || echo "netmask_07: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^netmask_08: ' $inips || echo "netmask_08: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^netmask_09: ' $inips || echo "netmask_09: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^netmask_010: ' $inips || echo "netmask_010: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^originas_01: ' $inips || echo "originas_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^originas_02: ' $inips || echo "originas_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^originas_03: ' $inips || echo "originas_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^originas_04: ' $inips || echo "originas_04: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^originas_05: ' $inips || echo "originas_05: " >> $nb_dir/csv/$inips; done)
+#echo "Network Columns Add Completed @ $(date)"
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^name: ' $inips || echo "name: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^cidr_01: ' $inips || echo "cidr_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^route_01: ' $inips || echo "route_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^cidr_02: ' $inips || echo "cidr_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^route_02: ' $inips || echo "route_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^netname_01: ' $inips || echo "netname_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^netname_02: ' $inips || echo "netname_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^orgname_01: ' $inips || echo "orgname_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^orgname_02: ' $inips || echo "orgname_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^orgname_03: ' $inips || echo "orgname_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^orgname_04: ' $inips || echo "orgname_04: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^orgname_05: ' $inips || echo "orgname_05: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^orgname_goo_01: ' $inips || echo "orgname_goo_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^orgname_goo_02: ' $inips || echo "orgname_goo_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^orgname_goo_03: ' $inips || echo "orgname_goo_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^organization_01: ' $inips || echo "organization_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^organization_02: ' $inips || echo "organization_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^organization_03: ' $inips || echo "organization_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^organization_04: ' $inips || echo "organization_04: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^organization_05: ' $inips || echo "organization_05: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^customer_01: ' $inips || echo "customer_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^customer_02: ' $inips || echo "customer_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^customer_03: ' $inips || echo "customer_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^customer_04: ' $inips || echo "customer_04: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^customer_05: ' $inips || echo "customer_05: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^nichdl_01: ' $inips || echo "nichdl_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^nichdl_02: ' $inips || echo "nichdl_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^nichdl_03: ' $inips || echo "nichdl_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^nichdl_04: ' $inips || echo "nichdl_04: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^nichdl_05: ' $inips || echo "nichdl_05: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^email_01: ' $inips || echo "email_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^email_02: ' $inips || echo "email_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^email_03: ' $inips || echo "email_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^email_04: ' $inips || echo "email_04: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^email_05: ' $inips || echo "email_05: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^email_06: ' $inips || echo "email_06: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^email_07: ' $inips || echo "email_07: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^email_08: ' $inips || echo "email_08: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^email_09: ' $inips || echo "email_09: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^email_010: ' $inips || echo "email_010: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^abuse_01: ' $inips || echo "abuse_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^abuse_02: ' $inips || echo "abuse_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^abuse_03: ' $inips || echo "abuse_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^abuse_04: ' $inips || echo "abuse_04: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^abuse_05: ' $inips || echo "abuse_05: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^rwhois_01: ' $inips || echo "rwhois_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^rwhois_02: ' $inips || echo "rwhois_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^rwhois_03: ' $inips || echo "rwhois_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^rwhois_04: ' $inips || echo "rwhois_04: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^rwhois_05: ' $inips || echo "rwhois_05: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^regdate_01: ' $inips || echo "regdate_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^regdate_02: ' $inips || echo "regdate_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^updated_01: ' $inips || echo "updated_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^updated_02: ' $inips || echo "updated_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^updated_03: ' $inips || echo "updated_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^country_01: ' $inips || echo "country_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^country_02: ' $inips || echo "country_02: " >> $nb_dir/csv/$inips; done)
+#echo "All Primary Columns Add Completed @ $(date)"
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^state_01: ' $inips || echo "state_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^city_01: ' $inips || echo "city_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^postalcode_01: ' $inips || echo "postalcode_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^state_02: ' $inips || echo "state_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^city_02: ' $inips || echo "city_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^postalcode_02: ' $inips || echo "postalcode_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^w_address_01: ' $inips || echo "w_address_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^w_address_02: ' $inips || echo "w_address_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^w_address_03: ' $inips || echo "w_address_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^w_address_04: ' $inips || echo "w_address_04: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^w_address_05: ' $inips || echo "w_address_05: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^w_address_06: ' $inips || echo "w_address_06: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^w_address_07: ' $inips || echo "w_address_07: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^w_address_08: ' $inips || echo "w_address_08: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^w_address_09: ' $inips || echo "w_address_09: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^w_address_010: ' $inips || echo "w_address_010: " >> $nb_dir/csv/$inips; done)
+#echo "Location Columns Add Completed @ $(date)"
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^phone_01: ' $inips || echo "phone_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^phone_02: ' $inips || echo "phone_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^phone_03: ' $inips || echo "phone_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^fax_01: ' $inips || echo "fax_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^fax_02: ' $inips || echo "fax_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^fax_03: ' $inips || echo "fax_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^person_01: ' $inips || echo "person_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^person_02: ' $inips || echo "person_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^person_03: ' $inips || echo "person_03: " >> $nb_dir/csv/$inips; done)
+#echo "Non-E-mail Contact Columns Add Completed @ $(date)"
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^nserver_01: ' $inips || echo "nserver_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^nserver_02: ' $inips || echo "nserver_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^nserver_03: ' $inips || echo "nserver_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^nslastaa_01: ' $inips || echo "nslastaa_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^nslastaa_02: ' $inips || echo "nslastaa_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^parent_01: ' $inips || echo "parent_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^parent_02: ' $inips || echo "parent_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^parent_03: ' $inips || echo "parent_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^mnt_01: ' $inips || echo "mnt_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^mnt_02: ' $inips || echo "mnt_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^mnt_03: ' $inips || echo "mnt_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^mnt_04: ' $inips || echo "mnt_04: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^mnt_05: ' $inips || echo "mnt_05: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^mnt_06: ' $inips || echo "mnt_06: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^ref_01: ' $inips || echo "ref_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^ref_02: ' $inips || echo "ref_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^ref_03: ' $inips || echo "ref_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^ref_04: ' $inips || echo "ref_04: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^ref_05: ' $inips || echo "ref_05: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^ref_06: ' $inips || echo "ref_06: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^ref_07: ' $inips || echo "ref_07: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^ref_08: ' $inips || echo "ref_08: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^ref_09: ' $inips || echo "ref_09: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^ref_010: ' $inips || echo "ref_010: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^changed_01: ' $inips || echo "changed_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^changed_02: ' $inips || echo "changed_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^changed_03: ' $inips || echo "changed_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^x_changed_date_01: ' $inips || echo "x_changed_date_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^x_changed_date_02: ' $inips || echo "x_changed_date_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^x_changed_date_03: ' $inips || echo "x_changed_date_03: " >> $nb_dir/csv/$inips; done)
+#echo "Extra Info Columns Add Completed @ $(date)"
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^descr_01: ' $inips || echo "descr_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^descr_02: ' $inips || echo "descr_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^descr_03: ' $inips || echo "descr_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^descr_04: ' $inips || echo "descr_04: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^descr_05: ' $inips || echo "descr_05: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^descr_06: ' $inips || echo "descr_06: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^descr_07: ' $inips || echo "descr_07: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^descr_08: ' $inips || echo "descr_08: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^descr_09: ' $inips || echo "descr_09: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^descr_010: ' $inips || echo "descr_010: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^comments_01: ' $inips || echo "comments_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^comments_02: ' $inips || echo "comments_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^comments_03: ' $inips || echo "comments_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^comments_04: ' $inips || echo "comments_04: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^comments_05: ' $inips || echo "comments_05: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^comments_06: ' $inips || echo "comments_06: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^comments_07: ' $inips || echo "comments_07: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^comments_08: ' $inips || echo "comments_08: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^comments_09: ' $inips || echo "comments_09: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^comments_010: ' $inips || echo "comments_010: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^remarks_01: ' $inips || echo "remarks_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^remarks_02: ' $inips || echo "remarks_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^remarks_03: ' $inips || echo "remarks_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^remarks_04: ' $inips || echo "remarks_04: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^remarks_05: ' $inips || echo "remarks_05: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^remarks_06: ' $inips || echo "remarks_06: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^remarks_07: ' $inips || echo "remarks_07: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^remarks_08: ' $inips || echo "remarks_08: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^remarks_09: ' $inips || echo "remarks_09: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^remarks_010: ' $inips || echo "remarks_010: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^other_01: ' $inips || echo "other_01: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^other_02: ' $inips || echo "other_02: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^other_03: ' $inips || echo "other_03: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^other_04: ' $inips || echo "other_04: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^other_05: ' $inips || echo "other_05: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^other_06: ' $inips || echo "other_06: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^other_07: ' $inips || echo "other_07: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^other_08: ' $inips || echo "other_08: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^other_09: ' $inips || echo "other_09: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^other_010: ' $inips || echo "other_010: " >> $nb_dir/csv/$inips; done)
+#echo "Commentary/Other Columns Add Completed @ $(date)"
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^updated_at: ' $inips || echo "updated_at: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^x_info: ' $inips || echo "x_info: " >> $nb_dir/csv/$inips; done)
+#(cd $nb_dir/csv; for inips in * ; do grep -a -q '^x_notes: ' $inips || echo "x_notes: " >> $nb_dir/csv/$inips; done)
+(cd $nb_dir/csv; for inips in * ; do sed -i 's#_010:#_10:#' $inips ; sort $nb_dir/csv/$inips -o $nb_dir/csv/$inips ; done)
+(cd $nb_dir/csv; for inips in * ; do sed -i  '/\(^abuse_01:\|^abuse_02:\|^abuse_03:\|^abuse_04:\|^abuse_05:\|^address:\|^changed_01:\|^changed_02:\|^changed_03:\|^cidr_01:\|^cidr_02:\|^city_01:\|^city_02:\|^comments_01:\|^comments_02:\|^comments_03:\|^comments_04:\|^comments_05:\|^comments_06:\|^comments_07:\|^comments_08:\|^comments_09:\|^comments_10:\|^country_01:\|^country_02:\|^created_at:\|^descr_01:\|^descr_02:\|^descr_03:\|^descr_04:\|^descr_05:\|^descr_06:\|^descr_07:\|^descr_08:\|^descr_09:\|^descr_10:\|^email_01:\|^email_02:\|^email_03:\|^email_04:\|^email_05:\|^email_06:\|^email_07:\|^email_08:\|^email_09:\|^email_10:\|^fax_01:\|^fax_02:\|^fax_03:\|^hostmax_01:\|^hostmax_02:\|^hostmax_03:\|^hostmax_04:\|^hostmax_05:\|^hostmax_06:\|^hostmax_07:\|^hostmax_08:\|^hostmax_09:\|^hostmax_10:\|^hostmin_01:\|^hostmin_02:\|^hostmin_03:\|^hostmin_04:\|^hostmin_05:\|^hostmin_06:\|^hostmin_07:\|^hostmin_08:\|^hostmin_09:\|^hostmin_10:\|^host_type_01:\|^host_type_02:\|^host_type_03:\|^inetnum_01:\|^inetnum_02:\|^inetnum_03:\|^inetnum_04:\|^inetnum_05:\|^inetnum_06:\|^inetnum_07:\|^inetnum_08:\|^inetnum_09:\|^inetnum_10:\|^inet_range_01:\|^inet_range_02:\|^inet_range_03:\|^inet_range_04:\|^inet_range_05:\|^mnt_01:\|^mnt_02:\|^mnt_03:\|^mnt_04:\|^mnt_05:\|^mnt_06:\|^name:\|^netcount_01:\|^netcount_02:\|^netcount_03:\|^netcount_04:\|^netcount_05:\|^netcount_06:\|^netcount_07:\|^netcount_08:\|^netcount_09:\|^netcount_10:\|^netmask_01:\|^netmask_02:\|^netmask_03:\|^netmask_04:\|^netmask_05:\|^netmask_06:\|^netmask_07:\|^netmask_08:\|^netmask_09:\|^netmask_10:\|^netname_01:\|^netname_02:\|^nserver_01:\|^nserver_02:\|^nserver_03:\|^nslastaa_01:\|^nslastaa_02:\|^organization_01:\|^organization_02:\|^organization_03:\|^organization_04:\|^organization_05:\|^orgname_01:\|^orgname_02:\|^orgname_03:\|^orgname_04:\|^orgname_05:\|^orgname_goo_01:\|^orgname_goo_02:\|^orgname_goo_03:\|^customer_01:\|^customer_02:\|^customer_03:\|^customer_04:\|^customer_05:\|^nichdl_01:\|^nichdl_02:\|^nichdl_03:\|^nichdl_04:\|^nichdl_05:\|^originas_01:\|^originas_02:\|^originas_03:\|^originas_04:\|^originas_05:\|^other_01:\|^other_02:\|^other_03:\|^other_04:\|^other_05:\|^other_06:\|^other_07:\|^other_08:\|^other_09:\|^other_10:\|^parent_01:\|^parent_02:\|^parent_03:\|^person_01:\|^person_02:\|^person_03:\|^phone_01:\|^phone_02:\|^phone_03:\|^postalcode_01:\|^postalcode_02:\|^ref_01:\|^ref_02:\|^ref_03:\|^ref_04:\|^ref_05:\|^ref_06:\|^ref_07:\|^ref_08:\|^ref_09:\|^ref_10:\|^regdate_01:\|^regdate_02:\|^remarks_01:\|^remarks_02:\|^remarks_03:\|^remarks_04:\|^remarks_05:\|^remarks_06:\|^remarks_07:\|^remarks_08:\|^remarks_09:\|^remarks_10:\|^route_01:\|^route_02:\|^rwhois_01:\|^rwhois_02:\|^rwhois_03:\|^rwhois_04:\|^rwhois_05:\|^source:\|^state_01:\|^state_02:\|^updated_01:\|^updated_02:\|^updated_03:\|^updated_at:\|^w_address_01:\|^w_address_02:\|^w_address_03:\|^w_address_04:\|^w_address_05:\|^w_address_06:\|^w_address_07:\|^w_address_08:\|^w_address_09:\|^w_address_10:\|^x_changed_date_01:\|^x_changed_date_02:\|^x_changed_date_03:\|^x_info:\|^x_notes:\)/!d' $nb_dir/csv/$inips ; done)
+echo "CSV Normalization Completed @ $(date)"
+####################################################
+
+####################################################
+# Convert all CSV normalized data to JSON
+(cd $nb_dir/csv ; for jsonv in  * ; do sed -e 's/[#%].*//' $jsonv | sed '/^$/d' | sed 's#\(.*\):\s*#"\1": "#' | sed 's#$#",#g' | sed '1i{' | sed '$a}' > $nb_dir/json/$jsonv.json ; done)
+# Remove * file if exists after move
+(cd $nb_dir/json/ ; rm -f '*' '%' )
+echo "N00b JSON Files Completed @ $(date)"
+####################################################
+
+####################################################
+# Create CSV files and load create Unsorted_WHOIS.csv to load into Complete_WHOIS.csv
+(cd $nb_dir/csv ; for mvcsv in * ; do sed 's#.*: ##' $mvcsv | sed 's#^#"#' | sed 's#$#"#' | sed 's#^""$#NULL#' | sed 's/"//g' | sed ':a;N;$!ba;s/\n/,/g'  > $nb_dir/csv/$mvcsv.csv ; rm -f $nb_dir/csv/$mvcsv ; done)
+(cd $nb_dir/csv ; for allv in * ; do cat $allv >> $csv_dir/all/Unsorted_WHOIS.csv ; done)
+echo "N00b CSV Files Completed @ $(date)"
+
+# If header exists in Complete_WHOIS.csv then remove for sorting by IP address (column name: address column number: 6). Then sort, uniq, and remove temp files.
+(cd $csv_dir/all ; sed -i '/^.*inetnum_01,inetnum_02,inetnum_03.*$/d' $csv_dir/all/Complete_WHOIS.csv )
+(cd $csv_dir/all ; sort -t, -k6 $csv_dir/all/Unsorted_WHOIS.csv | awk '!a[$0]++' > $csv_dir/all/Uniq_WHOIS.csv ; rm -f $csv_dir/all/Unsorted_WHOIS.csv )
+(cd $csv_dir/all ; cat $csv_dir/all/Uniq_WHOIS.csv >> $csv_dir/all/Complete_WHOIS.csv ; sort -t, -k6 $csv_dir/all/Complete_WHOIS.csv | awk '!a[$0]++' > $csv_dir/all/Temp_WHOIS.csv ; mv $csv_dir/all/Temp_WHOIS.csv $csv_dir/all/Complete_WHOIS.csv ; rm -f $csv_dir/all/Uniq_WHOIS.csv )
+echo "Complete_WHOIS.csv Add/Uniq/Sort Completed @ $(date)"
+####################################################
+
+####################################################
+# Add CSV Headers to n00b Files & Complete_WHOIS.csv
+(cd $nb_dir/csv ; for ahcsv in * ; do sed -i '1s/^/abuse_01,abuse_02,abuse_03,abuse_04,abuse_05,address,changed_01,changed_02,changed_03,cidr_01,cidr_02,city_01,city_02,comments_01,comments_02,comments_03,comments_04,comments_05,comments_06,comments_07,comments_08,comments_09,comments_10,country_01,country_02,created_at,customer_01,customer_02,customer_03,customer_04,customer_05,descr_01,descr_02,descr_03,descr_04,descr_05,descr_06,descr_07,descr_08,descr_09,descr_10,email_01,email_02,email_03,email_04,email_05,email_06,email_07,email_08,email_09,email_10,fax_01,fax_02,fax_03,hostmax_01,hostmax_02,hostmax_03,hostmax_04,hostmax_05,hostmax_06,hostmax_07,hostmax_08,hostmax_09,hostmax_10,hostmin_01,hostmin_02,hostmin_03,hostmin_04,hostmin_05,hostmin_06,hostmin_07,hostmin_08,hostmin_09,hostmin_10,host_type_01,host_type_02,host_type_03,inetnum_01,inetnum_02,inetnum_03,inetnum_04,inetnum_05,inetnum_06,inetnum_07,inetnum_08,inetnum_09,inetnum_10,inet_range_01,inet_range_02,inet_range_03,inet_range_04,inet_range_05,mnt_01,mnt_02,mnt_03,mnt_04,mnt_05,mnt_06,name,netcount_01,netcount_02,netcount_03,netcount_04,netcount_05,netcount_06,netcount_07,netcount_08,netcount_09,netcount_10,netmask_01,netmask_02,netmask_03,netmask_04,netmask_05,netmask_06,netmask_07,netmask_08,netmask_09,netmask_10,netname_01,netname_02,nichdl_01,nichdl_02,nichdl_03,nichdl_04,nichdl_05,nserver_01,nserver_02,nserver_03,nslastaa_01,nslastaa_02,organization_01,organization_02,organization_03,organization_04,organization_05,orgname_01,orgname_02,orgname_03,orgname_04,orgname_05,orgname_goo_01,orgname_goo_02,orgname_goo_03,originas_01,originas_02,originas_03,originas_04,originas_05,other_01,other_02,other_03,other_04,other_05,other_06,other_07,other_08,other_09,other_10,parent_01,parent_02,parent_03,person_01,person_02,person_03,phone_01,phone_02,phone_03,postalcode_01,postalcode_02,ref_01,ref_02,ref_03,ref_04,ref_05,ref_06,ref_07,ref_08,ref_09,ref_10,regdate_01,regdate_02,remarks_01,remarks_02,remarks_03,remarks_04,remarks_05,remarks_06,remarks_07,remarks_08,remarks_09,remarks_10,route_01,route_02,rwhois_01,rwhois_02,rwhois_03,rwhois_04,rwhois_05,source,state_01,state_02,updated_01,updated_02,updated_03,updated_at,w_address_01,w_address_02,w_address_03,w_address_04,w_address_05,w_address_06,w_address_07,w_address_08,w_address_09,w_address_10,x_changed_date_01,x_changed_date_02,x_changed_date_03,x_info,x_notes\n/'  $nb_dir/csv/$ahcsv ; done )
+echo "N00b Files CSV Header Adds Completed @ $(date)"
+
+# Add CSV header to Complete_WHOIS.csv if it doesn't exist which it shouldn't from above operation.
+(cd $csv_dir/all ; grep -a -q 'inetnum_01,inetnum_02,inetnum_03' $csv_dir/all/Complete_WHOIS.csv || sed -i '1s/^/abuse_01,abuse_02,abuse_03,abuse_04,abuse_05,address,changed_01,changed_02,changed_03,cidr_01,cidr_02,city_01,city_02,comments_01,comments_02,comments_03,comments_04,comments_05,comments_06,comments_07,comments_08,comments_09,comments_10,country_01,country_02,created_at,customer_01,customer_02,customer_03,customer_04,customer_05,descr_01,descr_02,descr_03,descr_04,descr_05,descr_06,descr_07,descr_08,descr_09,descr_10,email_01,email_02,email_03,email_04,email_05,email_06,email_07,email_08,email_09,email_10,fax_01,fax_02,fax_03,hostmax_01,hostmax_02,hostmax_03,hostmax_04,hostmax_05,hostmax_06,hostmax_07,hostmax_08,hostmax_09,hostmax_10,hostmin_01,hostmin_02,hostmin_03,hostmin_04,hostmin_05,hostmin_06,hostmin_07,hostmin_08,hostmin_09,hostmin_10,host_type_01,host_type_02,host_type_03,inetnum_01,inetnum_02,inetnum_03,inetnum_04,inetnum_05,inetnum_06,inetnum_07,inetnum_08,inetnum_09,inetnum_10,inet_range_01,inet_range_02,inet_range_03,inet_range_04,inet_range_05,mnt_01,mnt_02,mnt_03,mnt_04,mnt_05,mnt_06,name,netcount_01,netcount_02,netcount_03,netcount_04,netcount_05,netcount_06,netcount_07,netcount_08,netcount_09,netcount_10,netmask_01,netmask_02,netmask_03,netmask_04,netmask_05,netmask_06,netmask_07,netmask_08,netmask_09,netmask_10,netname_01,netname_02,nichdl_01,nichdl_02,nichdl_03,nichdl_04,nichdl_05,nserver_01,nserver_02,nserver_03,nslastaa_01,nslastaa_02,organization_01,organization_02,organization_03,organization_04,organization_05,orgname_01,orgname_02,orgname_03,orgname_04,orgname_05,orgname_goo_01,orgname_goo_02,orgname_goo_03,originas_01,originas_02,originas_03,originas_04,originas_05,other_01,other_02,other_03,other_04,other_05,other_06,other_07,other_08,other_09,other_10,parent_01,parent_02,parent_03,person_01,person_02,person_03,phone_01,phone_02,phone_03,postalcode_01,postalcode_02,ref_01,ref_02,ref_03,ref_04,ref_05,ref_06,ref_07,ref_08,ref_09,ref_10,regdate_01,regdate_02,remarks_01,remarks_02,remarks_03,remarks_04,remarks_05,remarks_06,remarks_07,remarks_08,remarks_09,remarks_10,route_01,route_02,rwhois_01,rwhois_02,rwhois_03,rwhois_04,rwhois_05,source,state_01,state_02,updated_01,updated_02,updated_03,updated_at,w_address_01,w_address_02,w_address_03,w_address_04,w_address_05,w_address_06,w_address_07,w_address_08,w_address_09,w_address_10,x_changed_date_01,x_changed_date_02,x_changed_date_03,x_info,x_notes\n/' $csv_dir/all/Complete_WHOIS.csv)
+echo "Complete_WHOIS.csv Header Adds Completed @ $(date)"
+####################################################
+(cd $csv_dir/all ; sed 's#NULL##g' $csv_dir/all/Complete_WHOIS.csv > $csv_dir/all/Complete_WHOIS_noNULL.csv )
+
+####################################################
+# Check if CSV file exists in known registrars i.e. DB record ; if no exist then copy to ready_db 
+# so it can be loaded in DB.
+# ONLY CSV needs to be processed since this is for loading to database.
+# !!!Choose only one item here, Echo or No Echo!!!
+# With Echo
+#( cd $nb_dir/csv ; for exstv in $( ls -1 $nb_dir/csv ) ; do find $csv_dir | grep -a -q $exstv || echo "New CSV found: $nb_dir/csv/$exstv" ; cp --no-clobber $nb_dir/csv/$exstv $nb_dir/ready_db/$exstv ; done ) 
+# No Echo
+( cd $nb_dir/csv ; for exstv in $( ls -1 $nb_dir/csv ) ; do find $csv_dir | sed 's#\.csv##g' |  grep -a -q $exstv || cp --no-clobber $nb_dir/csv/$exstv $nb_dir/ready_db/$exstv ; done ) 
+echo "Non-EIKR CSV for DB Load Copy Completed @ $(date)"
+####################################################
+###########WTFFF!!!!!????FLAG############
+
+####################################################
+# Move Normalized Files to Normalized Registrars
+(cd $nb_dir/norm ; for normmv in $(grep -a "source: TWNIC" $nb_dir/norm/* -Hl) ; do mv $normmv --no-clobber --target-directory=$nrml_dir/TWNIC ; done)
+(cd $nb_dir/norm ; for normmv in $(grep -a "source: Nic.br" $nb_dir/norm/* -Hl) ; do mv $normmv --no-clobber --target-directory=$nrml_dir/Nic.br ; done)
+(cd $nb_dir/norm ; for normmv in $(grep -a "source: KRNIC" $nb_dir/norm/* -Hl) ; do mv $normmv --no-clobber --target-directory=$nrml_dir/KRNIC ; done)
+(cd $nb_dir/norm ; for normmv in $(grep -a "source: JPNIC" $nb_dir/norm/* -Hl) ; do mv $normmv --no-clobber --target-directory=$nrml_dir/JPNIC ; done)
+(cd $nb_dir/norm ; for normmv in $(grep -a "source: AfriNIC" $nb_dir/norm/* -Hl) ; do mv $normmv --no-clobber --target-directory=$nrml_dir/AfriNIC ; done)
+(cd $nb_dir/norm ; for normmv in $(grep -a "source: RIPE" $nb_dir/norm/* -Hl) ; do mv $normmv --no-clobber --target-directory=$nrml_dir/RIPE ; done)
+(cd $nb_dir/norm ; for normmv in $(grep -a "source: APNIC" $nb_dir/norm/* -Hl) ; do mv $normmv --no-clobber --target-directory=$nrml_dir/APNIC ; done)
+(cd $nb_dir/norm ; for normmv in $(grep -a "source: LACNIC" $nb_dir/norm/* -Hl) ; do mv $normmv --no-clobber --target-directory=$nrml_dir/LACNIC ; done)
+(cd $nb_dir/norm ; for normmv in $(grep -a "source: ARIN" $nb_dir/norm/* -Hl) ; do mv $normmv --no-clobber --target-directory=$nrml_dir/ARIN ; done)
+echo "Normalized New/Non-EIKR Move Completed @ $(date)"
+####################################################
+
+####################################################
+# Move New/Non-EIKR JSON Files to JSON Registrars
+(cd $nb_dir/json ; for jsonmv in $(grep -a "TWNIC" $nb_dir/json/* -Hl) ; do mv $jsonmv --no-clobber --target-directory=$js_dir/TWNIC ; done)
+(cd $nb_dir/json ; for jsonmv in $(grep -a "Nic.br" $nb_dir/json/* -Hl) ; do mv $jsonmv --no-clobber --target-directory=$js_dir/Nic.br ; done)
+(cd $nb_dir/json ; for jsonmv in $(grep -a "KRNIC" $nb_dir/json/* -Hl) ; do mv $jsonmv --no-clobber --target-directory=$js_dir/KRNIC ; done)
+(cd $nb_dir/json ; for jsonmv in $(grep -a "JPNIC" $nb_dir/json/* -Hl) ; do mv $jsonmv --no-clobber --target-directory=$js_dir/JPNIC ; done)
+(cd $nb_dir/json ; for jsonmv in $(grep -a "AfriNIC" $nb_dir/json/* -Hl) ; do mv $jsonmv --no-clobber --target-directory=$js_dir/AfriNIC ; done)
+(cd $nb_dir/json ; for jsonmv in $(grep -a "RIPE" $nb_dir/json/* -Hl) ; do mv $jsonmv --no-clobber --target-directory=$js_dir/RIPE ; done)
+(cd $nb_dir/json ; for jsonmv in $(grep -a "APNIC" $nb_dir/json/* -Hl) ; do mv $jsonmv --no-clobber --target-directory=$js_dir/APNIC ; done)
+(cd $nb_dir/json ; for jsonmv in $(grep -a "LACNIC" $nb_dir/json/* -Hl) ; do mv $jsonmv --no-clobber --target-directory=$js_dir/LACNIC ; done)
+(cd $nb_dir/json ; for jsonmv in $(grep -a "ARIN" $nb_dir/json/* -Hl) ; do mv $jsonmv --no-clobber --target-directory=$js_dir/ARIN ; done)
+echo "JSON New/Non-EIKR Move Completed @ $(date)"
+####################################################
+
+####################################################
+# Move New/Non-EIKR Loadable Files to Regular Registrars
+(cd $nb_dir/loadable ; for loadablemv in $(grep -a "source: TWNIC" $nb_dir/loadable/* -Hl) ; do mv $loadablemv --no-clobber --target-directory=$reg_dir/TWNIC ; done)
+(cd $nb_dir/loadable ; for loadablemv in $(grep -a "source: Nic.br" $nb_dir/loadable/* -Hl) ; do mv $loadablemv --no-clobber --target-directory=$reg_dir/Nic.br ; done)
+(cd $nb_dir/loadable ; for loadablemv in $(grep -a "source: KRNIC" $nb_dir/loadable/* -Hl) ; do mv $loadablemv --no-clobber --target-directory=$reg_dir/KRNIC ; done)
+(cd $nb_dir/loadable ; for loadablemv in $(grep -a "source: JPNIC" $nb_dir/loadable/* -Hl) ; do mv $loadablemv --no-clobber --target-directory=$reg_dir/JPNIC ; done)
+(cd $nb_dir/loadable ; for loadablemv in $(grep -a "source: AfriNIC" $nb_dir/loadable/* -Hl) ; do mv $loadablemv --no-clobber --target-directory=$reg_dir/AfriNIC ; done)
+(cd $nb_dir/loadable ; for loadablemv in $(grep -a "source: RIPE" $nb_dir/loadable/* -Hl) ; do mv $loadablemv --no-clobber --target-directory=$reg_dir/RIPE ; done)
+(cd $nb_dir/loadable ; for loadablemv in $(grep -a "source: APNIC" $nb_dir/loadable/* -Hl) ; do mv $loadablemv --no-clobber --target-directory=$reg_dir/APNIC ; done)
+(cd $nb_dir/loadable ; for loadablemv in $(grep -a "source: LACNIC" $nb_dir/loadable/* -Hl) ; do mv $loadablemv --no-clobber --target-directory=$reg_dir/LACNIC ; done)
+(cd $nb_dir/loadable ; for loadablemv in $(grep -a "source: ARIN" $nb_dir/loadable/* -Hl) ; do mv $loadablemv --no-clobber --target-directory=$reg_dir/ARIN ; done)
+echo "Regular New/Non-EIKR Move Completed @ $(date)"
+####################################################
+
+####################################################
+# Move New/Non-EIKR CSV Files to CSV Registrars
+(cd $nb_dir/csv ; for csvmv in $(grep -a "TWNIC" $nb_dir/csv/* -Hl) ; do mv $csvmv --no-clobber --target-directory=$csv_dir/TWNIC ; done)
+(cd $nb_dir/csv ; for csvmv in $(grep -a "KRNIC" $nb_dir/csv/* -Hl) ; do mv $csvmv --no-clobber --target-directory=$csv_dir/KRNIC ; done)
+(cd $nb_dir/csv ; for csvmv in $(grep -a "JPNIC" $nb_dir/csv/* -Hl) ; do mv $csvmv --no-clobber --target-directory=$csv_dir/JPNIC ; done)
+(cd $nb_dir/csv ; for csvmv in $(grep -a "Nic.br" $nb_dir/csv/* -Hl) ; do mv $csvmv --no-clobber --target-directory=$csv_dir/Nic.br ; done)
+(cd $nb_dir/csv ; for csvmv in $(grep -a "RIPE" $nb_dir/csv/* -Hl) ; do mv $csvmv --no-clobber --target-directory=$csv_dir/RIPE ; done)
+(cd $nb_dir/csv ; for csvmv in $(grep -a "AfriNIC" $nb_dir/csv/* -Hl) ; do mv $csvmv --no-clobber --target-directory=$csv_dir/AfriNIC ; done)
+(cd $nb_dir/csv ; for csvmv in $(grep -a "APNIC" $nb_dir/csv/* -Hl) ; do mv $csvmv --no-clobber --target-directory=$csv_dir/APNIC ; done)
+(cd $nb_dir/csv ; for csvmv in $(grep -a "LACNIC" $nb_dir/csv/* -Hl) ; do mv $csvmv --no-clobber --target-directory=$csv_dir/LACNIC ; done)
+(cd $nb_dir/csv ; for csvmv in $(grep -a "ARIN" $nb_dir/csv/* -Hl) ; do mv $csvmv --no-clobber --target-directory=$csv_dir/ARIN ; done)
+echo "CSV New/Non-EIKR Move Completed @ $(date)"
+####################################################
+
+####################################################
+# Check to see if query exists in known registrars. It should if it is still in given dirs since query ran to here. 
+# If so then add _upd8_$date to end of file then add updated_at: with timestamp. 
+# Only updated records have these. Then proceed to move files again so updated record with 
+# timeline will be available.
+# CSV files with updates are also copied to ready_db_updated in command.
+# CSV & JSON files are diff'd differently. CSV uses sed to remove timestamps that match the format
+# ",[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} [0-9]\{2\}:[0-9]\{2\}:[0-9]\{2\} UTC,"
+# indicate a UTC timestamp. JSON does not search at the beginning of the line for created_at: or updated_at:
+( cd $nb_dir/csv ; for difx in $( ls -1 ) ; do for dify in $( find $csv_dir | grep -a '.*$difx.*' | sed 's#.*registrars/##' ) ; do diff -wEbiB <( sed 's#,[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} [0-9]\{2\}:[0-9]\{2\}:[0-9]\{2\} UTC,\|^x_notes:.*##g' $nb_dir/csv/$difx )  <( sed 's#,[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} [0-9]\{2\}:[0-9]\{2\}:[0-9]\{2\} UTC,\|^x_notes:.*##g' $csv_dir/$dify ) | grep -a -q '^< ' || echo "DIFF Found: $nb_dir/csv/$difx & $csv_dir/$dify" ; sed -i 's#^updated_at:.*#updated_at: $datetime#' $nb_dir/csv/$difx | cp --no-clobber $nb_dir/csv/$difx $nb_dir/ready_db_updated/$difx_upd8_$date ; mv --no-clobber $nb_dir/csv/$difx $nb_dir/csv/$difx_upd8_$date ; done ; done )
+( cd $nb_dir/json ; for difx in $( ls -1 ) ; do for dify in $( find $json_dir | grep -a '.*$difx.*' | sed 's#.*registrars/##' ) ; do diff -wEbiB <( grep -a -vE 'created_at: .*|updated_at: .*' $nb_dir/json/$difx )  <( grep -a -vE 'created_at: .*|updated_at: .*' $js_dir/$dify ) | grep -a -q '^< ' || echo "DIFF Found: $nb_dir/json/$difx & $js_dir/$dify" ; sed -i 's#^updated_at:.*#updated_at: $datetime#' $nb_dir/json/$difx | mv --no-clobber $nb_dir/json/$difx $nb_dir/json/$difx_upd8_$date ; done ; done )
+( cd $nb_dir/norm ; for difx in $( ls -1 ) ; do for dify in $( find $norm_dir | grep -a '.*$difx.*' | sed 's#.*registrars/##' ) ; do diff -wEbiB <( grep -a -vE '^created_at: .*|^updated_at: .*' $nb_dir/norm/$difx )  <( grep -a -vE '^created_at: .*|^updated_at: .*' $norm_dir/$dify ) | grep -a -q '^< ' || echo "DIFF Found: $nb_dir/norm/$difx & $norm_dir/$dify" ; sed -i 's#^updated_at:.*#updated_at: $datetime#' $nb_dir/norm/$difx | mv --no-clobber $nb_dir/norm/$difx $nb_dir/norm/$difx_upd8_$date ; done ; done )
+( cd $nb_dir/loadable ; for difx in $( ls -1 ) ; do for dify in $( find $reg_dir | grep -a '.*$difx.*' | sed 's#.*registrars/##' ) ; do diff -wEbiB <( grep -a -vE '^created_at: .*|^updated_at: .*' $nb_dir/loadable/$difx )  <( grep -a -vE '^created_at: .*|^updated_at: .*' $reg_dir/$dify ) | grep -a -q '^< ' || echo "DIFF Found: $nb_dir/loadable/$difx & $reg_dir/$dify" ; sed -i 's#^updated_at:.*#updated_at: $datetime#' $nb_dir/loadable/$difx | mv --no-clobber $nb_dir/loadable/$difx $nb_dir/loadable/$difx_upd8_$date ; done ; done )
+echo "EIKR Updated Completed @ $(date)"
+####################################################
+
+####################################################
+# Move Updated Normalized Files to Normalized Registrars
+(cd $nb_dir/norm ; for normmv in $(grep -a "source: TWNIC" $nb_dir/norm/* -Hl) ; do mv $normmv --no-clobber --target-directory=$nrml_dir/TWNIC ; done)
+(cd $nb_dir/norm ; for normmv in $(grep -a "source: Nic.br" $nb_dir/norm/* -Hl) ; do mv $normmv --no-clobber --target-directory=$nrml_dir/Nic.br ; done)
+(cd $nb_dir/norm ; for normmv in $(grep -a "source: KRNIC" $nb_dir/norm/* -Hl) ; do mv $normmv --no-clobber --target-directory=$nrml_dir/KRNIC ; done)
+(cd $nb_dir/norm ; for normmv in $(grep -a "source: JPNIC" $nb_dir/norm/* -Hl) ; do mv $normmv --no-clobber --target-directory=$nrml_dir/JPNIC ; done)
+(cd $nb_dir/norm ; for normmv in $(grep -a "source: AfriNIC" $nb_dir/norm/* -Hl) ; do mv $normmv --no-clobber --target-directory=$nrml_dir/AfriNIC ; done)
+(cd $nb_dir/norm ; for normmv in $(grep -a "source: RIPE" $nb_dir/norm/* -Hl) ; do mv $normmv --no-clobber --target-directory=$nrml_dir/RIPE ; done)
+(cd $nb_dir/norm ; for normmv in $(grep -a "source: APNIC" $nb_dir/norm/* -Hl) ; do mv $normmv --no-clobber --target-directory=$nrml_dir/APNIC ; done)
+(cd $nb_dir/norm ; for normmv in $(grep -a "source: LACNIC" $nb_dir/norm/* -Hl) ; do mv $normmv --no-clobber --target-directory=$nrml_dir/LACNIC ; done)
+(cd $nb_dir/norm ; for normmv in $(grep -a "source: ARIN" $nb_dir/norm/* -Hl) ; do mv $normmv --no-clobber --target-directory=$nrml_dir/ARIN ; done)
+echo "Normalized Updated Move Completed @ $(date)"
+####################################################
+
+####################################################
+# Move Updated JSON Files to JSON Registrars
+(cd $nb_dir/json ; for jsonmv in $(grep -a "TWNIC" $nb_dir/json/* -Hl) ; do mv $jsonmv --no-clobber --target-directory=$js_dir/TWNIC ; done)
+(cd $nb_dir/json ; for jsonmv in $(grep -a "Nic.br" $nb_dir/json/* -Hl) ; do mv $jsonmv --no-clobber --target-directory=$js_dir/Nic.br ; done)
+(cd $nb_dir/json ; for jsonmv in $(grep -a "KRNIC" $nb_dir/json/* -Hl) ; do mv $jsonmv --no-clobber --target-directory=$js_dir/KRNIC ; done)
+(cd $nb_dir/json ; for jsonmv in $(grep -a "JPNIC" $nb_dir/json/* -Hl) ; do mv $jsonmv --no-clobber --target-directory=$js_dir/JPNIC ; done)
+(cd $nb_dir/json ; for jsonmv in $(grep -a "AfriNIC" $nb_dir/json/* -Hl) ; do mv $jsonmv --no-clobber --target-directory=$js_dir/AfriNIC ; done)
+(cd $nb_dir/json ; for jsonmv in $(grep -a "RIPE" $nb_dir/json/* -Hl) ; do mv $jsonmv --no-clobber --target-directory=$js_dir/RIPE ; done)
+(cd $nb_dir/json ; for jsonmv in $(grep -a "APNIC" $nb_dir/json/* -Hl) ; do mv $jsonmv --no-clobber --target-directory=$js_dir/APNIC ; done)
+(cd $nb_dir/json ; for jsonmv in $(grep -a "LACNIC" $nb_dir/json/* -Hl) ; do mv $jsonmv --no-clobber --target-directory=$js_dir/LACNIC ; done)
+(cd $nb_dir/json ; for jsonmv in $(grep -a "ARIN" $nb_dir/json/* -Hl) ; do mv $jsonmv --no-clobber --target-directory=$js_dir/ARIN ; done)
+echo "JSON Updated Move Completed @ $(date)"
+####################################################
+
+####################################################
+# Move Updated Loadable Files to Regular Registrars
+(cd $nb_dir/loadable ; for loadablemv in $(grep -a "source: TWNIC" $nb_dir/loadable/* -Hl) ; do mv $loadablemv --no-clobber --target-directory=$reg_dir/TWNIC ; done)
+(cd $nb_dir/loadable ; for loadablemv in $(grep -a "source: Nic.br" $nb_dir/loadable/* -Hl) ; do mv $loadablemv --no-clobber --target-directory=$reg_dir/Nic.br ; done)
+(cd $nb_dir/loadable ; for loadablemv in $(grep -a "source: KRNIC" $nb_dir/loadable/* -Hl) ; do mv $loadablemv --no-clobber --target-directory=$reg_dir/KRNIC ; done)
+(cd $nb_dir/loadable ; for loadablemv in $(grep -a "source: JPNIC" $nb_dir/loadable/* -Hl) ; do mv $loadablemv --no-clobber --target-directory=$reg_dir/JPNIC ; done)
+(cd $nb_dir/loadable ; for loadablemv in $(grep -a "source: AfriNIC" $nb_dir/loadable/* -Hl) ; do mv $loadablemv --no-clobber --target-directory=$reg_dir/AfriNIC ; done)
+(cd $nb_dir/loadable ; for loadablemv in $(grep -a "source: RIPE" $nb_dir/loadable/* -Hl) ; do mv $loadablemv --no-clobber --target-directory=$reg_dir/RIPE ; done)
+(cd $nb_dir/loadable ; for loadablemv in $(grep -a "source: APNIC" $nb_dir/loadable/* -Hl) ; do mv $loadablemv --no-clobber --target-directory=$reg_dir/APNIC ; done)
+(cd $nb_dir/loadable ; for loadablemv in $(grep -a "source: LACNIC" $nb_dir/loadable/* -Hl) ; do mv $loadablemv --no-clobber --target-directory=$reg_dir/LACNIC ; done)
+(cd $nb_dir/loadable ; for loadablemv in $(grep -a "source: ARIN" $nb_dir/loadable/* -Hl) ; do mv $loadablemv --no-clobber --target-directory=$reg_dir/ARIN ; done)
+echo "Regular Updated Move Completed @ $(date)"
+####################################################
+
+####################################################
+# Move Updated CSV Files to CSV Registrars
+(cd $nb_dir/csv ; for csvmv in $(grep -a "TWNIC" $nb_dir/csv/* -Hl) ; do mv $csvmv --no-clobber --target-directory=$csv_dir/TWNIC ; done)
+(cd $nb_dir/csv ; for csvmv in $(grep -a "KRNIC" $nb_dir/csv/* -Hl) ; do mv $csvmv --no-clobber --target-directory=$csv_dir/KRNIC ; done)
+(cd $nb_dir/csv ; for csvmv in $(grep -a "JPNIC" $nb_dir/csv/* -Hl) ; do mv $csvmv --no-clobber --target-directory=$csv_dir/JPNIC ; done)
+(cd $nb_dir/csv ; for csvmv in $(grep -a "Nic.br" $nb_dir/csv/* -Hl) ; do mv $csvmv --no-clobber --target-directory=$csv_dir/Nic.br ; done)
+(cd $nb_dir/csv ; for csvmv in $(grep -a "RIPE" $nb_dir/csv/* -Hl) ; do mv $csvmv --no-clobber --target-directory=$csv_dir/RIPE ; done)
+(cd $nb_dir/csv ; for csvmv in $(grep -a "AfriNIC" $nb_dir/csv/* -Hl) ; do mv $csvmv --no-clobber --target-directory=$csv_dir/AfriNIC ; done)
+(cd $nb_dir/csv ; for csvmv in $(grep -a "APNIC" $nb_dir/csv/* -Hl) ; do mv $csvmv --no-clobber --target-directory=$csv_dir/APNIC ; done)
+(cd $nb_dir/csv ; for csvmv in $(grep -a "LACNIC" $nb_dir/csv/* -Hl) ; do mv $csvmv --no-clobber --target-directory=$csv_dir/LACNIC ; done)
+(cd $nb_dir/csv ; for csvmv in $(grep -a "ARIN" $nb_dir/csv/* -Hl) ; do mv $csvmv --no-clobber --target-directory=$csv_dir/ARIN ; done)
+echo "CSV Updated Move Completed @ $(date)"
+####################################################
+
+####################################################
+# Move remaining files to not_processed_eikr 
+( cd $nb_dir/csv ; for eikrv in $( ls -1 ) ; do mv $eikrv $eikr_dir/csv/$eikrv ; done )
+( cd $nb_dir/json ; for eikrv in $( ls -1 ) ; do mv $eikrv $eikr_dir/json/$eikrv ; done )
+( cd $nb_dir/norm ; for eikrv in $( ls -1 ) ; do mv $eikrv $eikr_dir/norm/$eikrv ; done )
+( cd $nb_dir/loadable ; for eikrv in $( ls -1 ) ; do mv $eikrv $eikr_dir/loadable/$eikrv ; done )
+( cd $nb_dir/loadable ; rm -f $nb_dir/loadable/* )
+( cd $nb_dir/norm ; rm -f $nb_dir/norm/* )
+( cd $nb_dir/json ; rm -f $nb_dir/json/* )
+( cd $nb_dir/csv ;  rm -f $nb_dir/csv/* )
+echo "Move EIKR After Update Completed @ $(date)"
+####################################################
+
+####################################################
+# Remove Star '*' from registrars after moves if exists
+(cd $reg_dir/TWNIC ; rm -f '*' '%' )
+(cd $reg_dir/Nic.br ; rm -f '*' '%' )
+(cd $reg_dir/KRNIC ; rm -f '*' '%' )
+(cd $reg_dir/JPNIC ; rm -f '*' '%' )
+(cd $reg_dir/AfriNIC ; rm -f '*' '%' )
+(cd $reg_dir/APNIC ; rm -f '*' '%' )
+(cd $reg_dir/RIPE ; rm -f '*' '%' )
+(cd $reg_dir/LACNIC ; rm -f '*' '%' )
+(cd $reg_dir/ARIN ; rm -f '*' '%' )
+
+(cd $csv_dir/TWNIC ; rm -f '*' '%' )
+(cd $csv_dir/Nic.br ; rm -f '*' '%' )
+(cd $csv_dir/KRNIC ; rm -f '*' '%' )
+(cd $csv_dir/JPNIC ; rm -f '*' '%' )
+(cd $csv_dir/AfriNIC ; rm -f '*' '%' )
+(cd $csv_dir/APNIC ; rm -f '*' '%' )
+(cd $csv_dir/RIPE ; rm -f '*' '%' )
+(cd $csv_dir/LACNIC ; rm -f '*' '%' )
+(cd $csv_dir/ARIN ; rm -f '*' '%' )
+(cd $csv_dir/ARIN ; rm -f '*' '%' )
+
+(cd $js_dir/TWNIC ; rm -f '*' '%' )
+(cd $js_dir/Nic.br ; rm -f '*' '%' )
+(cd $js_dir/KRNIC ; rm -f '*' '%' )
+(cd $js_dir/JPNIC ; rm -f '*' '%' )
+(cd $js_dir/AfriNIC ; rm -f '*' '%' )
+(cd $js_dir/APNIC ; rm -f '*' '%' )
+(cd $js_dir/RIPE ; rm -f '*' '%' )
+(cd $js_dir/LACNIC ; rm -f '*' '%' )
+(cd $js_dir/ARIN ; rm -f '*' '%' )
+echo "Star '*' File Removal From Registrars Completed @ $(date)"
+####################################################
+
+####################################################
+# Refresh Catalog Files
+ls -1 $reg_dir/AfriNIC > $cat_dir/AfriNIC_files
+ls -1 $reg_dir/APNIC > $cat_dir/APNIC_files
+ls -1 $reg_dir/ARIN > $cat_dir/ARIN_files
+ls -1 $reg_dir/JPNIC > $cat_dir/JPNIC_files
+ls -1 $reg_dir/KRNIC > $cat_dir/KRNIC_files
+ls -1 $reg_dir/LACNIC > $cat_dir/LACNIC_files
+#ls -1 $reg_dir/limit-exceeded > $cat_dir/limit_files
+ls -1 $reg_dir/Nic.br > $cat_dir/Nic.br_files
+#ls -1 $reg_dir/nulls > $cat_dir/null_files
+ls -1 $reg_dir/OTHER > $cat_dir/OTHER_files
+ls -1 $reg_dir/RIPE > $cat_dir/RIPE_files
+ls -1 $reg_dir/TWNIC > $cat_dir/TWNIC_files
+#ls -1 $reg_dir/upgrade > $cat_dir/upgrade_files
+echo "Catalog Refresh Completed @ $(date)"
+####################################################
+
+####################################################
+# Sort and Remove Duplicates From Catalog Files
+sort $cat_dir/AfriNIC_files | awk '!a[$0]++' > $cat_dir/AfriNIC_files_uniq ; mv $cat_dir/AfriNIC_files_uniq $cat_dir/AfriNIC_files
+sort $cat_dir/APNIC_files | awk '!a[$0]++' > $cat_dir/APNIC_files_uniq ; mv $cat_dir/APNIC_files_uniq $cat_dir/APNIC_files
+sort $cat_dir/ARIN_files | awk '!a[$0]++' > $cat_dir/ARIN_files_uniq ; mv $cat_dir/ARIN_files_uniq $cat_dir/ARIN_files
+sort $cat_dir/JPNIC_files | awk '!a[$0]++' > $cat_dir/JPNIC_files_uniq ; mv $cat_dir/JPNIC_files_uniq $cat_dir/JPNIC_files
+sort $cat_dir/KRNIC_files | awk '!a[$0]++' > $cat_dir/KRNIC_files_uniq ; mv $cat_dir/KRNIC_files_uniq $cat_dir/KRNIC_files
+sort $cat_dir/LACNIC_files | awk '!a[$0]++' > $cat_dir/LACNIC_files_uniq ; mv $cat_dir/LACNIC_files_uniq $cat_dir/LACNIC_files
+sort $cat_dir/limit_files | awk '!a[$0]++' > $cat_dir/limit_files_uniq ; mv $cat_dir/limit_files_uniq $cat_dir/limit_files
+sort $cat_dir/Nic.br_files | awk '!a[$0]++' > $cat_dir/Nic.br_files_uniq ; mv $cat_dir/Nic.br_files_uniq $cat_dir/Nic.br_files
+sort $cat_dir/null_files | awk '!a[$0]++' > $cat_dir/null_files_uniq ; mv $cat_dir/null_files_uniq $cat_dir/null_files
+sort $cat_dir/OTHER_files | awk '!a[$0]++' > $cat_dir/OTHER_files_uniq ; mv $cat_dir/OTHER_files_uniq $cat_dir/OTHER_files
+sort $cat_dir/RIPE_files | awk '!a[$0]++' > $cat_dir/RIPE_files_uniq ; mv $cat_dir/RIPE_files_uniq $cat_dir/RIPE_files
+sort $cat_dir/TWNIC_files | awk '!a[$0]++' > $cat_dir/TWNIC_files_uniq ; mv $cat_dir/TWNIC_files_uniq $cat_dir/TWNIC_files
+sort $cat_dir/upgrade_files | awk '!a[$0]++' > $cat_dir/upgrade_files_uniq ; mv $cat_dir/upgrade_files_uniq $cat_dir/upgrade_files
+echo "Catalog Sort/Remove Completed @ $(date)"
+####################################################
+
+####################################################
+#Build Full Catalog
+mv $cat_dir/catalog_complete $cat_dir/catalog_complete_$date
+
+echo "AfriNIC_files Start" >> $cat_dir/catalog_complete
+cat $cat_dir/AfriNIC_files >> $cat_dir/catalog_complete
+echo "AfriNIC_files End" >> $cat_dir/catalog_complete
+
+echo "APNIC_files Start" >> $cat_dir/catalog_complete
+cat $cat_dir/APNIC_files >> $cat_dir/catalog_complete
+echo "APNIC_files End" >> $cat_dir/catalog_complete
+
+echo "ARIN_files Start" >> $cat_dir/catalog_complete
+cat $cat_dir/ARIN_files >> $cat_dir/catalog_complete
+echo "APNIC_files End" >> $cat_dir/catalog_complete
+
+echo "JPNIC_files Start" >> $cat_dir/catalog_complete
+cat $cat_dir/JPNIC_files >> $cat_dir/catalog_complete
+echo "JPNIC_files End" >> $cat_dir/catalog_complete
+
+echo "KRNIC_files Start" >> $cat_dir/catalog_complete
+cat $cat_dir/KRNIC_files >> $cat_dir/catalog_complete
+echo "KRNIC_files End" >> $cat_dir/catalog_complete
+
+echo "LACNIC_files Start" >> $cat_dir/catalog_complete
+cat $cat_dir/LACNIC_files >> $cat_dir/catalog_complete
+echo "LACNIC_files End" >> $cat_dir/catalog_complete
+
+echo "limit_files Start" >> $cat_dir/catalog_complete
+cat $cat_dir/limit_files >> $cat_dir/catalog_complete
+echo "limit_files End" >> $cat_dir/catalog_complete
+
+echo "Nic.br_files Start" >> $cat_dir/catalog_complete
+cat $cat_dir/Nic.br_files >> $cat_dir/catalog_complete
+echo "Nic.br_files End" >> $cat_dir/catalog_complete
+
+echo "null_files Start" >> $cat_dir/catalog_complete
+cat $cat_dir/null_files >> $cat_dir/catalog_complete
+echo "null_files End" >> $cat_dir/catalog_complete
+
+echo "OTHER_files Start" >> $cat_dir/catalog_complete
+cat $cat_dir/OTHER_files >> $cat_dir/catalog_complete
+echo "OTHER_files End" >> $cat_dir/catalog_complete
+
+echo "RIPE_files Start" >> $cat_dir/catalog_complete
+cat $cat_dir/RIPE_files >> $cat_dir/catalog_complete
+echo "RIPE_files End" >> $cat_dir/catalog_complete
+
+echo "TWNIC_files Start" >> $cat_dir/catalog_complete
+cat $cat_dir/TWNIC_files >> $cat_dir/catalog_complete
+echo "TWNIC_files End" >> $cat_dir/catalog_complete
+
+echo "upgrade_files Start" >> $cat_dir/catalog_complete
+cat $cat_dir/upgrade_files >> $cat_dir/catalog_complete
+echo "upgrade_files End" >> $cat_dir/catalog_complete
+echo "Build Full Catalog Completed @ $(date)"
+####################################################
+

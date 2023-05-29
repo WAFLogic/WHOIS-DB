@@ -1,0 +1,214 @@
+#!/bin/bash
+date=$(date +'%Y-%m-%d')
+time=$(date -u +'%T')
+reg_dir=~/whois_output/registrars
+cat_dir=~/whois_output/catalog
+info_dir=~/whois_output/info_registrars
+nb_dir=~/whois_output/n00b_queries
+nq_dir=~/whois_output/new_query
+eikr_dir=~/whois_output/exists_in_known_registrars
+csv_dir=~/whois_output/csv_registrars
+#################################################################################
+# Purge n00b_query_list 
+(cd $nb_dir ; rm -f $nb_dir/n00b_query_list $nb_dir/requery_done_$date  $nb_dir/requery_db_$date $nb_dir/xnotes_exist && touch $nb_dir/n00b_query_list ; touch $csv_dir/all/Complete_WHOIS.csv )
+(cd $nb_dir ; sort n00b_query_prep | uniq > n00b_query_prep_temp )
+(cd $nb_dir ; mv n00b_query_prep_temp n00b_query_prep )
+#################################################################################
+# Compare existing WHOIS DB with new list and identify hosts that will be re-queried.
+# The unique records are not compared to see if any new information exists, just to 
+# see if a record exists since we can't predict what the query is. 
+# This mainly gives you a chance to not requery say 1000 IPs you've already got.
+echo "Checking to see what queries exist in the WHOIS DB"
+#(cd $csv_dir/all/ ; for requery in $(sort $nb_dir/n00b_query_prep | uniq ) ; do awk -F ',' '{print $6}' $csv_dir/all/Complete_WHOIS.csv | grep -q $requery || echo "$requery" >> $nb_dir/n00b_query_list ; done)
+(cd $nb_dir/ ; diff n00b_query_prep <(awk -F ',' '{print $6}' $csv_dir/all/Complete_WHOIS.csv) | grep '<' | sed 's#< ##' | sort | uniq >> $nb_dir/n00b_query_list )
+(cd $nb_dir ; diff n00b_query_list n00b_query_prep | grep '> ' | sed 's#> ##g' > $nb_dir/requery_db_$date ) 
+while true; do
+    ( cat $nb_dir/requery_db_$date )
+    ( cd $nb_dir/ ; cat $nb_dir/n00b_query_list ; echo "^^^IPs That Do Not Have an Existing WHOIS DB Entry^^^" ; for reqdt in $(cat $nb_dir/requery_db_$date ) ; do grep -h $reqdt $csv_dir/all/Complete_WHOIS.csv | awk -F,  ' { print "IP: " $6 " Created_At: "  $26 " x_notes: " $221}' ; done )
+    ( cd $nb_dir/ ; echo "^^^IPs to Re-Query^^^" ; for exq in $(wc -l $nb_dir/requery_db_$date | awk '{print $1}' ) ; do for newq in $(wc -l $nb_dir/n00b_query_list | awk '{print $1}') ; do echo "$exq + $newq" | bc  ; echo "^^^Total Queries Requested^^^" ; echo "$newq" ; echo "^^^Total Unqueried Results^^^" ; echo "$exq"  ; echo "^^^Number of WHOIS Queries Requested for Re-Query^^^" ; done ; done )
+    read -p "The second list, IPs to Re-Query already exists in the WHOIS DB. The first list, List of IPs That Remain is what does not exist in the WHOIS DB.  Re-query them?" yn
+    case $yn in
+        [Yy]* ) cd $nb_dir ; cat $nb_dir/requery_db_$date | sort | uniq >> $nb_dir/n00b_query_list && sort $nb_dir/n00b_query_list | uniq > $nb_dir/n00b_query_list_temp && mv $nb_dir/n00b_query_list_temp $nb_dir/n00b_query_list ; echo "Injected list for Re-Query" ; break;;
+        [Nn]* ) echo "Will not Re-Query Existing Entries" ; in_note_1=1 ; break;;
+        [Qq]* ) (echo "Thank you for using the WHOIS DB Query Tool and have a wonderful day!" ) ; exit;;
+        * ) echo "Don't abuse me :( Please answer yes or no.";;
+    esac
+done
+
+# Give chance to add notes to queries that exist in the WHOIS DB
+if [[ $in_notes1 -eq 1 ]]
+then
+while true; do
+    read -p "Do you wish to append notes to these queries?" yn
+    case $yn in
+        [Yy]* ) (cd $nb_dir ; for xnotes in $(cat $nb_dir/requery_db_$date ) ; do grep -l "^x_notes:" $nb_dir/done/$xnotes >> $nb_dir/xnotes_exist ; done ) ; in_notes1g=1 ; break;;
+        [Nn]* ) break;;
+        [Qq]* ) (echo "Thank you for using the WHOIS DB Query Tool and have a wonderful day!" ) ; exit;;
+        * ) echo "Don't abuse me :( Please answer yes or no.";;
+    esac
+done
+
+if [[ $in_notes1g -eq 1 ]]
+then
+echo "Getting list of existing queries with existing notes:"
+(cat $nb_dir/xnotes_exist )
+while true; do
+    read -p "The above list of queries already has x_notes populated. Do you wish to replace the notes with your new notes? Choosing No will just update the queries without notes." yn
+    case $yn in
+        [Yy]* ) (cd $nb_dir ; read input ; for xnotes in $(cat $nb_dir/requery_db_$date | sort | uniq ) ; do sed -i 's#^x_notes:\( .*\)$#x_notes: \1 ~ $date $time - $input#g' $nb_dir/done/$xnotes ; done ) ; break;;
+        [Nn]* ) (cd $nb_dir ; read input ; for xnotes in $(diff <(cat $nb_dir/requery_db_$date | sort | uniq ) $nb_dir/xnotes_exist | grep '<' | sed 's#< ##g' ) ; do echo "x_notes: $date $time - $input" >> $nb_dir/done/$xnotes ; done ) ; break;;
+        [Qq]* ) (echo "Thank you for using the WHOIS DB Query Tool and have a wonderful day!" ) ; exit;;
+        * ) echo "Don't abuse me :( Please answer yes or no.";;
+    esac
+done
+fi
+fi
+#################################################################################
+# Compare existing queries that may not be in the database yet. Those files exist in "done" 
+# We compare with the new list and identify hosts that will be re-queried.
+# The unique records are not compared to see if any new information exists, just to 
+# see if a record exists since we can't predict what the query results are. 
+# This mainly gives you a chance to not requery say 1000 IPs you've already finished 
+# say a bit ago but had to stop your query and start over.
+echo "Checking to see what queries have been made already but may not exist in the WHOIS DB"
+(cd $nb_dir/ ; diff n00b_query_list <(ls $nb_dir/done) | grep '<' | sed 's#< ##' | sort | uniq >> $nb_dir/requery_done_$date )
+(cd $nb_dir/ ; rm -f $nb_dir/lsdonedir $nb_dir/lsdonedir_exist )
+while true; do
+    (cd $nb_dir/ ; for newq in $(wc -l $nb_dir/requery_done_$date | awk '{print $1}' ) ; do for exq in $( wc -l $nb_dir/n00b_query_list | awk '{print $1}' ) ; do echo "$exq" ; echo "^^^Total Queries Requested^^^" ; sort $nb_dir/requery_done_$date | uniq ; echo "^^^IPs That Do Not Have an Existing Initial Query^^^" ;  echo "$newq" ; echo "^^^Total Unqueried Results^^^" ; ( ls -lth $nb_dir/done/ > $nb_dir/lsdonedir && cat $nb_dir/n00b_query_list | xargs -I % grep % -hi $nb_dir/lsdonedir >> $nb_dir/lsdonedir_exist ) ; cat $nb_dir/lsdonedir_exist | sed 's#^\S\+ \S\+ \S\+ \S\+ ##g' | awk '!a[$0]++' ; echo "^^^IPs to Re-Query^^^" ; echo "$exq - $newq" | bc ; echo "^^^Number of WHOIS Queries Requested for Re-Query^^^" ; done ; done )
+    (cd $nb_dir/ ; rm -f $nb_dir/lsdonedir $nb_dir/lsdonedir_exist )
+    read -p "These are not in the Database but they have an existing query. Re-query them?" yn
+    case $yn in
+        [Yy]* ) (cd $nb_dir ; cat $nb_dir/requery_done_$date >> $nb_dir/n00b_query_list && sort $nb_dir/n00b_query_list | uniq > $nb_dir/n00b_query_list_temp && mv $nb_dir/n00b_query_list_temp $nb_dir/n00b_query_list ; echo "Injected list for Re-Query" ) ; yback=1 ; break;;
+        [Nn]* ) (cd $nb_dir ; cat $nb_dir/requery_done_$date > $nb_dir/n00b_query_list && sort $nb_dir/n00b_query_list | uniq > $nb_dir/n00b_query_list_temp && mv $nb_dir/n00b_query_list_temp $nb_dir/n00b_query_list ; echo "Will not Re-Query Existing Entries" ) ; break;;
+        [Qq]* ) (echo "Thank you for using the WHOIS DB Query Tool and have a wonderful day!" ) ; exit;;
+        * ) echo "Don't abuse me :( Please answer yes or no.";;
+    esac
+done
+
+# Give option to backup existing queries since they will be 
+# replaced in the /done folder
+if [[ $yback -eq 1 ]]
+then
+while true; do
+    read -p "Do you wish to backup the existing queries?" yn
+    case $yn in
+        [Yy]* ) (cd $nb_dir ; mkdir $nb_dir/done_prev_query_$date ; for backup_db in $(cat $nb_dir/requery_db_$date | sort | uniq ) ; do cp $nb_dir/done/$backup_db $nb_dir/done_prev_query_$date/$backup_db ; done ; for backup_do in $(diff $nb_dir/requery_done_$date $nb_dir/n00b_query_list | grep '>' | sed 's#> ##g' | sort | uniq ) ; do cp $nb_dir/done/$backup_do $nb_dir/done_prev_query_$date/$backup_do ; done && echo "Backup of existing queries is complete" ) ; in_notes2=1 ; break ;;
+        [Nn]* ) (cd $nb_dir ; echo "Backup of existing queries cancelled" ) ; in_notes2=1 ; break;;
+        [Qq]* ) (echo "Thank you for using the WHOIS DB Query Tool and have a wonderful day!" ) ; exit;;
+        * ) echo "Don't abuse me :( Please answer yes or no.";;
+    esac
+done
+
+# Give chance to add notes to queries that exist in the WHOIS DB
+if [[ $in_notes2 -eq 1 ]]
+then
+while true; do
+    read -p "Do you wish to append notes to the existing queries that were backed up?" yn
+    case $yn in
+        [Yy]* ) (cd $nb_dir ; for xnotes in $(cat $nb_dir/n00b_query_list ) ; do grep -l "^x_notes:" $nb_dir/done/$xnotes >> $nb_dir/xnotes_exist ; done ) ; in_notes2g=1 ; break;;
+        [Nn]* ) (echo "Skipping Adding Notes to Existing Queries" ) ; break;;
+        [Qq]* ) (echo "Thank you for using the WHOIS DB Query Tool and have a wonderful day!" ) ; exit;;
+        * ) echo "Don't abuse me :( Please answer yes or no.";;
+    esac
+done
+if [[ $in_notes2g -eq 1 ]]
+then
+echo "Getting list of existing queries with existing notes:"
+(cat $nb_dir/xnotes_exist )
+while true; do
+    read -p "The above list of queries already has x_notes populated. Do you wish to replace the notes with your new notes? Choosing No will just update the queries without notes." yn
+    case $yn in
+        [Yy]* ) (cd $nb_dir ; read input ; for xnotes in $(cat $nb_dir/done_prev_query_$date | sort | uniq ) ; do sed -i 's#^x_notes:\( .*\)$#x_notes: \1 ~ $date $time - $input#g' $nb_dir/done/$xnotes ; done ) ; break;;
+        [Nn]* ) (cd $nb_dir ; read input ; for xnotes in $(diff <(cat $nb_dir/done_prev_query_$date | sort | uniq ) $nb_dir/xnotes_exist | grep '<' | sed 's#< ##g' ) ; do echo "x_notes: $date $time - $input" >> $nb_dir/done/$xnotes ; done ) ; break;;
+        [Qq]* ) (echo "Thank you for using the WHOIS DB Query Tool and have a wonderful day!" ) ; exit;;
+        * ) echo "Don't abuse me :( Please answer yes or no.";;
+    esac
+done
+fi
+fi
+fi
+
+#################################################################################
+q_count=$( wc -l $nb_dir/n00b_query_list | awk '{print $1}' )
+q_left=$q_count
+
+# For WHOIS via CLI
+(cd $nb_dir/ ; rm -f $nb_dir/n00b_query_$date )
+(cd $nb_dir/ ; echo 'nb_dir=~/whois_output/n00b_queries' >  $nb_dir/n00b_query_$date )
+(cd $nb_dir/ ; echo 'q_count=$( wc -l $nb_dir/n00b_query_list | awk '"'"'{print $1}'"'"' )' >> $nb_dir/n00b_query_$date )
+(cd $nb_dir/ ; echo 'q_left=$q_count' >> $nb_dir/n00b_query_$date )
+(cd $nb_dir/ ; for who in $(sed '/^172\.1[6-9]\.[0-9\.]\+\|^172\.2[0-9]\.[0-9\.]\+\|^172\.3[0-1]\.[0-9\.]\+\|^127\.[0-9\.]\+\|^10\.[0-9\.]\+\|^192\.168/d' $nb_dir/n00b_query_list  | sort | uniq | shuf ) ; do grep -ho "$who\$" $nb_dir/n00b_query_list | awk -v var="$who" '{print "whois " var " > '$nb_dir'/done/" var }' | sed 's#$#\nsleep 6s\necho "$q_left Remain of $q_count"\nq_left=$(echo "$q_left-1" | bc )\n echo "Query for '$who' Complete"#g' >> $nb_dir/n00b_query_$date ; done )
+(cd $nb_dir/ ; chmod gu+x $nb_dir/n00b_query_$date )
+# For WHOIS via Domain Tools
+#(cd $nb_dir/ ; rm -f $nb_dir/n00b_query_$date )
+#(cd $nb_dir/ ; echo 'q_count=$( wc -l $nb_dir/n00b_query_list | awk '"'"'{print $1}'"'"' )' > $nb_dir/n00b_query_$date )
+#(cd $nb_dir/ ; echo 'q_left=$q_count' >> $nb_dir/n00b_query_$date )
+#(cd $nb_dir/ ; for who in $(sed '/^172\.1[6-9]\.[0-9\.]\+\|^172\.2[0-9]\.[0-9\.]\+\|^172\.3[0-1]\.[0-9\.]\+\|^127\.[0-9\.]\+\|^10\.[0-9\.]\+\|^192\.168/d' $nb_dir/n00b_query_list | sort | uniq | shuf ) ; do grep -ho "$who\$" $nb_dir/n00b_query_list | awk -v var="$who" '{print "./dt_lookup.py " var " > '$nb_dir'/done/" var }' | sed 's#$#\nsleep 5s\necho "$q_left Remain of $q_count"\nq_left=$(echo "$q_left-1" | bc )\n echo "Query for '$who' Complete"#g' >> $nb_dir/n00b_query_$date ; done )
+#(cd $nb_dir/ ; chmod gu+x $nb_dir/n00b_query_$date )
+
+while true; do
+    read -p "Do you wish to run the WHOIS query?" yn
+    case $yn in
+        [Yy]* ) (cd $nb_dir ; $nb_dir/n00b_query_$date ) ; break;;
+        [Nn]* ) (echo "Thank you for using the WHOIS DB Query Tool and have a wonderful day!" ) ; exit;;
+        [Qq]* ) (echo "Thank you for using the WHOIS DB Query Tool and have a wonderful day!" ) ; exit;;
+        * ) echo "Don't abuse me :( Please answer yes or no.";;
+    esac
+done
+
+# Use only for Domain Tools script to cleanup Heading HTML BS
+#(cd $nb_dir/done ; cat $nb_dir/n00b_query_list | xargs -I %  sed  -i -n '/Registra.*:.*/,$p' $nb_dir/done/%)
+
+echo "All queries are now complete!"
+
+# Append notes! This asks if you'd like to do this but first checks to see if notes already exist.
+while true; do
+    read -p "Do you wish to append notes to these queries?" yn
+    case $yn in
+        [Yy]* ) (cd $nb_dir ; for xnotes in $(cat $nb_dir/n00b_query_list ) ; do grep -l "^x_notes:" $nb_dir/done/$xnotes >> $nb_dir/xnotes_exist ; done ) ; in_notes3=1 ; break;;
+        [Nn]* ) break;;
+        [Qq]* ) (echo "Thank you for using the WHOIS DB Query Tool and have a wonderful day!" ) ; exit;;
+        * ) echo "Don't abuse me :( Please answer yes or no.";;
+    esac
+done
+
+# If you've chosen to add notes, then this will alert on the files that have existing notes and 
+#will prompt for over-write. If you do not choose to over-write, then only files without notes will be edited.
+if [[ $in_notes3 -eq 1 ]]
+then
+echo "Getting list of existing queries with existing notes:"
+(cat $nb_dir/xnotes_exist )
+while true; do
+    read -p "The above list of queries already has x_notes populated. Do you wish to replace the notes with your new notes? Choosing No will just update the queries without notes." yn
+    case $yn in
+        [Yy]* ) (cd $nb_dir ; read input ; for xnotes in $(cat $nb_dir/n00b_query_list ) ; do sed -i 's#^x_notes:\( .*\)$#x_notes: \1 ~ $date $time - $input#g' $nb_dir/done/$xnotes ; done ) ; break;;
+        [Nn]* ) (cd $nb_dir ; read input ; for xnotes in $(diff $nb_dir/n00b_query_list $nb_dir/xnotes_exist | grep '<' | sed 's#< ##g' ) ; do echo "x_notes: $date $time - $input" >> $nb_dir/done/$xnotes ; done ) ; break;;
+        [Qq]* ) (echo "Thank you for using the WHOIS DB Query Tool and have a wonderful day!" ) ; exit;;
+        * ) echo "Don't abuse me :( Please answer yes or no.";;
+    esac
+done
+fi
+
+# Give option to enter created_at date
+while true; do
+    read -p "Do you wish to enter the created_at date as now?" yn
+    case $yn in
+        [Yy]* ) (cd $nb_dir/done ; for created in $(cat $nb_dir/n00b_query_list ) ; do sed -i '/^created_at: /d' $nb_dir/done/$created && echo "created_at: $date $time" >> $nb_dir/done/$created ; done ) ; break;;
+        [Nn]* ) (echo "Thank you for using the WHOIS DB Query Tool and have a wonderful day!" ) ; exit;;
+        [Qq]* ) (echo "Thank you for using the WHOIS DB Query Tool and have a wonderful day!" ) ; exit;;
+        * ) echo "Don't abuse me :( Please answer yes or no.";;
+    esac
+done
+
+# Give option to run hostclass / host classification scripts against n00b_query_list 
+# i.e. the final list of IPs that were queried
+while true; do
+    read -p "Do you wish to run the Host Classification Scripts now?" yn
+    case $yn in
+	    [Yy]* ) (cd $nb_dir/hostclass ; ./hostclass_tor; ./hostclass_vps-hosting ; ./hostclass_education ; ./hostclass_isp ) ; break;;
+        [Nn]* ) (echo "Thank you for using the WHOIS DB Query Tool and have a wonderful day!" ) ; exit;;
+        [Qq]* ) (echo "Thank you for using the WHOIS DB Query Tool and have a wonderful day!" ) ; exit;;
+        * ) echo "Don't abuse me :( Please answer yes or no.";;
+    esac
+done
+(echo "Thank you for using the WHOIS DB Query Tool and have a wonderful day!" )

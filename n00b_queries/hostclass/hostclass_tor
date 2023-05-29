@@ -1,0 +1,15 @@
+date=$(date -u +'%Y-%m-%d')
+time=$(date -u +'%T')
+datetime=$(date -u +'%Y-%m-%d %T %Z')
+reg_dir=~/whois_output/registrars
+cat_dir=~/whois_output/catalog
+info_dir=~/whois_output/info_registrars
+nq_dir=~/whois_output/new_query
+nb_dir=~/whois_output/n00b_queries
+eikr_dir=~/whois_output/n00b_queries/not_processed_eikr
+js_dir=~/whois_output/json_registrars
+csv_dir=~/whois_output/csv_registrars
+nrml_dir=~/whois_output/normalized_registrars
+og_reg_dir=~/whois_output/og_registrars
+
+(cd $nb_dir/done ; for filei in $(cat $nb_dir/n00b_query_list  ) ; do for class in $(cat $nb_dir/hostclass/tor_nodes.txt) ; do echo "host_type: TOR Node" >> $nb_dir/done/$class ; done ; done )
