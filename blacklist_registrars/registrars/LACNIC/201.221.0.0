@@ -1,0 +1,66 @@
+source: LACNIC
+
+% Joint Whois - whois.lacnic.net
+%  This server accepts single ASN  IPv4 or IPv6 queries
+
+
+
+% Copyright LACNIC lacnic.net
+%  The data below is provided for information purposes
+%  and to assist persons in obtaining information about or
+%  related to AS and IP numbers registrations
+%  By submitting a whois query  you agree to use this data
+%  only for lawful purposes.
+%  2014-12-05 16:37:53 ( brst 02: 00 )
+
+autnum:      N/A
+owner:        Tecnowind S.A.
+ownerid:      UY-TESA3-LACNIC
+responsible:  Administracion IP Dedicado
+address:      Plaza Independencia  755  Piso 9
+address:      11100 - Montevideo - MV
+country:      UY
+phone:        +598 2 900 02 90 []
+ownerc:      AID
+techc:       AID
+abuse:      AAD2
+inetrev:      201.221.0/24
+nserver:      NS1.DEDICADO.COM.UY  
+nsstat:       20141204 AA
+nslastaa:     20141204
+nserver:      NS2.DEDICADO.COM.UY  
+nsstat:       20141204 AA
+nslastaa:     20141204
+created:      20050413
+changed:      20080610
+
+nichdl:      AAD2
+person:       Administracion Abuse Dedicado
+address:      Plaza Independencia  755  9
+address:      11100 - Montevideo - 
+country:      UY
+phone:        +598 2 9011010 []
+created:      20080610
+changed:      20100119
+
+nichdl:      AID
+person:       Administracion IP ( Dedicado )
+address:      Plaza Independencia  755  Piso 9
+address:      11100 - Montevideo - 
+country:      UY
+phone:        +598 2 9011010 []
+created:      20030521
+changed:      20100119
+
+% whois.lacnic.net accepts only direct match queries.
+% types of queriesare:  POCs  ownerid  CIDR blocks  IP
+% and AS numbers.
+
+host:  201.221.0.0
+email: abuse@DEDICADO.COM
+email: ipadmin@DEDICADO.COM.UY
+inetnum_01: 201.221.0/20
+netmask_01: 255.255.240.0
+hostmin_01: 192.168.0.1
+hostmax_01: 192.168.15.254
+netcount_01: 4094

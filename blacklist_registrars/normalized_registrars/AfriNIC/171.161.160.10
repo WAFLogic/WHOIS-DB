@@ -1,0 +1,62 @@
+source: AfriNIC
+netname_01: ERX-NETBLOCK
+descr_01: Early registration addresses
+remarks_01: Networks in this range were allocated by InterNIC
+remarks_02: prior to the formation of Regional Internet
+remarks_03: registries( rirs ):  AfriNIC  APNIC  ARIN  LACNIC and RIPE NCC.
+remarks_04: Address ranges from this historical space have now
+remarks_05: If your search has returned this record  it means the
+remarks_06: address range is not administered by APNIC.
+remarks_07: - AfriNIC ( Africa )
+remarks_08: website: http://www.afrinic.net/
+remarks_09: commandline:  whois.afrinic.net
+remarks_010: - ARIN ( Northern America )
+remarks_011: website: http://www.arin.net/
+remarks_012: commandline:  whois.arin.net
+remarks_013: - LACNIC ( Latin America and the Carribean )
+remarks_014: website: http://www.lacnic.net/
+remarks_015: commandline:  whois.lacnic.net
+remarks_016: - RIPE NCC ( Europe )
+remarks_017: website: http://www.ripe.net/
+remarks_018: commandline:  whois.ripe.net
+remarks_019: For information on the Early Registration Transfer
+remarks_020: http://www.apnic.net/db/erx
+country_01: AU
+other_01: IANA1-AP
+mnt_01: APNIC-HM
+mnt_02: IRT-APNIC-AP
+other_02: ALLOCATED PORTABLE
+changed_01: hm-changed@apnic.net 20030404
+changed_02: hm-changed@apnic.net 20040926
+changed_03: hm-changed@apnic.net 20110209
+other_03: IRT-APNIC-AP
+w_address_01: Brisbane  Australia
+abuse_01: security@apnic.net
+other_04: HM20-AP
+other_05: NO4-AP
+remarks_021: APNIC is a Regional Internet Registry.
+remarks_022: We do not operate the referring network and
+remarks_023: is unable to investigate complaints of network abuse.
+remarks_024: For more information  see www.apnic.net/irt
+changed_04: hm-changed@apnic.net 20101111
+changed_05: hm-changed@apnic.net 20110124
+other_06: Internet Assigned Numbers Authority
+w_address_02: see http://www.iana.org.
+country_02: US
+phone_01: +1-310-823-9358
+nichdl_01: IANA1-AP
+remarks_025: For more information on IANA services
+remarks_026: go to iana web site@http://www.iana.org.
+mnt_03: MAINT-APNIC-AP
+changed_06: helpdesk@apnic.net 20110811
+changed_07: hm-changed@apnic.net 20111206
+address: 171.161.160.10
+email_01: hm-changed@apnic.net
+email_02: helpdesk@apnic.net
+email_03: security@apnic.net
+email_04: nobody@apnic.net
+inetnum_01: 171.0.0.0/8
+netmask_01: 255.0.0.0
+hostmin_01: 171.0.0.1
+hostmax_01: 171.255.255.254
+netcount_01: 16777214

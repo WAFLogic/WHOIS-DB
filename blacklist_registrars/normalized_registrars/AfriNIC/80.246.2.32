@@ -1,0 +1,46 @@
+source: AfriNIC
+netname_01: NON-RIPE-NCC-MANAGED-ADDRESS-BLOCK
+descr_01: IPv4 address block not managed by the RIPE NCC
+remarks_01: You can find the whois server to query  or the
+remarks_02: http://www.iana.org/assignments/ipv4-address-space
+remarks_03: AFRINIC ( Africa )
+remarks_04: http://www.afrinic.net/ whois.afrinic.net
+remarks_05: APNIC ( Asia Pacific )
+remarks_06: http://www.apnic.net/ whois.apnic.net
+remarks_07: ARIN ( Northern America )
+remarks_08: http://www.arin.net/  whois.arin.net
+remarks_09: LACNIC ( Latin America and the Carribean )
+remarks_010: http://www.lacnic.net/ whois.lacnic.net
+country_01: EU
+other_01: ORG-IANA1-RIPE
+other_02: IANA1-RIPE
+other_03: ALLOCATED UNSPECIFIED
+mnt_01: RIPE-NCC-HM-MNT
+mnt_02: RIPE-NCC-RPSL-MNT
+orgname_01: Internet Assigned Numbers Authority
+other_04: IANA
+w_address_01: see http://www.iana.org
+remarks_011: The IANA allocates IP addresses and AS number blocks to RIRs
+remarks_012: see http://www.iana.org/numbers
+ref_01: RIPE-NCC-HM-MNT
+other_05: Internet Assigned Numbers Authority
+w_address_02: see http://www.iana.org.
+nichdl_01: IANA1-RIPE
+remarks_013: For more information on IANA services
+remarks_014: go to iana web site@http://www.iana.org.
+mnt_03: RIPE-NCC-MNT
+route_01: 80.246.2.0/24
+descr_02: DZ-TDA
+originas_01: AS21391
+mnt_04: TDA-MNT
+address: 80.246.2.32
+inetnum_01: 80.246.0.0/20
+inetnum_02: 80.246.2.0/24
+netmask_01: 255.255.240.0
+hostmin_01: 80.246.0.1
+hostmax_01: 80.246.15.254
+netcount_01: 4094
+netmask_02: 255.255.255.0
+hostmin_02: 80.246.2.1
+hostmax_02: 80.246.2.254
+netcount_02: 254

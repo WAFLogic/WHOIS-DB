@@ -1,0 +1,80 @@
+source: LACNIC
+
+% Joint Whois - whois.lacnic.net
+%  This server accepts single ASN  IPv4 or IPv6 queries
+
+
+
+% Copyright LACNIC lacnic.net
+%  The data below is provided for information purposes
+%  and to assist persons in obtaining information about or
+%  related to AS and IP numbers registrations
+%  By submitting a whois query  you agree to use this data
+%  only for lawful purposes.
+%  2014-12-05 17:07:35 ( brst 02: 00 )
+
+autnum:      AS23201
+abuse:      ABT2
+owner:        Telecel S.A.
+ownerid:      PY-TESA-LACNIC
+responsible:  Eduardo Torres
+address:      Zavala Cue y Artillería  n/d  n/d
+address:      0000 - Fernando de La Mora - Zona Sur - 
+country:      PY
+phone:        +595 21 618 9000 [58 1400]
+ownerc:      EDT26
+techc:       EDT26
+abuse:      ROR30
+inetrev:      190.128.224/19
+nserver:      INET2.TELECEL.COM.PY  
+nsstat:       20141202 AA
+nslastaa:     20141202
+nserver:      INET3.TELECEL.COM.PY  
+nsstat:       20141202 AA
+nslastaa:     20141202
+nserver:      NS3.TELECEL.COM.PY  
+nsstat:       20141202 AA
+nslastaa:     20141202
+created:      20080111
+changed:      20140411
+
+nichdl:      ABT2
+person:       Abuse Telecel
+address:      Zavala Cue y Artilleria  n/d  n/d
+address:      0000 - Fernando de La Mora - Zona Sur - -
+country:      PY
+phone:        +595 981 581350 []
+created:      20080401
+changed:      20080401
+
+nichdl:      EDT26
+person:       Eduardo Torres
+address:      Avda. Zavalas Cué esq. Artillería  1010  
+address:       - Fernado de la Mora - CE
+country:      PY
+phone:        +595 21 6189000 []
+created:      20140408
+changed:      20140411
+
+nichdl:      ROR30
+person:       Rodrigo Riveros
+address:      Av. Artilleria y Zavalas Cue  61890  
+address:      1010 - Fernando de la Mora - CE
+country:      PY
+phone:        +595 21 6189000 []
+created:      20120919
+changed:      20120919
+
+% whois.lacnic.net accepts only direct match queries.
+% types of queriesare:  POCs  ownerid  CIDR blocks  IP
+% and AS numbers.
+
+host:  190.128.233.78
+email: abuse@TIGO.COM.PY
+email: eduardo.torres@TIGO.NET.PY
+email: abuse@TIGO.COM.PY
+inetnum_01: 190.128.192/18
+netmask_01: 255.255.192.0
+hostmin_01: 192.168.0.1
+hostmax_01: 192.168.63.254
+netcount_01: 16382

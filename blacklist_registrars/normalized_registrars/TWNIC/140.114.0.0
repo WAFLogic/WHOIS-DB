@@ -1,0 +1,97 @@
+source: TWNIC
+cidr_01: 140.138.0.0/16  140.128.0.0/13  140.112.0.0/12  140.109.0.0/16  140.136.0.0/15  140.110.0.0/15
+netname_01: APNIC-ERX-140-109-0-0
+nichdl_01: NET-140-109-0-0-1
+parent_01: NET140 ( NET-140-0-0-0-0 )
+other_01: Early Registrations  Transferred to APNIC
+organization_01: Asia Pacific Network Information Centre ( APNIC )
+regdate_01: 2003-07-14
+other_02: 2009-10-08
+comments_01: This IP address range is not registered in the ARIN database.
+comments_02: This range was transferred to the APNIC Whois Database as
+comments_03: part of the ERX ( Early Registration Transfer ) project.
+comments_04: For details  refer to the APNIC Whois Database via
+comments_05: whois.apnic.net or http://wq.apnic.net/apnic-bin/whois.pl
+comments_06: APNIC is the Regional Internet Registry
+comments_07: for the Asia Pacific region.  APNIC does not operate networks
+comments_08: using this IP address range and is not able to investigate
+comments_09: spam or abuse reports relating to these addresses.  For more
+comments_010: help  refer to http://www.apnic.net/apnic-info/whois_search2/abuse-and-spamming
+ref_01: http://whois.arin.net/rest/net/NET-140-109-0-0-1
+orgname_01: Asia Pacific Network Information Centre
+other_03: APNIC
+w_address_01: PO Box 3646
+city_01: South Brisbane
+state_01: QLD
+postalcode_01: 4101
+country_01: AU
+other_04: 2012-01-24
+ref_02: http://whois.arin.net/rest/org/APNIC
+ref_03: server:whois://whois.apnic.net
+abuse_01: AWC12-ARIN
+abuse_02: APNIC Whois Contact
+abuse_03: +61 7 3858 3188 
+abuse_04: search-apnic-not-arin@apnic.net
+abuse_05: http://whois.arin.net/rest/poc/AWC12-ARIN
+nichdl_02: AWC12-ARIN
+orgname_02: APNIC Whois Contact
+phone_01: +61 7 3858 3188 
+ref_04: http://whois.arin.net/rest/poc/AWC12-ARIN
+rwhois_01: whois.apnic.net.
+netname_02: TANET
+descr_01: Taiwan Academic Network
+descr_02: Ministry of Education computer Center
+descr_03: 12F  No 106  Sec. 2  Heping E. Rd.  Taipei
+country_02: TW
+other_05: TA61-AP
+mnt_01: MAINT-TW-TWNIC
+changed_01: hostmaster@twnic.net.tw 20030908
+changed_02: hm-changed@apnic.net 20040926
+other_06: ALLOCATED PORTABLE
+person_01: TANET ADMIN
+nichdl_03: TA61-AP
+w_address_02: 12F  No 106  Sec. 2  Heping E. Rd.  Taipei
+w_address_03: Taipei  106  R.O.C
+phone_02: +886-2-2737-7044
+fax_01: +886-2-2737-7043
+changed_03: hostmaster@twnic.net.tw 20090212
+address: 140.114.0.0
+email_01: search-apnic-not-arin@apnic.net
+email_02: hostmaster@twnic.net.tw
+email_03: hm-changed@apnic.net
+email_04: tanetadm@moe.edu.tw
+inetnum_01: 140.109.0.0/16
+inetnum_02: 140.110.0.0/15
+inetnum_03: 140.112.0.0/12
+inetnum_04: 140.128.0.0/13
+inetnum_05: 140.136.0.0/15
+inetnum_06: 140.138.0.0/16
+inetnum_07: 140.114.0.0/16
+netmask_01: 255.255.0.0
+hostmin_01: 140.109.0.1
+hostmax_01: 140.109.255.254
+netcount_01: 65534
+netmask_02: 255.254.0.0
+hostmin_02: 140.110.0.1
+hostmax_02: 140.111.255.254
+netcount_02: 131070
+netmask_03: 255.240.0.0
+hostmin_03: 140.112.0.1
+hostmax_03: 140.127.255.254
+netcount_03: 1048574
+netmask_04: 255.248.0.0
+hostmin_04: 140.128.0.1
+hostmax_04: 140.135.255.254
+netcount_04: 524286
+netmask_05: 255.254.0.0
+hostmin_05: 140.136.0.1
+hostmax_05: 140.137.255.254
+netcount_05: 131070
+netmask_06: 255.255.0.0
+hostmin_06: 140.138.0.1
+hostmax_06: 140.138.255.254
+netcount_06: 65534
+netmask_07: 255.255.0.0
+hostmin_07: 140.114.0.1
+hostmax_07: 140.114.255.254
+netcount_07: 65534

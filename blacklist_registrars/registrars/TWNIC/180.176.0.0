@@ -1,0 +1,48 @@
+source: TWNIC
+% [whois.apnic.net]
+% whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to  180.176.0.0 - 180.177.255.255 
+
+netname:         TUNGHO-NET
+descr:           Kbro CO. Ltd.
+descr:           7F.  No.31  Jhulun St.  Jhongshan District 
+descr:           Taipei City 104  Taiwan ( R.O.C. )
+descr:           Taipei Taiwan 104
+country:         TW
+adminc:         VL198-AP
+techc:          VL198-AP
+status:          ALLOCATED PORTABLE
+mntby:          MAINT-TW-TWNIC
+mntlower:       MAINT-TW-TWNIC
+mntroutes:      MAINT-TW-TWNIC
+remarks:         -+-+-+-+-+-+-+-+-+-+-+-++-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+remarks:         This object can only be updated by APNIC hostmasters.
+remarks:         To update this object  please contact APNIC
+remarks:         hostmasters and include your organisation s account
+remarks:         name in the subject line.
+remarks:         -+-+-+-+-+-+-+-+-+-+-+-++-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+changed:         hm-changed@apnic.net 20090903
+
+person:          vincent Lin
+nichdl:         VL198-AP
+address:         6F No.42  Kuanchien Rd.  Chungcheng  District  Taipei City  Taiwan  R.O.C.
+address:         Taipei City  100  R.O.C
+phone:           +886-2-8791-0168 ext. 1228
+faxno:          +886-2-8791-2255
+country:         TW
+changed:         hostmaster@twnic.net.tw 20070730
+mntby:          MAINT-TW-TWNIC
+
+% This query was served by the APNIC Whois Service version 1.69.1-APNICv1r0 ( WHOIS3 )
+
+
+host:  180.176.0.0
+email: hm-changed@apnic.net
+email: cm.manager@ethome.com.tw
+email: hostmaster@twnic.net.tw
+inetnum_01: 180.176.0.0/15
+netmask_01: 255.254.0.0
+hostmin_01: 180.176.0.1
+hostmax_01: 180.177.255.254
+netcount_01: 131070

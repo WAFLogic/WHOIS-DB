@@ -1,0 +1,28 @@
+source: Nic.br
+other_01: AS262484
+abuse_01: SZS3
+organization_01: Zumpa Telecom Telecomunicações EIRELI
+organization_02: 016.894.727/0001-08
+person_01: Sergio Zumpano Pereira Santos
+country_01: BR
+organization_03: SZS3
+other_02: SZS3
+other_03: 177.55.66/24
+nserver_01: ns1.zumpatelecom.com.br 
+other_04: 20141204 AA
+nslastaa_01: 20141204
+nserver_02: ns2.zumpatelecom.com.br 
+regdate_01: 20110603
+changed_01: 20110603
+person_02: Sérgio Zumpano Pereira Santos
+regdate_02: 20010203
+changed_02: 20080303
+address: 177.55.66.146
+email_01: dominios@zumpatelecom.com.br
+email_02: cert@cert.br
+email_03: mail-abuse@cert.br
+inetnum_01: 177.55.64/20
+netmask_01: 255.255.240.0
+hostmin_01: 192.168.0.1
+hostmax_01: 192.168.15.254
+netcount_01: 4094

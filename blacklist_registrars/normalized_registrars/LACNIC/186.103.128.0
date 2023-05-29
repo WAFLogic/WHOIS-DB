@@ -1,0 +1,32 @@
+source: LACNIC
+other_01: N/A
+organization_01: Telefonica Empresas
+organization_02: CL-TEEM-LACNIC
+person_01: Technical Contact
+w_address_01: Providencia  119  Piso 8
+w_address_02: 00 - Santiago - 
+country_01: CL
+phone_01: +56 02 6912000 [7562]
+organization_03: HMP2
+other_02: HMP2
+abuse_01: HMP2
+other_03: 186.103.128/17
+nserver_01: NSAUT.TIE.CL  
+other_04: 20141201 AA
+nslastaa_01: 20141201
+regdate_01: 20111013
+changed_01: 20111013
+nichdl_01: HMP2
+person_02: Operador de Red ISP TIE
+w_address_03: Providencia  111  Piso10
+w_address_04: 7500775 - santiago - M
+phone_02: +56 2 26912478 []
+regdate_02: 20050603
+changed_02: 20130417
+address: 186.103.128.0
+email_01: technical.tie@GMAIL.COM
+inetnum_01: 186.103.128/17
+netmask_01: 255.255.128.0
+hostmin_01: 192.168.0.1
+hostmax_01: 192.168.127.254
+netcount_01: 32766

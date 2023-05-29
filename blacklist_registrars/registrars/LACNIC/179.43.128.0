@@ -1,0 +1,56 @@
+source: LACNIC
+
+% Joint Whois - whois.lacnic.net
+%  This server accepts single ASN  IPv4 or IPv6 queries
+
+
+
+% Copyright LACNIC lacnic.net
+%  The data below is provided for information purposes
+%  and to assist persons in obtaining information about or
+%  related to AS and IP numbers registrations
+%  By submitting a whois query  you agree to use this data
+%  only for lawful purposes.
+%  2014-12-05 16:46:12 ( brst 02: 00 )
+
+autnum:      N/A
+owner:        PRIVATE LAYER INC
+ownerid:      PA-PLIN-LACNIC
+responsible:  Ezequiel Pineda
+address:      Torres De Las Americas  Torre C  0  Piso 29 Suite 2901
+address:      00000 - Panama - 
+country:      PA
+phone:        +507  8365449 []
+ownerc:      TSD2
+techc:       TSD2
+abuse:      TSD2
+inetrev:      179.43.128/24
+nserver:      DNS01.PRIVATELAYER.COM  
+nsstat:       20141204 AA
+nslastaa:     20141204
+nserver:      DNS02.PRIVATELAYER.COM  
+nsstat:       20141204 AA
+nslastaa:     20141204
+created:      20131112
+changed:      20131112
+
+nichdl:      TSD2
+person:       Ezequiel Pineda
+address:      Ocean Business Plaza  Piso 17 Suite 1703    Marbella
+address:      00000 - Panama City - PA
+country:      PA
+phone:        +507  8365601 [32]
+created:      20101004
+changed:      20140528
+
+% whois.lacnic.net accepts only direct match queries.
+% types of queriesare:  POCs  ownerid  CIDR blocks  IP
+% and AS numbers.
+
+host:  179.43.128.0
+email: abuse@PRIVATELAYER.COM
+inetnum_01: 179.43.128/18
+netmask_01: 255.255.192.0
+hostmin_01: 192.168.0.1
+hostmax_01: 192.168.63.254
+netcount_01: 16382

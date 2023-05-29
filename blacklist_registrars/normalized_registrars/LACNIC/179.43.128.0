@@ -1,0 +1,32 @@
+source: LACNIC
+other_01: N/A
+organization_01: PRIVATE LAYER INC
+organization_02: PA-PLIN-LACNIC
+person_01: Ezequiel Pineda
+w_address_01: Torres De Las Americas  Torre C  0  Piso 29 Suite 2901
+w_address_02: 00000 - Panama - 
+country_01: PA
+phone_01: +507  8365449 []
+organization_03: TSD2
+other_02: TSD2
+abuse_01: TSD2
+other_03: 179.43.128/24
+nserver_01: DNS01.PRIVATELAYER.COM  
+other_04: 20141204 AA
+nslastaa_01: 20141204
+nserver_02: DNS02.PRIVATELAYER.COM  
+regdate_01: 20131112
+changed_01: 20131112
+nichdl_01: TSD2
+w_address_03: Ocean Business Plaza  Piso 17 Suite 1703    Marbella
+w_address_04: 00000 - Panama City - PA
+phone_02: +507  8365601 [32]
+regdate_02: 20101004
+changed_02: 20140528
+address: 179.43.128.0
+email_01: abuse@PRIVATELAYER.COM
+inetnum_01: 179.43.128/18
+netmask_01: 255.255.192.0
+hostmin_01: 192.168.0.1
+hostmax_01: 192.168.63.254
+netcount_01: 16382

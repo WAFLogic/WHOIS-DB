@@ -1,0 +1,60 @@
+source: LACNIC
+
+% Joint Whois - whois.lacnic.net
+%  This server accepts single ASN  IPv4 or IPv6 queries
+
+
+
+% Copyright LACNIC lacnic.net
+%  The data below is provided for information purposes
+%  and to assist persons in obtaining information about or
+%  related to AS and IP numbers registrations
+%  By submitting a whois query  you agree to use this data
+%  only for lawful purposes.
+%  2014-12-05 17:13:54 ( brst 02: 00 )
+
+autnum:      AS8048
+abuse:      LUM
+owner:        CANTV Servicios  Venezuela
+ownerid:      VE-CSVE-LACNIC
+responsible:  Saba Garcia
+address:      Segunda Avenida de los Palos Grandes  000  Entre Av. Fr
+address:      1060 - Caracas - MI
+country:      VE
+phone:        +58 212 2095680 []
+ownerc:      LUM
+techc:       LUM
+abuse:      LUM
+inetrev:      190.72/14
+nserver:      DNS1.CANTV.NET  
+nsstat:       20141205 AA
+nslastaa:     20141205
+nserver:      DNS2.CANTV.NET  
+nsstat:       20141205 AA
+nslastaa:     20141205
+nserver:      DNS5.CANTV.NET  
+nsstat:       20141205 AA
+nslastaa:     20141205
+created:      20061110
+changed:      20061110
+
+nichdl:      LUM
+person:       Saba García
+address:      Segunda Avenida de los Palos Grandes  Entre Av. Fr  000  
+address:      1060 - Caracas - MI
+country:      VE
+phone:        +58 212 2095680 [0]
+created:      20020911
+changed:      20140212
+
+% whois.lacnic.net accepts only direct match queries.
+% types of queriesare:  POCs  ownerid  CIDR blocks  IP
+% and AS numbers.
+
+host:  190.74.0.0
+email: ipadmin@CANTV.NET
+inetnum_01: 190.72/14
+netmask_01: 255.252.0.0
+hostmin_01: 192.168.0.1
+hostmax_01: 192.171.255.254
+netcount_01: 262142

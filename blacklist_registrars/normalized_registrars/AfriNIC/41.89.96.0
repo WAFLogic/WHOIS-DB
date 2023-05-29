@@ -1,0 +1,27 @@
+source: AfriNIC
+netname_01: Egerton-University-Njoro
+descr_01: Egerton  University-Njoro IP
+country_01: KE
+other_01: KC1-AFRINIC
+other_02: KNT1-AFRINIC
+other_03: ASSIGNED PA
+mnt_01: kenet-mnt
+parent_01: 41.89.0.0 - 41.89.255.255
+person_01: Kevin Chege
+w_address_01: P.O. Box 30244 00100  Nairobi  Kenya
+phone_01: +254206750435
+nichdl_01: KC1-AFRINIC
+remarks_01: Kenya Education Network
+person_02: KENET Noc Team
+w_address_02: P.O. Box 30244 00100 
+phone_02: +254728787085
+nichdl_02: KNT1-AFRINIC
+address: 41.89.96.0
+inetnum_01: 41.89.96.0/24
+inetnum_02: 41.89.97.0/32
+netmask_01: 255.255.255.0
+hostmin_01: 41.89.96.1
+hostmax_01: 41.89.96.254
+netcount_01: 254
+netmask_02: 255.255.255.255
+netcount_02: 1

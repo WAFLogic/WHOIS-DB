@@ -1,0 +1,40 @@
+source: LACNIC
+organization_01: Fundacion Universitaria de San Gil
+organization_02: CO-FUSG-LACNIC
+person_01: Lida Castro
+w_address_01: San Gil Charala  68679  
+w_address_02: - Casanare - 
+country_01: CO
+phone_01: +57 7 7245757 []
+organization_03: LFM2
+other_01: JBF
+abuse_01: JBF
+regdate_01: 20110623
+changed_01: 20110623
+nichdl_01: JBF
+person_02: Jenny Beltran Flórez
+w_address_03: Av Circunvalar No 1 -54  1  54
+w_address_04: 6601 - Pereira - Ri
+phone_02: +57 6 3311125 [1004]
+regdate_02: 20060824
+changed_02: 20110701
+nichdl_02: LFM2
+person_03: Luis Fernando Millán Morales
+w_address_05: Cra 7 14-34    
+w_address_06: - SAN GIL - 
+phone_03: +57 7 7245757 [220]
+regdate_03: 20111205
+changed_03: 20111205
+address: 190.121.128.0
+email_01: aprovisionamiento@MEDIACOMMERCE.NET.CO
+email_02: redes@UNISANGIL.EDU.CO
+inetnum_01: 190.121.128.0/29
+inetnum_02: 190.121.128/20
+netmask_01: 255.255.255.248
+hostmin_01: 190.121.128.1
+hostmax_01: 190.121.128.6
+netcount_01: 6
+netmask_02: 255.255.240.0
+hostmin_02: 192.168.0.1
+hostmax_02: 192.168.15.254
+netcount_02: 4094

@@ -1,0 +1,87 @@
+source: AfriNIC
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% see http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+%note:  this output has been filtered.
+%       To receive output for a database update  use the  -B  flag.
+
+% Information related to  80.246.0.0 - 80.246.15.255 
+
+% No abuse contact registered for 80.246.0.0 - 80.246.15.255
+
+netname:         NON-RIPE-NCC-MANAGED-ADDRESS-BLOCK
+descr:           IPv4 address block not managed by the RIPE NCC
+remarks:         ------------------------------------------------------
+remarks: 
+remarks:         You can find the whois server to query  or the
+remarks:        iana registry to query on this webpage: 
+remarks:        http://www.iana.org/assignments/ipv4-address-space
+remarks: 
+remarks:        you can access databases of other rir sat: 
+remarks: 
+remarks:         AFRINIC ( Africa )
+remarks:        http://www.afrinic.net/ whois.afrinic.net
+remarks: 
+remarks:         APNIC ( Asia Pacific )
+remarks:        http://www.apnic.net/ whois.apnic.net
+remarks: 
+remarks:         ARIN ( Northern America )
+remarks:        http://www.arin.net/  whois.arin.net
+remarks: 
+remarks:         LACNIC ( Latin America and the Carribean )
+remarks:        http://www.lacnic.net/ whois.lacnic.net
+remarks: 
+remarks:         ------------------------------------------------------
+country:         EU
+org:             ORG-IANA1-RIPE
+adminc:         IANA1-RIPE
+techc:          IANA1-RIPE
+status:          ALLOCATED UNSPECIFIED
+mntby:          RIPE-NCC-HM-MNT
+mntlower:       RIPE-NCC-HM-MNT
+mntroutes:      RIPE-NCC-RPSL-MNT
+
+organisation:    ORG-IANA1-RIPE
+orgname:        Internet Assigned Numbers Authority
+orgtype:        IANA
+address:        see http://www.iana.org
+remarks:         The IANA allocates IP addresses and AS number blocks to RIRs
+remarks:        see http://www.iana.org/numbers
+adminc:         IANA1-RIPE
+techc:          IANA1-RIPE
+mntref:         RIPE-NCC-HM-MNT
+mntby:          RIPE-NCC-HM-MNT
+
+role:            Internet Assigned Numbers Authority
+address:        see http://www.iana.org.
+adminc:         IANA1-RIPE
+techc:          IANA1-RIPE
+nichdl:         IANA1-RIPE
+remarks:         For more information on IANA services
+remarks:        go to iana web site@http://www.iana.org.
+mntby:          RIPE-NCC-MNT
+
+% Information related to  80.246.2.0/24AS21391 
+
+route:           80.246.2.0/24
+descr:           DZ-TDA
+originas_01:          AS21391
+mntby:          TDA-MNT
+
+% This query was served by the RIPE Database Query Service version 1.76 ( DB-2 )
+
+
+host:  80.246.2.32
+inetnum_01: 80.246.0.0/20
+inetnum_02: 80.246.2.0/24
+netmask_01: 255.255.240.0
+hostmin_01: 80.246.0.1
+hostmax_01: 80.246.15.254
+netcount_01: 4094
+netmask_02: 255.255.255.0
+hostmin_02: 80.246.2.1
+hostmax_02: 80.246.2.254
+netcount_02: 254

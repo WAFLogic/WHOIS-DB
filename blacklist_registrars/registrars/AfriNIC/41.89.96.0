@@ -1,0 +1,43 @@
+source: AfriNIC
+% This is the AfriNIC Whois server.
+
+%note:  this output has been filtered.
+%       To receive output for a database update  use the  -B  flag.
+
+% Information related to  41.89.96.0 - 41.89.97.0 
+
+% No abuse contact registered for 41.89.96.0 - 41.89.97.0
+
+netname:         Egerton-University-Njoro
+descr:           Egerton  University-Njoro IP
+country:         KE
+adminc:         KC1-AFRINIC
+techc:          KNT1-AFRINIC
+status:          ASSIGNED PA
+mntby:          kenet-mnt
+parent:          41.89.0.0 - 41.89.255.255
+
+person:          Kevin Chege
+address:         P.O. Box 30244 00100  Nairobi  Kenya
+phone:           +254206750435
+nichdl:         KC1-AFRINIC
+remarks:         Kenya Education Network
+
+person:          KENET Noc Team
+address:         P.O. Box 30244 00100 
+Nairobi
+Kenya
+phone:           +254728787085
+nichdl:         KNT1-AFRINIC
+
+
+
+host:  41.89.96.0
+inetnum_01: 41.89.96.0/24
+inetnum_02: 41.89.97.0/32
+netmask_01: 255.255.255.0
+hostmin_01: 41.89.96.1
+hostmax_01: 41.89.96.254
+netcount_01: 254
+netmask_02: 255.255.255.255
+netcount_02: 1

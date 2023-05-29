@@ -1,0 +1,32 @@
+source: Nic.br
+other_01: AS27724
+abuse_01: MAG1884
+organization_01: JEVIN COMERCIO E SERVICOS LTDA
+organization_02: 031.969.702/0001-01
+person_01: Joao Horacio C. Cunha
+country_01: BR
+organization_03: JHC57
+other_02: JHC57
+regdate_01: 20111020
+changed_01: 20111020
+regdate_02: 20020529
+changed_02: 20040621
+other_03: MAG1884
+person_02: Mario Gulla
+regdate_03: 20060518
+changed_03: 20110223
+address: 186.219.34.0
+email_01: leonardo@jevin.com.br
+email_02: registrobr@nqt.com.br
+email_03: cert@cert.br
+email_04: mail-abuse@cert.br
+inetnum_01: 186.219.34.0/28
+inetnum_02: 186.219.32/20
+netmask_01: 255.255.255.240
+hostmin_01: 186.219.34.1
+hostmax_01: 186.219.34.14
+netcount_01: 14
+netmask_02: 255.255.240.0
+hostmin_02: 192.168.0.1
+hostmax_02: 192.168.15.254
+netcount_02: 4094

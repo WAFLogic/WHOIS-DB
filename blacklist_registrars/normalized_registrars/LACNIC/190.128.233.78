@@ -1,0 +1,47 @@
+source: LACNIC
+other_01: AS23201
+abuse_01: ABT2
+organization_01: Telecel S.A.
+organization_02: PY-TESA-LACNIC
+person_01: Eduardo Torres
+w_address_01: Zavala Cue y Artillería  n/d  n/d
+w_address_02: 0000 - Fernando de La Mora - Zona Sur - 
+country_01: PY
+phone_01: +595 21 618 9000 [58 1400]
+organization_03: EDT26
+other_02: EDT26
+abuse_02: ROR30
+other_03: 190.128.224/19
+nserver_01: INET2.TELECEL.COM.PY  
+other_04: 20141202 AA
+nslastaa_01: 20141202
+nserver_02: INET3.TELECEL.COM.PY  
+nserver_03: NS3.TELECEL.COM.PY  
+regdate_01: 20080111
+changed_01: 20140411
+nichdl_01: ABT2
+person_02: Abuse Telecel
+w_address_03: Zavala Cue y Artilleria  n/d  n/d
+w_address_04: 0000 - Fernando de La Mora - Zona Sur - -
+phone_02: +595 981 581350 []
+regdate_02: 20080401
+changed_02: 20080401
+nichdl_02: EDT26
+w_address_05: Avda. Zavalas Cué esq. Artillería  1010  
+w_address_06: - Fernado de la Mora - CE
+phone_03: +595 21 6189000 []
+regdate_03: 20140408
+nichdl_03: ROR30
+person_03: Rodrigo Riveros
+w_address_07: Av. Artilleria y Zavalas Cue  61890  
+w_address_08: 1010 - Fernando de la Mora - CE
+regdate_04: 20120919
+changed_03: 20120919
+address: 190.128.233.78
+email_01: abuse@TIGO.COM.PY
+email_02: eduardo.torres@TIGO.NET.PY
+inetnum_01: 190.128.192/18
+netmask_01: 255.255.192.0
+hostmin_01: 192.168.0.1
+hostmax_01: 192.168.63.254
+netcount_01: 16382

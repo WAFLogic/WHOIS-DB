@@ -1,0 +1,24 @@
+source: TWNIC
+netname_01: TANET
+descr_01: Taiwan Academic Network
+country_01: TW
+other_01: TA61-AP
+mnt_01: MAINT-TW-TWNIC
+changed_01: snw@www.edu.tw 19980908
+other_02: ALLOCATED PORTABLE
+person_01: TANET ADMIN
+nichdl_01: TA61-AP
+w_address_01: 12F  No 106  Sec. 2  Heping E. Rd.  Taipei
+w_address_02: Taipei  106  R.O.C
+phone_01: +886-2-2737-7044
+fax_01: +886-2-2737-7043
+changed_02: hostmaster@twnic.net.tw 20090212
+address: 203.68.0.0
+email_01: snw@www.edu.tw
+email_02: tanetadm@moe.edu.tw
+email_03: hostmaster@twnic.net.tw
+inetnum_01: 203.68.0.0/16
+netmask_01: 255.255.0.0
+hostmin_01: 203.68.0.1
+hostmax_01: 203.68.255.254
+netcount_01: 65534

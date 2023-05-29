@@ -1,0 +1,31 @@
+source: TWNIC
+netname_01: TUNGHO-NET
+descr_01: Kbro CO. Ltd.
+descr_02: 7F.  No.31  Jhulun St.  Jhongshan District 
+descr_03: Taipei City 104  Taiwan ( R.O.C. )
+descr_04: Taipei Taiwan 104
+country_01: TW
+other_01: VL198-AP
+other_02: ALLOCATED PORTABLE
+mnt_01: MAINT-TW-TWNIC
+remarks_01: This object can only be updated by APNIC hostmasters.
+remarks_02: To update this object  please contact APNIC
+remarks_03: hostmasters and include your organisation s account
+remarks_04: name in the subject line.
+changed_01: hm-changed@apnic.net 20090903
+person_01: vincent Lin
+nichdl_01: VL198-AP
+w_address_01: 6F No.42  Kuanchien Rd.  Chungcheng  District  Taipei City  Taiwan  R.O.C.
+w_address_02: Taipei City  100  R.O.C
+phone_01: +886-2-8791-0168 ext. 1228
+fax_01: +886-2-8791-2255
+changed_02: hostmaster@twnic.net.tw 20070730
+address: 180.176.0.0
+email_01: hm-changed@apnic.net
+email_02: cm.manager@ethome.com.tw
+email_03: hostmaster@twnic.net.tw
+inetnum_01: 180.176.0.0/15
+netmask_01: 255.254.0.0
+hostmin_01: 180.176.0.1
+hostmax_01: 180.177.255.254
+netcount_01: 131070

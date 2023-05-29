@@ -1,0 +1,28 @@
+source: AfriNIC
+netname_01: PE-CE_WAN
+descr_01: For MPLS PE-CE WAN Range
+country_01: NG
+other_01: FO19-AFRINIC
+other_02: GO17-AFRINIC
+other_03: ASSIGNED PA
+mnt_01: MNT-ACCELON
+parent_01: 197.156.192.0 - 197.156.255.255
+person_01: Franklyn Okogun
+nichdl_01: FO19-AFRINIC
+w_address_01: 1IS InternetSolutions Limited
+w_address_02: Fabac Centre
+w_address_03: 3B Ligali Ayorinde Street
+w_address_04: Victoria Island
+w_address_05: Lagos
+w_address_06: Nigeria
+phone_01: +2348027922693
+person_02: George Olunwa
+nichdl_02: GO17-AFRINIC
+phone_02: +23412709947
+phone_03: +2348023763264
+address: 197.156.192.0
+inetnum_01: 197.156.192.0/24
+netmask_01: 255.255.255.0
+hostmin_01: 197.156.192.1
+hostmax_01: 197.156.192.254
+netcount_01: 254

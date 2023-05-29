@@ -1,0 +1,59 @@
+source: AfriNIC
+% This is the AfriNIC Whois server.
+
+%note:  this output has been filtered.
+%       To receive output for a database update  use the  -B  flag.
+
+% Information related to  105.0.0.0 - 105.15.255.255 
+
+% No abuse contact registered for 105.0.0.0 - 105.15.255.255
+
+netname:         CELLC
+descr:           Cell C ( Pty ) Ltd
+country:         ZA
+org:             ORG-CC2-AFRINIC
+adminc:         NR7-AFRINIC
+techc:          NR7-AFRINIC
+techc:          DG5-AFRINIC
+status:          ALLOCATED PA
+mntby:          AFRINIC-HM-MNT
+mntlower:       CELLC-MNT
+parent:          105.0.0.0 - 105.255.255.255
+
+organisation:    ORG-CC2-AFRINIC
+orgname:        Cell C ( Pty ) Ltd
+orgtype:        LIR
+country:         ZA
+address:         Cell C ( Pty ) Ltd
+address:         Esher Place  7 Federal Rd
+address:         Sandhurst
+phone:           +27 11 324 4055
+adminc:         NR7-AFRINIC
+techc:          NR7-AFRINIC
+techc:          DG5-afrinic
+techc:          FD7-AFRINIC
+mntref:         AFRINIC-HM-MNT
+mntref:         CELLC-MNT
+mntby:          AFRINIC-HM-MNT
+
+person:          Dheven Govender
+nichdl:         DG5-afrinic
+address:         Cell C  150 Rivonia Road  Morningside
+address:         sandton
+address:         South Africa
+phone:           +27841744346
+
+person:          Nishal Radhalal
+address:         Cell C  150 Rivonia Road  Morningside
+address:         ZA
+phone:           +27841744055
+nichdl:         NR7-AFRINIC
+
+
+
+host:  105.9.0.0
+inetnum_01: 105.0.0.0/12
+netmask_01: 255.240.0.0
+hostmin_01: 105.0.0.1
+hostmax_01: 105.15.255.254
+netcount_01: 1048574

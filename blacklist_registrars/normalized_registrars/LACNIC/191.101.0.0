@@ -1,0 +1,37 @@
+source: LACNIC
+organization_01: Digital Energy Technologies Ltd
+organization_02: US-DETL-LACNIC
+person_01: Petras Sinkevicius
+w_address_01: LA SALLE ST  427  S
+w_address_02: 60605 - Chicago - IL
+country_01: US
+phone_01: +1 888 8042926 []
+organization_03: MOJ4
+other_01: MOJ4
+abuse_01: VIG28
+regdate_01: 20140401
+changed_01: 20140905
+nichdl_01: MOJ4
+person_02: Network Operating Center
+w_address_03: LA SALLE ST  427  
+phone_02: +1  8042926 []
+regdate_02: 20140723
+nichdl_02: VIG28
+w_address_04: Moneda  970  Piso 5
+w_address_05: 8320313 - Santiago - RM
+country_02: CL
+phone_03: +56 229 382322 []
+regdate_03: 20130508
+changed_02: 20140108
+address: 191.101.0.0
+email_01: noc@AS61440.NET
+inetnum_01: 191.101.0/21
+inetnum_02: 191.101/16
+netmask_01: 255.255.248.0
+hostmin_01: 192.168.0.1
+hostmax_01: 192.168.7.254
+netcount_01: 2046
+netmask_02: 255.255.0.0
+hostmin_02: 192.168.0.1
+hostmax_02: 192.168.255.254
+netcount_02: 65534

@@ -1,0 +1,77 @@
+country: KR
+source: KRNIC
+% [whois.apnic.net]
+% whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to  101.55.0.0 - 101.55.127.255 
+
+netname:         KDTIDC
+descr:           KDTIDC
+descr:           8F  Sindorim technomart Guro 5( o )-dong Guro-gu Seoul
+descr:           ************************************
+descr:           Allocated to KRNIC Member.
+descr:           If you would like to find assignment
+descr:           information in detail please refer to
+descr:          the krnic whois databaseat: 
+descr:           http://whois.kisa.or.kr/english/index.html 
+descr:           ************************************
+country:         KR
+adminc:         IM393-AP
+techc:          IM393-AP
+status:          Allocated Portable
+remarks:         www.kdtidc.com
+mntby:          MNT-KRNIC-AP
+mntlower:       MNT-KRNIC-AP
+mntirt:         IRT-KRNIC-KR
+changed:         hm-changed@apnic.net 20110210
+
+irt:             IRT-KRNIC-KR
+address:         6F  West Hall  118 Building( IT Venture Tower ) 
+address:         78  Garak-dong  Songpa-gu
+address:         Seoul  Korea  137-857
+abuse:   hostmaster@kisa.or.kr
+adminc:         HM127-AP
+techc:          HM127-AP
+mntby:          MNT-KRNIC-AP
+changed:         hostmaster@kisa.or.kr 20101109
+
+person:          IP MANAGER
+nichdl:         IM393-AP
+address:         8F  Sindorim technomart Guro 5( o )-dong Guro-gu Seoul
+phone:           +82-2-2062-7671
+faxno:          +82-2-2062-7681
+country:         KR
+changed:         hostmaster@nic.or.kr 20130809
+mntby:          MNT-KRNIC-AP
+
+% Information related to  101.55.0.0 - 101.55.127.255 
+
+netname:         KDTIDC-KR
+descr:           Korea Data Telecommunication Co.  Ltd.
+country:         KR
+adminc:         YZ1321-KR
+techc:          YZ1321-KR
+status:          ALLOCATED PORTABLE
+mntby:          MNT-KRNIC-AP
+mntirt:         IRT-KRNIC-KR
+remarks:         This information has been partially mirrored by APNIC from
+remarks:         KRNIC. To obtain more specific information  please use the
+remarks:         KRNIC whois server@whois.krnic.net.
+changed:         hostmaster@nic.or.kr
+
+% This query was served by the APNIC Whois Service version 1.69.1-APNICv1r0 ( WHOIS2 )
+
+
+host:  101.55.125.0
+email: hm-changed@apnic.net
+email: hostmaster@kisa.or.kr
+email: hostmaster@kisa.or.kr
+email: hostmaster@kisa.or.kr
+email: ip@kdtidc.com
+email: hostmaster@nic.or.kr
+email: hostmaster@nic.or.kr
+inetnum_01: 101.55.0.0/17
+netmask_01: 255.255.128.0
+hostmin_01: 101.55.0.1
+hostmax_01: 101.55.127.254
+netcount_01: 32766

@@ -1,0 +1,147 @@
+source: TWNIC
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at:https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results  please report at
+# http://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+
+#
+# the following results may also be obtainedvia: 
+# http://whois.arin.net/rest/nets;q:  140.114.0.0?showDetails=true&showARIN=false&ext=netref2
+#
+
+cidr:            140.138.0.0/16  140.128.0.0/13  140.112.0.0/12  140.109.0.0/16  140.136.0.0/15  140.110.0.0/15
+netname:         APNIC-ERX-140-109-0-0
+nichdl:       NET-140-109-0-0-1
+parent:          NET140 ( NET-140-0-0-0-0 )
+nettype:         Early Registrations  Transferred to APNIC
+originas_01:        
+organization:    Asia Pacific Network Information Centre ( APNIC )
+regdate:         2003-07-14
+updated:         2009-10-08
+comment:         This IP address range is not registered in the ARIN database.
+comment:         This range was transferred to the APNIC Whois Database as
+comment:         part of the ERX ( Early Registration Transfer ) project.
+comment:         For details  refer to the APNIC Whois Database via
+comment:        whois.apnic.net or http://wq.apnic.net/apnic-bin/whois.pl
+comment:         
+comment:        ** importantnote:  APNIC is the Regional Internet Registry
+comment:         for the Asia Pacific region.  APNIC does not operate networks
+comment:         using this IP address range and is not able to investigate
+comment:         spam or abuse reports relating to these addresses.  For more
+comment:        help  refer to http://www.apnic.net/apnic-info/whois_search2/abuse-and-spamming
+ref:            http://whois.arin.net/rest/net/NET-140-109-0-0-1
+
+orgname:         Asia Pacific Network Information Centre
+orgid:           APNIC
+address:         PO Box 3646
+city:            South Brisbane
+stateprov:       QLD
+postalcode:      4101
+country:         AU
+regdate:         
+updated:         2012-01-24
+ref:            http://whois.arin.net/rest/org/APNIC
+
+referralserver:whois://whois.apnic.net
+
+abuse:  AWC12-ARIN
+abuse:    APNIC Whois Contact
+abuse:   +61 7 3858 3188 
+abuse:   search-apnic-not-arin@apnic.net
+abuse:    http://whois.arin.net/rest/poc/AWC12-ARIN
+
+nichdl:  AWC12-ARIN
+orgtechname:    APNIC Whois Contact
+orgtechphone:   +61 7 3858 3188 
+orgtechref:    http://whois.arin.net/rest/poc/AWC12-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at:https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results  please report at
+# http://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+
+
+Found a referral to whois.apnic.net.
+
+% [whois.apnic.net]
+% whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to  140.114.0.0 - 140.114.255.255 
+
+netname:         TANET
+descr:           Taiwan Academic Network
+descr:           Ministry of Education computer Center
+descr:           12F  No 106  Sec. 2  Heping E. Rd.  Taipei
+country:         TW
+adminc:         TA61-AP
+techc:          TA61-AP
+mntby:          MAINT-TW-TWNIC
+changed:         hostmaster@twnic.net.tw 20030908
+changed:         hm-changed@apnic.net 20040926
+status:          ALLOCATED PORTABLE
+
+person:          TANET ADMIN
+nichdl:         TA61-AP
+address:         12F  No 106  Sec. 2  Heping E. Rd.  Taipei
+address:         Taipei  106  R.O.C
+phone:           +886-2-2737-7044
+faxno:          +886-2-2737-7043
+country:         TW
+changed:         hostmaster@twnic.net.tw 20090212
+mntby:          MAINT-TW-TWNIC
+
+% This query was served by the APNIC Whois Service version 1.69.1-APNICv1r0 ( WHOIS3 )
+
+
+host:  140.114.0.0
+email: search-apnic-not-arin@apnic.net
+email: search-apnic-not-arin@apnic.net
+email: hostmaster@twnic.net.tw
+email: hm-changed@apnic.net
+email: tanetadm@moe.edu.tw
+email: hostmaster@twnic.net.tw
+inetnum_01: 140.109.0.0/16
+inetnum_02: 140.110.0.0/15
+inetnum_03: 140.112.0.0/12
+inetnum_04: 140.128.0.0/13
+inetnum_05: 140.136.0.0/15
+inetnum_06: 140.138.0.0/16
+inetnum_07: 140.114.0.0/16
+netmask_01: 255.255.0.0
+hostmin_01: 140.109.0.1
+hostmax_01: 140.109.255.254
+netcount_01: 65534
+netmask_02: 255.254.0.0
+hostmin_02: 140.110.0.1
+hostmax_02: 140.111.255.254
+netcount_02: 131070
+netmask_03: 255.240.0.0
+hostmin_03: 140.112.0.1
+hostmax_03: 140.127.255.254
+netcount_03: 1048574
+netmask_04: 255.248.0.0
+hostmin_04: 140.128.0.1
+hostmax_04: 140.135.255.254
+netcount_04: 524286
+netmask_05: 255.254.0.0
+hostmin_05: 140.136.0.1
+hostmax_05: 140.137.255.254
+netcount_05: 131070
+netmask_06: 255.255.0.0
+hostmin_06: 140.138.0.1
+hostmax_06: 140.138.255.254
+netcount_06: 65534
+netmask_07: 255.255.0.0
+hostmin_07: 140.114.0.1
+hostmax_07: 140.114.255.254
+netcount_07: 65534

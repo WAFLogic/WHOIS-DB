@@ -1,0 +1,37 @@
+source: TWNIC
+% [whois.apnic.net]
+% whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to  203.68.0.0 - 203.68.255.255 
+
+netname:         TANET
+descr:           Taiwan Academic Network
+country:         TW
+adminc:         TA61-AP
+techc:          TA61-AP
+mntby:          MAINT-TW-TWNIC
+changed:         snw@www.edu.tw 19980908
+status:          ALLOCATED PORTABLE
+
+person:          TANET ADMIN
+nichdl:         TA61-AP
+address:         12F  No 106  Sec. 2  Heping E. Rd.  Taipei
+address:         Taipei  106  R.O.C
+phone:           +886-2-2737-7044
+faxno:          +886-2-2737-7043
+country:         TW
+changed:         hostmaster@twnic.net.tw 20090212
+mntby:          MAINT-TW-TWNIC
+
+% This query was served by the APNIC Whois Service version 1.69.1-APNICv1r0 ( WHOIS4 )
+
+
+host:  203.68.0.0
+email: snw@www.edu.tw
+email: tanetadm@moe.edu.tw
+email: hostmaster@twnic.net.tw
+inetnum_01: 203.68.0.0/16
+netmask_01: 255.255.0.0
+hostmin_01: 203.68.0.1
+hostmax_01: 203.68.255.254
+netcount_01: 65534

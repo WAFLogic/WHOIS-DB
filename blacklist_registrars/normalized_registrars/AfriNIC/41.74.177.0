@@ -1,0 +1,23 @@
+source: AfriNIC
+netname_01: RSAWEB
+descr_01: Network Resources - Datacentre1 & 2
+country_01: ZA
+other_01: RH4-AFRINIC
+other_02: ASSIGNED PA
+mnt_01: RSA-MNT
+parent_01: 41.74.176.0 - 41.74.191.255
+person_01: RSAWeb Hostmaster
+nichdl_01: RH4-AFRINIC
+w_address_01: Suite 3 Private Bag X1005
+w_address_02: Claremont
+w_address_03: 7735
+w_address_04: Cape Town
+w_address_05: South Africa
+phone_01: +27214626798
+fax_01: +27214626794
+address: 41.74.177.0
+inetnum_01: 41.74.177.0/24
+netmask_01: 255.255.255.0
+hostmin_01: 41.74.177.1
+hostmax_01: 41.74.177.254
+netcount_01: 254

@@ -1,0 +1,64 @@
+source: AfriNIC
+% This is the AfriNIC Whois server.
+
+%note:  this output has been filtered.
+%       To receive output for a database update  use the  -B  flag.
+
+% Information related to  196.220.96.0 - 196.220.127.255 
+
+% No abuse contact registered for 196.220.96.0 - 196.220.127.255
+
+netname:         NUST-v4
+descr:           National University of Science and Technology
+country:         ZW
+org:             ORG-NUoS1-AFRINIC
+adminc:         CCLS1-AFRINIC
+techc:          HT7-AFRINIC
+status:          ASSIGNED PI
+mntby:          AFRINIC-HM-MNT
+mntlower:       NUST-MNT
+parent:          196.0.0.0 - 196.255.255.255
+
+organisation:    ORG-NUoS1-AFRINIC
+orgname:        National University of Science and Technology
+orgtype:        EU-PI
+country:         ZW
+address:         ICTS Department
+address:         2nd Floor Admin Block
+address:         Corner Gwanda Road/Cecil Avenue
+address:         Bulawayo
+phone:           +263 9 282842
+faxno:          +263 9 286803
+adminc:         CCLS1-AFRINIC
+techc:          HT7-AFRINIC
+mntref:         AFRINIC-HM-MNT
+mntref:         NUST-MNT
+mntby:          AFRINIC-HM-MNT
+
+person:          C C L Sibanda
+address:         P O Box AC 939
+Ascot
+Bulawayo
+Zimbabwe
+phone:           +2639282842
+faxno:          +2639286803
+nichdl:         CCLS1-AFRINIC
+
+person:          H Tsokodayi
+nichdl:         HT7-AFRINIC
+address:         P O Box AC 939  Ascot
+address:         Bulawayo
+address:         Zimbabwe
+address:         Bulawayo
+address:         Zimbabwe
+phone:           +2639282842
+faxno:          +2639286803
+
+
+
+host:  196.220.96.0
+inetnum_01: 196.220.96.0/19
+netmask_01: 255.255.224.0
+hostmin_01: 196.220.96.1
+hostmax_01: 196.220.127.254
+netcount_01: 8190
