@@ -117,3 +117,9 @@ mkdir scripts/new_queries
 mkdir scripts/ZZZ_admin_scripts
 echo "./COMMAND_THAT_BLOWS_UP_ENTIRE_COMPANY.sh"
 echo ";)"
+
+Original Home of the WHOIS DB & ProjectBAIU:
+https://projectbaiu.org
+Developer of the WHOIS DB & ProjectBAIU:
+The WAF Guy @ https://waflogic.com
+thewafguy@waflogic.com
