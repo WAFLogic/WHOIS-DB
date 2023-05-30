@@ -1,0 +1,46 @@
+country_01: KR
+source: KRNIC
+netname_01: KDTIDC
+descr_01: KDTIDC
+descr_02: 8F  Sindorim technomart Guro 5( o )-dong Guro-gu Seoul
+descr_03: Allocated to KRNIC Member.
+descr_04: If you would like to find assignment
+descr_05: information in detail please refer to
+descr_06: http://whois.kisa.or.kr/english/index.html 
+other_01: IM393-AP
+other_02: Allocated Portable
+remarks_01: www.kdtidc.com
+mnt_01: MNT-KRNIC-AP
+mnt_02: IRT-KRNIC-KR
+changed_01: hm-changed@apnic.net 20110210
+other_03: IRT-KRNIC-KR
+w_address_01: 6F  West Hall  118 Building( IT Venture Tower ) 
+w_address_02: 78  Garak-dong  Songpa-gu
+w_address_03: Seoul  Korea  137-857
+abuse_01: hostmaster@kisa.or.kr
+other_04: HM127-AP
+changed_02: hostmaster@kisa.or.kr 20101109
+person_01: IP MANAGER
+nichdl_01: IM393-AP
+w_address_04: 8F  Sindorim technomart Guro 5( o )-dong Guro-gu Seoul
+phone_01: +82-2-2062-7671
+fax_01: +82-2-2062-7681
+changed_03: hostmaster@nic.or.kr 20130809
+netname_02: KDTIDC-KR
+descr_07: Korea Data Telecommunication Co.  Ltd.
+other_05: YZ1321-KR
+other_06: ALLOCATED PORTABLE
+remarks_02: This information has been partially mirrored by APNIC from
+remarks_03: KRNIC. To obtain more specific information  please use the
+remarks_04: KRNIC whois server@whois.krnic.net.
+changed_04: hostmaster@nic.or.kr
+address: 101.55.125.0
+email_01: hm-changed@apnic.net
+email_02: hostmaster@kisa.or.kr
+email_03: ip@kdtidc.com
+email_04: hostmaster@nic.or.kr
+inetnum_01: 101.55.0.0/17
+netmask_01: 255.255.128.0
+hostmin_01: 101.55.0.1
+hostmax_01: 101.55.127.254
+netcount_01: 32766

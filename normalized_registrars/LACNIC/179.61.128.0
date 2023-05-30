@@ -1,0 +1,33 @@
+source: LACNIC
+other_01: AS61440
+abuse_01: VIG28
+organization_01: Digital Energy Technologies Chile SpA
+organization_02: CL-DETC-LACNIC
+person_01: Vincentas Grinius
+w_address_01: Moneda  970  Piso 5
+w_address_02: 8320313 - Santiago - 
+country_01: CL
+phone_01: +56 226 382322 []
+organization_03: VIG28
+other_02: VIG28
+other_03: 179.61.128/24
+nserver_01: NS5.AS61440.NET  
+other_04: 20141203 AA
+nslastaa_01: 20141203
+nserver_02: NS6.AS61440.NET  
+nserver_03: NS7.AS61440.NET  
+regdate_01: 20140106
+changed_01: 20140106
+nichdl_01: VIG28
+person_02: Network Operating Center
+w_address_03: 8320313 - Santiago - RM
+phone_02: +56 229 382322 []
+regdate_02: 20130508
+changed_02: 20140108
+address: 179.61.128.0
+email_01: noc@AS61440.NET
+inetnum_01: 179.61.128/17
+netmask_01: 255.255.128.0
+hostmin_01: 192.168.0.1
+hostmax_01: 192.168.127.254
+netcount_01: 32766

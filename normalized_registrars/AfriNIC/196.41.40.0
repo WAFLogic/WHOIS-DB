@@ -1,0 +1,21 @@
+source: AfriNIC
+netname_01: STARTEL-DSM
+descr_01: Holiday Inn - ONE
+country_01: TZ
+other_01: NM25-AFRINIC
+other_02: ASSIGNED PA
+remarks_01: Holiday Inn
+mnt_01: TF-196-41-32-0-196-41-63-255-MNT
+parent_01: 196.41.32.0 - 196.41.63.255
+person_01: Nyangu Meghji
+nichdl_01: NM25-AFRINIC
+w_address_01: Off Maktaba Street 1st Floor GAK Patel Building
+w_address_02: Dar Es Salaam
+w_address_03: Tanzania
+phone_01: +255784711626
+address: 196.41.40.0
+inetnum_01: 196.41.40.0/29
+netmask_01: 255.255.255.248
+hostmin_01: 196.41.40.1
+hostmax_01: 196.41.40.6
+netcount_01: 6

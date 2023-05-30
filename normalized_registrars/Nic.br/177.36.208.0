@@ -1,0 +1,27 @@
+source: Nic.br
+other_01: AS52967
+abuse_01: EXJ2
+organization_01: NT Brasil Tecnologia Ltda. ME
+organization_02: 010.560.288/0001-02
+person_01: Edson Xavier Veloso Júnior
+country_01: BR
+organization_03: EXJ2
+other_02: EXJ2
+other_03: 177.36.208/24
+nserver_01: ns1.klisatelecom.com.br 
+other_04: 20141201 AA
+nslastaa_01: 20141201
+nserver_02: ns2.klisatelecom.com.br 
+regdate_01: 20110601
+changed_01: 20110601
+regdate_02: 20020923
+changed_02: 20090204
+address: 177.36.208.0
+email_01: edson@ntbr.com.br
+email_02: cert@cert.br
+email_03: mail-abuse@cert.br
+inetnum_01: 177.36.208/20
+netmask_01: 255.255.240.0
+hostmin_01: 192.168.0.1
+hostmax_01: 192.168.15.254
+netcount_01: 4094

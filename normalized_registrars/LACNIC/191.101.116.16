@@ -1,0 +1,33 @@
+source: LACNIC
+organization_01: Digital Energy Technologies Ltd
+organization_02: UK-DETL-LACNIC
+person_01: Vincentas Grinius
+w_address_01: Greenwich View Place  5  
+w_address_02: E149NN - London - 
+country_01: UK
+phone_01: +44  382322 []
+organization_03: VIG28
+other_01: VIG28
+abuse_01: VIG28
+regdate_01: 20140813
+changed_01: 20140813
+nichdl_01: VIG28
+person_02: Network Operating Center
+w_address_03: Moneda  970  Piso 5
+w_address_04: 8320313 - Santiago - RM
+country_02: CL
+phone_02: +56 229 382322 []
+regdate_02: 20130508
+changed_02: 20140108
+address: 191.101.116.16
+email_01: noc@AS61440.NET
+inetnum_01: 191.101.116.16/28
+inetnum_02: 191.101/16
+netmask_01: 255.255.255.240
+hostmin_01: 191.101.116.17
+hostmax_01: 191.101.116.30
+netcount_01: 14
+netmask_02: 255.255.0.0
+hostmin_02: 192.168.0.1
+hostmax_02: 192.168.255.254
+netcount_02: 65534

@@ -1,0 +1,40 @@
+source: AfriNIC
+netname_01: MTN-Nigeria
+descr_01: MTN Nigeria
+country_01: NG
+other_01: ORG-MN1-AFRINIC
+other_02: CN6-AFRINIC
+other_03: AE32-AFRINIC
+other_04: ALLOCATED PA
+mnt_01: AFRINIC-HM-MNT
+mnt_02: MTNNIGERA1-MNT
+parent_01: 197.0.0.0 - 197.255.255.255
+orgname_01: MTN Nigeria
+other_05: LIR
+w_address_01: Yellodrome building  adeola hopewell street  Victoria island
+w_address_02: Victoria island
+phone_01: +08039029004
+phone_02: +08031230141
+other_06: BRM1-AFRINIC
+other_07: ISP1-AFRINIC
+ref_01: AFRINIC-HM-MNT
+ref_02: MTNNIGERA1-MNT
+person_01: Atte Enyenihi
+nichdl_01: AE32-AFRINIC
+w_address_03: MTN Nigeria Communications Limited
+w_address_04: Plot 1612 Adeola Hopewell Street
+w_address_05: Victoria Island
+w_address_06: Lagos State
+w_address_07: Nigeria
+w_address_08: lagos
+w_address_09: Lagos
+phone_03: +2348032009260
+person_02: Chukwunonso Nkenke
+nichdl_02: CN6-AFRINIC
+phone_04: +2348032005038
+address: 197.210.0.0
+inetnum_01: 197.210.0.0/16
+netmask_01: 255.255.0.0
+hostmin_01: 197.210.0.1
+hostmax_01: 197.210.255.254
+netcount_01: 65534

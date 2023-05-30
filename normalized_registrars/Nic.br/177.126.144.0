@@ -1,0 +1,22 @@
+source: Nic.br
+other_01: AS52714
+abuse_01: AAS1009
+organization_01: Firemicro Informática Com. E Serv. Ltda
+organization_02: 097.430.847/0001-48
+person_01: Alessandro Antonio Sampaio dos Santos
+country_01: BR
+organization_03: AAS1009
+other_02: AAS1009
+regdate_01: 20130108
+changed_01: 20130108
+regdate_02: 20050331
+changed_02: 20120822
+address: 177.126.144.0
+email_01: firemicro@uol.com.br
+email_02: cert@cert.br
+email_03: mail-abuse@cert.br
+inetnum_01: 177.126.144/21
+netmask_01: 255.255.248.0
+hostmin_01: 192.168.0.1
+hostmax_01: 192.168.7.254
+netcount_01: 2046

@@ -1,0 +1,30 @@
+source: AfriNIC
+netname_01: INETSERVICES64
+descr_01: Yattoo Services Hosting
+country_01: CG
+other_01: JH6-AFRINIC
+other_02: JL8-AFRINIC
+other_03: HR4-AFRINIC
+other_04: ASSIGNED PA
+mnt_01: OFIS
+parent_01: 41.75.64.0 - 41.75.79.255
+person_01: Heiko Rehm
+w_address_01: Rue Charles de Gaulle
+phone_01: +2426708080
+fax_01: +2426708080
+nichdl_01: HR4-AFRINIC
+person_02: julien heuze
+w_address_02: 317 Avenue Charles de Gaulle
+w_address_03: Pointe Noire
+w_address_04: Republic of Congo
+phone_02: +242 958 20 92
+nichdl_02: jh6-afrinic
+person_03: jeremie lecocq
+phone_03: +242 670 83 83
+nichdl_03: jl8-afrinic
+address: 41.75.64.0
+inetnum_01: 41.75.64.0/24
+netmask_01: 255.255.255.0
+hostmin_01: 41.75.64.1
+hostmax_01: 41.75.64.254
+netcount_01: 254

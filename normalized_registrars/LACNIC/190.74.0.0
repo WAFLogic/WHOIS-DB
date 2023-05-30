@@ -1,0 +1,33 @@
+source: LACNIC
+other_01: AS8048
+abuse_01: LUM
+organization_01: CANTV Servicios  Venezuela
+organization_02: VE-CSVE-LACNIC
+person_01: Saba Garcia
+w_address_01: Segunda Avenida de los Palos Grandes  000  Entre Av. Fr
+w_address_02: 1060 - Caracas - MI
+country_01: VE
+phone_01: +58 212 2095680 []
+organization_03: LUM
+other_02: LUM
+other_03: 190.72/14
+nserver_01: DNS1.CANTV.NET  
+other_04: 20141205 AA
+nslastaa_01: 20141205
+nserver_02: DNS2.CANTV.NET  
+nserver_03: DNS5.CANTV.NET  
+regdate_01: 20061110
+changed_01: 20061110
+nichdl_01: LUM
+person_02: Saba García
+w_address_03: Segunda Avenida de los Palos Grandes  Entre Av. Fr  000  
+phone_02: +58 212 2095680 [0]
+regdate_02: 20020911
+changed_02: 20140212
+address: 190.74.0.0
+email_01: ipadmin@CANTV.NET
+inetnum_01: 190.72/14
+netmask_01: 255.252.0.0
+hostmin_01: 192.168.0.1
+hostmax_01: 192.171.255.254
+netcount_01: 262142

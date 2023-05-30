@@ -1,0 +1,37 @@
+source: LACNIC
+other_01: N/A
+organization_01: Tecnowind S.A.
+organization_02: UY-TESA3-LACNIC
+person_01: Administracion IP Dedicado
+w_address_01: Plaza Independencia  755  Piso 9
+w_address_02: 11100 - Montevideo - MV
+country_01: UY
+phone_01: +598 2 900 02 90 []
+organization_03: AID
+other_02: AID
+abuse_01: AAD2
+other_03: 201.221.0/24
+nserver_01: NS1.DEDICADO.COM.UY  
+other_04: 20141204 AA
+nslastaa_01: 20141204
+nserver_02: NS2.DEDICADO.COM.UY  
+regdate_01: 20050413
+changed_01: 20080610
+nichdl_01: AAD2
+person_02: Administracion Abuse Dedicado
+w_address_03: Plaza Independencia  755  9
+w_address_04: 11100 - Montevideo - 
+phone_02: +598 2 9011010 []
+regdate_02: 20080610
+changed_02: 20100119
+nichdl_02: AID
+person_03: Administracion IP ( Dedicado )
+regdate_03: 20030521
+address: 201.221.0.0
+email_01: abuse@DEDICADO.COM
+email_02: ipadmin@DEDICADO.COM.UY
+inetnum_01: 201.221.0/20
+netmask_01: 255.255.240.0
+hostmin_01: 192.168.0.1
+hostmax_01: 192.168.15.254
+netcount_01: 4094
