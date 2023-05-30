@@ -1,0 +1,53 @@
+source: LACNIC
+
+% Joint Whois - whois.lacnic.net
+%  This server accepts single ASN  IPv4 or IPv6 queries
+
+
+
+% Copyright LACNIC lacnic.net
+%  The data below is provided for information purposes
+%  and to assist persons in obtaining information about or
+%  related to AS and IP numbers registrations
+%  By submitting a whois query  you agree to use this data
+%  only for lawful purposes.
+%  2014-12-05 16:50:19 ( brst 02: 00 )
+
+autnum:      N/A
+owner:        Telefonica Empresas
+ownerid:      CL-TEEM-LACNIC
+responsible:  Technical Contact
+address:      Providencia  119  Piso 8
+address:      00 - Santiago - 
+country:      CL
+phone:        +56 02 6912000 [7562]
+ownerc:      HMP2
+techc:       HMP2
+abuse:      HMP2
+inetrev:      186.103.128/17
+nserver:      NSAUT.TIE.CL  
+nsstat:       20141201 AA
+nslastaa:     20141201
+created:      20111013
+changed:      20111013
+
+nichdl:      HMP2
+person:       Operador de Red ISP TIE
+address:      Providencia  111  Piso10
+address:      7500775 - santiago - M
+country:      CL
+phone:        +56 2 26912478 []
+created:      20050603
+changed:      20130417
+
+% whois.lacnic.net accepts only direct match queries.
+% types of queriesare:  POCs  ownerid  CIDR blocks  IP
+% and AS numbers.
+
+host:  186.103.128.0
+email: technical.tie@GMAIL.COM
+inetnum_01: 186.103.128/17
+netmask_01: 255.255.128.0
+hostmin_01: 192.168.0.1
+hostmax_01: 192.168.127.254
+netcount_01: 32766

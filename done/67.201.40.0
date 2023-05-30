@@ -1,0 +1,222 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results, please report at
+# http://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+
+#
+# The following results may also be obtained via:
+# http://whois.arin.net/rest/nets;q=67.201.40.0?showDetails=true&showARIN=false&ext=netref2
+#
+
+
+# start
+
+NetRange:       67.201.0.0 - 67.201.63.255
+CIDR:           67.201.0.0/18
+NetName:        NETBLK-PACKETEXCHANGE-V4-04
+NetHandle:      NET-67-201-0-0-1
+Parent:         NET67 (NET-67-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS25973
+Organization:   PacketExchange, Inc (PACKE-25)
+RegDate:        2007-07-11
+Updated:        2012-02-24
+Ref:            http://whois.arin.net/rest/net/NET-67-201-0-0-1
+
+
+OrgName:        PacketExchange, Inc
+OrgId:          PACKE-25
+Address:        GTT Communications, Inc.
+Address:        8484 Westpark Drive
+Address:        Suite 720
+City:           McLean
+StateProv:      VA
+PostalCode:     22102
+Country:        US
+RegDate:        2008-02-26
+Updated:        2014-04-16
+Ref:            http://whois.arin.net/rest/org/PACKE-25
+
+OrgAbuseHandle: GAD46-ARIN
+OrgAbuseName:   GTT Abuse Department
+OrgAbusePhone:  +1-703-442-5501 
+OrgAbuseEmail:  abuse@gtt.net
+OrgAbuseRef:    http://whois.arin.net/rest/poc/GAD46-ARIN
+
+OrgTechHandle: GNOC16-ARIN
+OrgTechName:   GTT Network Operations Center
+OrgTechPhone:  +1-866-250-3887 
+OrgTechEmail:  noc@gtt.net
+OrgTechRef:    http://whois.arin.net/rest/poc/GNOC16-ARIN
+
+OrgTechHandle: AS3251-ARIN
+OrgTechName:   AS3257 Netguard
+OrgTechPhone:  +49 6102 8235 389 
+OrgTechEmail:  netguard@tinet.net
+OrgTechRef:    http://whois.arin.net/rest/poc/AS3251-ARIN
+
+OrgNOCHandle: GNOC16-ARIN
+OrgNOCName:   GTT Network Operations Center
+OrgNOCPhone:  +1-866-250-3887 
+OrgNOCEmail:  noc@gtt.net
+OrgNOCRef:    http://whois.arin.net/rest/poc/GNOC16-ARIN
+
+# end
+
+
+# start
+
+NetRange:       67.201.40.0 - 67.201.40.255
+CIDR:           67.201.40.0/24
+NetName:        NOBIS-CUSTBLK-67-201-40-0-24
+NetHandle:      NET-67-201-40-0-2
+Parent:         MZIMA04-CUST-NOBISTECHNOLOGYLLC09 (NET-67-201-40-0-1)
+NetType:        Reassigned
+OriginAS:       AS15003
+Organization:   Fidelity Media LLC (FML-23)
+RegDate:        2009-10-01
+Updated:        2009-10-01
+Comment:        Addresses in this block are non-portable.
+Comment:        For security issues, abuse reports, and
+Comment:        technical issues, please contact the
+Comment:        Nobis Technology Group NOC at admin@nobistech.net
+Ref:            http://whois.arin.net/rest/net/NET-67-201-40-0-2
+
+OrgName:        Fidelity Media LLC
+OrgId:          FML-23
+Address:        73 Greentree Dr. #35
+City:           Dover
+StateProv:      DE
+PostalCode:     19904
+Country:        US
+RegDate:        2007-10-09
+Updated:        2011-09-24
+Ref:            http://whois.arin.net/rest/org/FML-23
+
+OrgTechHandle: FMNO-ARIN
+OrgTechName:   FIDELITY MEDIA NETWORK OPS
+OrgTechPhone:  +1-302-476-2548 
+OrgTechEmail:  fidelitymed@aol.com
+OrgTechRef:    http://whois.arin.net/rest/poc/FMNO-ARIN
+
+OrgAbuseHandle: FMNO-ARIN
+OrgAbuseName:   FIDELITY MEDIA NETWORK OPS
+OrgAbusePhone:  +1-302-476-2548 
+OrgAbuseEmail:  fidelitymed@aol.com
+OrgAbuseRef:    http://whois.arin.net/rest/poc/FMNO-ARIN
+
+RTechHandle: FML-ARIN
+RTechName:   Fidelity Media LLC
+RTechPhone:  +1-302-476-2546 
+RTechEmail:  FidelityMed2@aol.com
+RTechRef:    http://whois.arin.net/rest/poc/FML-ARIN
+
+RNOCHandle: FML-ARIN
+RNOCName:   Fidelity Media LLC
+RNOCPhone:  +1-302-476-2546 
+RNOCEmail:  FidelityMed2@aol.com
+RNOCRef:    http://whois.arin.net/rest/poc/FML-ARIN
+
+RAbuseHandle: FML-ARIN
+RAbuseName:   Fidelity Media LLC
+RAbusePhone:  +1-302-476-2546 
+RAbuseEmail:  FidelityMed2@aol.com
+RAbuseRef:    http://whois.arin.net/rest/poc/FML-ARIN
+
+# end
+
+
+# start
+
+NetRange:       67.201.40.0 - 67.201.40.255
+CIDR:           67.201.40.0/24
+NetName:        MZIMA04-CUST-NOBISTECHNOLOGYLLC09
+NetHandle:      NET-67-201-40-0-1
+Parent:         NETBLK-PACKETEXCHANGE-V4-04 (NET-67-201-0-0-1)
+NetType:        Reallocated
+OriginAS:       AS25973
+Organization:   Nobis Technology Group, LLC (NTGL)
+RegDate:        2007-07-24
+Updated:        2007-07-24
+Ref:            http://whois.arin.net/rest/net/NET-67-201-40-0-1
+
+OrgName:        Nobis Technology Group, LLC
+OrgId:          NTGL
+Address:        5350 East High Street
+Address:        Suite 300
+City:           Phoenix
+StateProv:      AZ
+PostalCode:     85054
+Country:        US
+RegDate:        2007-01-30
+Updated:        2014-11-03
+Comment:        +++++++++++++++++++++++++++
+Comment:        Nobis Technology Group, LLC
+Comment:        http://www.nobistech.net
+Comment:        +++++++++++++++++++++++++++
+Comment:        
+Comment:        For all inquiries relating
+Comment:        to network abuse, network
+Comment:        security, DMCA, trademark,
+Comment:        legal compliance, and law 
+Comment:        enforcement requests, contact
+Comment:        abuse@nobistech.net via e-mail
+Comment:        or via postal mail as follows:
+Comment:        
+Comment:        Nobis Technology Group
+Comment:        ATTN IP Network Operations
+Comment:        5350 East High Street
+Comment:        Suite 300
+Comment:        Phoenix, AZ 85054
+Ref:            http://whois.arin.net/rest/org/NTGL
+
+ReferralServer: rwhois://rwhois.nobistech.net:4321
+
+OrgTechHandle: AIA12-ARIN
+OrgTechName:   ARIN IP Admin
+OrgTechPhone:  +1-480-212-1710 
+OrgTechEmail:  arin@nobistech.net
+OrgTechRef:    http://whois.arin.net/rest/poc/AIA12-ARIN
+
+OrgNOCHandle: NOC2466-ARIN
+OrgNOCName:   NOC
+OrgNOCPhone:  +1-480-212-1710 
+OrgNOCEmail:  admin@nobistech.net
+OrgNOCRef:    http://whois.arin.net/rest/poc/NOC2466-ARIN
+
+OrgAbuseHandle: ABUSE1601-ARIN
+OrgAbuseName:   Abuse
+OrgAbusePhone:  +1-480-212-1710 
+OrgAbuseEmail:  abuse@nobistech.net
+OrgAbuseRef:    http://whois.arin.net/rest/poc/ABUSE1601-ARIN
+
+RTechHandle: NOC2466-ARIN
+RTechName:   NOC
+RTechPhone:  +1-480-212-1710 
+RTechEmail:  admin@nobistech.net
+RTechRef:    http://whois.arin.net/rest/poc/NOC2466-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results, please report at
+# http://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+
+
+Found a referral to rwhois.nobistech.net:4321.
+
+%rwhois V-1.0,V-1.5:00090h:00 rwhois.nobistech.net (Ubersmith RWhois Server V-2.3.0)
+%error 1 Address not found
+host_type: ISP Telecomm

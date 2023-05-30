@@ -1,0 +1,195 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results, please report at
+# http://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+
+#
+# The following results may also be obtained via:
+# http://whois.arin.net/rest/nets;q=140.105.47.20?showDetails=true&showARIN=false&ext=netref2
+#
+
+NetRange:       140.105.0.0 - 140.105.255.255
+CIDR:           140.105.0.0/16
+NetName:        RIPE-ERX-140-105-0-0
+NetHandle:      NET-140-105-0-0-1
+Parent:         NET140 (NET-140-0-0-0-0)
+NetType:        Early Registrations, Transferred to RIPE NCC
+OriginAS:       
+Organization:   RIPE Network Coordination Centre (RIPE)
+RegDate:        2003-07-14
+Updated:        2003-08-06
+Comment:        These addresses have been further assigned to users in
+Comment:        the RIPE NCC region.  Contact information can be found in
+Comment:        the RIPE database at http://www.ripe.net/whois
+Ref:            http://whois.arin.net/rest/net/NET-140-105-0-0-1
+
+OrgName:        RIPE Network Coordination Centre
+OrgId:          RIPE
+Address:        P.O. Box 10096
+City:           Amsterdam
+StateProv:      
+PostalCode:     1001EB
+Country:        NL
+RegDate:        
+Updated:        2013-07-29
+Ref:            http://whois.arin.net/rest/org/RIPE
+
+ReferralServer: whois://whois.ripe.net:43
+
+OrgAbuseHandle: ABUSE3850-ARIN
+OrgAbuseName:   Abuse Contact
+OrgAbusePhone:  +31205354444 
+OrgAbuseEmail:  abuse@ripe.net
+OrgAbuseRef:    http://whois.arin.net/rest/poc/ABUSE3850-ARIN
+
+OrgTechHandle: RNO29-ARIN
+OrgTechName:   RIPE NCC Operations
+OrgTechPhone:  +31 20 535 4444 
+OrgTechEmail:  hostmaster@ripe.net
+OrgTechRef:    http://whois.arin.net/rest/poc/RNO29-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results, please report at
+# http://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+
+
+Found a referral to whois.ripe.net:43.
+
+% This is the RIPE Database query service.
+% The objects are in RPSL format.
+%
+% The RIPE Database is subject to Terms and Conditions.
+% See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+% Note: this output has been filtered.
+%       To receive output for a database update, use the "-B" flag.
+
+% Information related to '140.105.0.0 - 140.105.255.255'
+
+% Abuse contact for '140.105.0.0 - 140.105.255.255' is 'cert@garr.it'
+
+inetnum:        140.105.0.0 - 140.105.255.255
+netname:        TRIESTE-NET
+descr:          Universita' degli Studi di Trieste
+org:            ORG-UDSD35-RIPE
+country:        IT
+admin-c:        FC6950-RIPE
+tech-c:         PP6495-RIPE
+tech-c:         RG1254-RIPE
+status:         LEGACY
+remarks:        For information on "status:" attribute read https://www.ripe.net/data-tools/db/faq/faq-status-values-legacy-resources
+remarks:        -----------------------------------------------------------
+remarks:        This prefix is statically assigned
+remarks:        To notify abuse mailto:cert@garr.it
+remarks:        Lightnet consortium consortium, joins together the
+remarks:        following R&D institutions located in Trieste
+remarks:        region, Italy in alphabetical order:
+remarks:
+remarks:        Consortium GARR autorithative for subnet 140.105.201.x
+remarks:
+remarks:        Consorzio per l'Area per la Ricerca Scientifica e
+remarks:        Tecnologica autoritathive for the following subnets
+remarks:        140.105.9-14.x, 140.105.80-86.x, 140.105.88.x
+remarks:
+remarks:        International Center for Theoretical Physics
+remarks:        autoritathive for 140.105.16-30.x, 140.105.32-47.x
+remarks:        ISMAR - CNR
+remarks:
+remarks:        INFN (Sezione di Trieste)autorithative for
+remarks:        140.105.6-7.x, 140.105.11-14.x, 140.105.80-86.x
+remarks:        140.105.176-191.x, 140.105.196-200.x
+remarks:        140.105.202-205.x, 140.105.208-223.x
+remarks:
+remarks:        Osservatorio Astronomico - INAF
+remarks:        autorithative for 140.105.72-79.x
+remarks:
+remarks:        Osservatorio Geofisico Sperimentale di Trieste
+remarks:        autoritathive for 140.105.64-71.x
+remarks:
+remarks:        Sincrotrone Trieste Scpa responsible for the
+remarks:        autoritathive for 140.105.1-5.x, 140.105.8.x
+remarks:        140.105.15.x, 140.105.206-207.x, 140.105.87.x
+remarks:        140.105.89-90.x
+remarks:
+remarks:        Universita' degli Studi di Trieste
+remarks:        autorithative for 140.105.31.x
+remarks:        140.105.48-63.x, 140.105.96-175.x
+remarks:        140.105.192-193.x, 140.105.224-255.x
+remarks:
+remarks:        This network has a contact point towards the GARR
+remarks:        backbone via a single interconnection point
+remarks:        between Trieste (Universita') and GARR
+remarks:        (Italian academic and research network)
+remarks:        ----------------------------------------------------------
+mnt-irt:        IRT-GARR-CERT
+mnt-by:         GARR-LIR
+source:         RIPE # Filtered
+
+organisation:   ORG-UDSD35-RIPE
+org-name:       Universita' degli Studi di Trieste
+org-type:       OTHER
+address:        Via Valerio, 12, 34127 Trieste (TS) Italy
+phone:          +39 040 5583326
+fax-no:         +39 040 5583316
+mnt-ref:        GARR-LIR
+mnt-by:         GARR-LIR
+abuse-c:        AG16225-RIPE
+source:         RIPE # Filtered
+
+person:         Fabio Criscuoli
+address:        Vice Direttore CSIA - Univ.ta' di Trieste,
+address:        Via Valerio 12
+address:        I-34127  Trieste
+address:        Italy
+phone:          +39 040 5583326
+fax-no:         +39 040 5583316
+nic-hdl:        FC6950-RIPE
+mnt-by:         GARR-LIR
+source:         RIPE # Filtered
+
+person:         Paolo Piccoli
+address:        Università di Trieste
+address:        Via Valerio, 12
+address:        I-34127  Trieste
+address:        Italy
+phone:          +39 040 5583320
+fax-no:         +39 040 5583316
+nic-hdl:        PP6495-RIPE
+mnt-by:         GARR-LIR
+source:         RIPE # Filtered
+
+person:         Roberto Gomezel
+address:        INFN sez. di Trieste
+address:        c/o Area di Ricerca
+address:        Padriciano 99
+address:        I-34012 Trieste
+address:        Italy
+phone:          +39 040 3756240
+fax-no:         +39 040 3756258
+nic-hdl:        RG1254-RIPE
+mnt-by:         GARR-LIR
+source:         RIPE # Filtered
+
+% Information related to '140.105.0.0/16AS137'
+
+route:          140.105.0.0/16
+descr:          TRIESTE-NET
+origin:         AS137
+remarks:        Universita' di Trieste ed altri
+mnt-by:         GARR-LIR
+source:         RIPE # Filtered
+
+% This query was served by the RIPE Database Query Service version 1.76.1 (DB-2)
+
+

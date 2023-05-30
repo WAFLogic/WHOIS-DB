@@ -1,0 +1,48 @@
+source: AfriNIC
+% This is the AfriNIC Whois server.
+
+%note:  this output has been filtered.
+%       To receive output for a database update  use the  -B  flag.
+
+% Information related to  197.156.192.0 - 197.156.192.255 
+
+% No abuse contact registered for 197.156.192.0 - 197.156.192.255
+
+netname:         PE-CE_WAN
+descr:           For MPLS PE-CE WAN Range
+country:         NG
+adminc:         FO19-AFRINIC
+adminc:         GO17-AFRINIC
+techc:          FO19-AFRINIC
+techc:          GO17-AFRINIC
+status:          ASSIGNED PA
+mntby:          MNT-ACCELON
+parent:          197.156.192.0 - 197.156.255.255
+
+person:          Franklyn Okogun
+nichdl:         FO19-AFRINIC
+address:         1IS InternetSolutions Limited
+address:         Fabac Centre
+address:         3B Ligali Ayorinde Street
+address:         Victoria Island
+address:         Lagos
+address:         Nigeria
+phone:           +2348027922693
+
+person:          George Olunwa
+nichdl:         GO17-AFRINIC
+address:         3B Ligali Ayorinde Street
+address:         Victoria Island
+address:         Lagos
+address:         Nigeria
+phone:           +23412709947
+phone:           +2348023763264
+
+
+
+host:  197.156.192.0
+inetnum_01: 197.156.192.0/24
+netmask_01: 255.255.255.0
+hostmin_01: 197.156.192.1
+hostmax_01: 197.156.192.254
+netcount_01: 254

@@ -1,0 +1,202 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results, please report at
+# http://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+
+#
+# The following results may also be obtained via:
+# http://whois.arin.net/rest/nets;q=66.255.247.219?showDetails=true&showARIN=false&ext=netref2
+#
+
+
+# start
+
+NetRange:       66.255.240.0 - 66.255.255.255
+CIDR:           66.255.240.0/20
+NetName:        ENERGYNET-1
+NetHandle:      NET-66-255-240-0-1
+Parent:         NET66 (NET-66-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS13781
+Organization:   Hopkinsville Electric System (EPBCH)
+RegDate:        2008-03-20
+Updated:        2014-06-08
+Ref:            http://whois.arin.net/rest/net/NET-66-255-240-0-1
+
+OrgName:        Hopkinsville Electric System
+OrgId:          EPBCH
+Address:        PO Box 728
+Address:        1820 East 9th Street
+City:           Hopkinsville
+StateProv:      KY
+PostalCode:     42240
+Country:        US
+RegDate:        2007-10-22
+Updated:        2014-06-08
+Ref:            http://whois.arin.net/rest/org/EPBCH
+
+OrgTechHandle: TDG13-ARIN
+OrgTechName:   Griffey, Timothy D
+OrgTechPhone:  +1-270-887-0779 
+OrgTechEmail:  tgriffey@hop-electric.com
+OrgTechRef:    http://whois.arin.net/rest/poc/TDG13-ARIN
+
+OrgAbuseHandle: TDG13-ARIN
+OrgAbuseName:   Griffey, Timothy D
+OrgAbusePhone:  +1-270-887-0779 
+OrgAbuseEmail:  tgriffey@hop-electric.com
+OrgAbuseRef:    http://whois.arin.net/rest/poc/TDG13-ARIN
+
+OrgNOCHandle: TDG13-ARIN
+OrgNOCName:   Griffey, Timothy D
+OrgNOCPhone:  +1-270-887-0779 
+OrgNOCEmail:  tgriffey@hop-electric.com
+OrgNOCRef:    http://whois.arin.net/rest/poc/TDG13-ARIN
+
+OrgTechHandle: DMD7-ARIN
+OrgTechName:   Dousette, David Michael
+OrgTechPhone:  +1-270-887-0761 
+OrgTechEmail:  ddousette@hop-electric.com
+OrgTechRef:    http://whois.arin.net/rest/poc/DMD7-ARIN
+
+OrgAbuseHandle: PAN33-ARIN
+OrgAbuseName:   Ancil, Peter 
+OrgAbusePhone:  +1-270-887-0766 
+OrgAbuseEmail:  pancil@hop-electric.com
+OrgAbuseRef:    http://whois.arin.net/rest/poc/PAN33-ARIN
+
+OrgTechHandle: PAN33-ARIN
+OrgTechName:   Ancil, Peter 
+OrgTechPhone:  +1-270-887-0766 
+OrgTechEmail:  pancil@hop-electric.com
+OrgTechRef:    http://whois.arin.net/rest/poc/PAN33-ARIN
+
+RAbuseHandle: PAN33-ARIN
+RAbuseName:   Ancil, Peter 
+RAbusePhone:  +1-270-887-0766 
+RAbuseEmail:  pancil@hop-electric.com
+RAbuseRef:    http://whois.arin.net/rest/poc/PAN33-ARIN
+
+RAbuseHandle: TDG13-ARIN
+RAbuseName:   Griffey, Timothy D
+RAbusePhone:  +1-270-887-0779 
+RAbuseEmail:  tgriffey@hop-electric.com
+RAbuseRef:    http://whois.arin.net/rest/poc/TDG13-ARIN
+
+RTechHandle: TDG13-ARIN
+RTechName:   Griffey, Timothy D
+RTechPhone:  +1-270-887-0779 
+RTechEmail:  tgriffey@hop-electric.com
+RTechRef:    http://whois.arin.net/rest/poc/TDG13-ARIN
+
+RTechHandle: PAN33-ARIN
+RTechName:   Ancil, Peter 
+RTechPhone:  +1-270-887-0766 
+RTechEmail:  pancil@hop-electric.com
+RTechRef:    http://whois.arin.net/rest/poc/PAN33-ARIN
+
+# end
+
+
+# start
+
+NetRange:       66.255.247.0 - 66.255.247.255
+CIDR:           66.255.247.0/24
+NetName:        HES-66-255-247-0-24
+NetHandle:      NET-66-255-247-0-1
+Parent:         ENERGYNET-1 (NET-66-255-240-0-1)
+NetType:        Reassigned
+OriginAS:       
+Customer:       Basic Commercial High-speed DHCP range (C02508840)
+RegDate:        2010-05-27
+Updated:        2010-05-27
+Ref:            http://whois.arin.net/rest/net/NET-66-255-247-0-1
+
+CustName:       Basic Commercial High-speed DHCP range
+Address:        1820 East 9th St
+City:           Hopkinsville
+StateProv:      KY
+PostalCode:     42240
+Country:        US
+RegDate:        2010-05-27
+Updated:        2011-03-19
+Ref:            http://whois.arin.net/rest/customer/C02508840
+
+OrgTechHandle: TDG13-ARIN
+OrgTechName:   Griffey, Timothy D
+OrgTechPhone:  +1-270-887-0779 
+OrgTechEmail:  tgriffey@hop-electric.com
+OrgTechRef:    http://whois.arin.net/rest/poc/TDG13-ARIN
+
+OrgAbuseHandle: TDG13-ARIN
+OrgAbuseName:   Griffey, Timothy D
+OrgAbusePhone:  +1-270-887-0779 
+OrgAbuseEmail:  tgriffey@hop-electric.com
+OrgAbuseRef:    http://whois.arin.net/rest/poc/TDG13-ARIN
+
+OrgNOCHandle: TDG13-ARIN
+OrgNOCName:   Griffey, Timothy D
+OrgNOCPhone:  +1-270-887-0779 
+OrgNOCEmail:  tgriffey@hop-electric.com
+OrgNOCRef:    http://whois.arin.net/rest/poc/TDG13-ARIN
+
+OrgTechHandle: DMD7-ARIN
+OrgTechName:   Dousette, David Michael
+OrgTechPhone:  +1-270-887-0761 
+OrgTechEmail:  ddousette@hop-electric.com
+OrgTechRef:    http://whois.arin.net/rest/poc/DMD7-ARIN
+
+OrgAbuseHandle: PAN33-ARIN
+OrgAbuseName:   Ancil, Peter 
+OrgAbusePhone:  +1-270-887-0766 
+OrgAbuseEmail:  pancil@hop-electric.com
+OrgAbuseRef:    http://whois.arin.net/rest/poc/PAN33-ARIN
+
+OrgTechHandle: PAN33-ARIN
+OrgTechName:   Ancil, Peter 
+OrgTechPhone:  +1-270-887-0766 
+OrgTechEmail:  pancil@hop-electric.com
+OrgTechRef:    http://whois.arin.net/rest/poc/PAN33-ARIN
+
+RAbuseHandle: PAN33-ARIN
+RAbuseName:   Ancil, Peter 
+RAbusePhone:  +1-270-887-0766 
+RAbuseEmail:  pancil@hop-electric.com
+RAbuseRef:    http://whois.arin.net/rest/poc/PAN33-ARIN
+
+RAbuseHandle: TDG13-ARIN
+RAbuseName:   Griffey, Timothy D
+RAbusePhone:  +1-270-887-0779 
+RAbuseEmail:  tgriffey@hop-electric.com
+RAbuseRef:    http://whois.arin.net/rest/poc/TDG13-ARIN
+
+RTechHandle: TDG13-ARIN
+RTechName:   Griffey, Timothy D
+RTechPhone:  +1-270-887-0779 
+RTechEmail:  tgriffey@hop-electric.com
+RTechRef:    http://whois.arin.net/rest/poc/TDG13-ARIN
+
+RTechHandle: PAN33-ARIN
+RTechName:   Ancil, Peter 
+RTechPhone:  +1-270-887-0766 
+RTechEmail:  pancil@hop-electric.com
+RTechRef:    http://whois.arin.net/rest/poc/PAN33-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results, please report at
+# http://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+x_notes: Brute Force Auth attacker. Part of 38k of IPs launching massive attack for several months at Choice Hotels in 2013-2014

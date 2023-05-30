@@ -1,0 +1,194 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+
+#
+# The following results may also be obtained via:
+# https://whois.arin.net/rest/nets;q=68.103.186.196?showDetails=true&showARIN=false&showNonArinTopLevelNet=false&ext=netref2
+#
+
+
+# start
+
+NetRange:       68.102.0.0 - 68.103.255.255
+CIDR:           68.102.0.0/15
+NetName:        NETBLK-WI-RDC-68-102-0-0
+NetHandle:      NET-68-102-0-0-1
+Parent:         COX-ATLANTA-2 (NET-68-96-0-0-1)
+NetType:        Reassigned
+OriginAS:       
+Organization:   Cox Communications Inc. (CXA)
+RegDate:        2002-05-15
+Updated:        2007-08-16
+Comment:        For legal requests/assistance please use the following contact information:
+Comment:        
+Comment:        Cox Subpoena Phone: 404-269-0100
+Comment:        
+Comment:        Cox Subpoena Info: http://www.cox.com/policy/leainformation/default.asp
+Ref:            https://whois.arin.net/rest/net/NET-68-102-0-0-1
+
+
+OrgName:        Cox Communications Inc.
+OrgId:          CXA
+Address:        1400 Lake Hearn Dr.
+City:           Atlanta
+StateProv:      GA
+PostalCode:     30319
+Country:        US
+RegDate:        
+Updated:        2017-05-30
+Comment:        For legal requests/assistance please use the
+Comment:        following contact information:
+Comment:        Cox Subpoena Info: https://www.cox.com/aboutus/policies/law-enforcement-and-subpoenas-information.html
+Ref:            https://whois.arin.net/rest/org/CXA
+
+
+OrgAbuseHandle: IC146-ARIN
+OrgAbuseName:   Cox Communications Inc
+OrgAbusePhone:  +1-404-269-7626 
+OrgAbuseEmail:  abuse@cox.net
+OrgAbuseRef:    https://whois.arin.net/rest/poc/IC146-ARIN
+
+OrgTechHandle: ADA131-ARIN
+OrgTechName:   Anderson, Alvin Demond
+OrgTechPhone:  +1-404-269-4416 
+OrgTechEmail:  alvin.anderson@cox.com
+OrgTechRef:    https://whois.arin.net/rest/poc/ADA131-ARIN
+
+OrgTechHandle: MEROL3-ARIN
+OrgTechName:   Merola, Cari 
+OrgTechPhone:  +1-404-269-4416 
+OrgTechEmail:  cari.merola@cox.com
+OrgTechRef:    https://whois.arin.net/rest/poc/MEROL3-ARIN
+
+OrgTechHandle: BAABO-ARIN
+OrgTechName:   BA, Aboubakr 
+OrgTechPhone:  +1-404-269-4416 
+OrgTechEmail:  abuse@cox.net
+OrgTechRef:    https://whois.arin.net/rest/poc/BAABO-ARIN
+
+OrgTechHandle: RWA196-ARIN
+OrgTechName:   Waldron, Roderick 
+OrgTechPhone:  +1-404-269-7626 
+OrgTechEmail:  Roderick.Waldron@cox.com
+OrgTechRef:    https://whois.arin.net/rest/poc/RWA196-ARIN
+
+OrgTechHandle: BERUB3-ARIN
+OrgTechName:   Berube, Tori 
+OrgTechPhone:  +1-404-269-4416 
+OrgTechEmail:  tori.berube@cox.com
+OrgTechRef:    https://whois.arin.net/rest/poc/BERUB3-ARIN
+
+OrgTechHandle: NIA16-ARIN
+OrgTechName:   National IP Administrator
+OrgTechPhone:  +1-404-269-4416 
+OrgTechEmail:  tiffany.coleman@cox.com
+OrgTechRef:    https://whois.arin.net/rest/poc/NIA16-ARIN
+
+# end
+
+
+# start
+
+NetRange:       68.96.0.0 - 68.111.255.255
+CIDR:           68.96.0.0/12
+NetName:        COX-ATLANTA-2
+NetHandle:      NET-68-96-0-0-1
+Parent:         NET68 (NET-68-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       
+Organization:   Cox Communications Inc. (CXA)
+RegDate:        2002-02-04
+Updated:        2012-03-02
+Comment:        For legal requests/assistance please use the following contact information:
+Comment:        
+Comment:        Cox Subpoena Phone: 404-269-0100
+Comment:        
+Comment:        Cox Subpoena Info: http://www.cox.com/policy/leainformation/default.asp
+Ref:            https://whois.arin.net/rest/net/NET-68-96-0-0-1
+
+
+OrgName:        Cox Communications Inc.
+OrgId:          CXA
+Address:        1400 Lake Hearn Dr.
+City:           Atlanta
+StateProv:      GA
+PostalCode:     30319
+Country:        US
+RegDate:        
+Updated:        2017-05-30
+Comment:        For legal requests/assistance please use the
+Comment:        following contact information:
+Comment:        Cox Subpoena Info: https://www.cox.com/aboutus/policies/law-enforcement-and-subpoenas-information.html
+Ref:            https://whois.arin.net/rest/org/CXA
+
+
+OrgAbuseHandle: IC146-ARIN
+OrgAbuseName:   Cox Communications Inc
+OrgAbusePhone:  +1-404-269-7626 
+OrgAbuseEmail:  abuse@cox.net
+OrgAbuseRef:    https://whois.arin.net/rest/poc/IC146-ARIN
+
+OrgTechHandle: ADA131-ARIN
+OrgTechName:   Anderson, Alvin Demond
+OrgTechPhone:  +1-404-269-4416 
+OrgTechEmail:  alvin.anderson@cox.com
+OrgTechRef:    https://whois.arin.net/rest/poc/ADA131-ARIN
+
+OrgTechHandle: MEROL3-ARIN
+OrgTechName:   Merola, Cari 
+OrgTechPhone:  +1-404-269-4416 
+OrgTechEmail:  cari.merola@cox.com
+OrgTechRef:    https://whois.arin.net/rest/poc/MEROL3-ARIN
+
+OrgTechHandle: BAABO-ARIN
+OrgTechName:   BA, Aboubakr 
+OrgTechPhone:  +1-404-269-4416 
+OrgTechEmail:  abuse@cox.net
+OrgTechRef:    https://whois.arin.net/rest/poc/BAABO-ARIN
+
+OrgTechHandle: RWA196-ARIN
+OrgTechName:   Waldron, Roderick 
+OrgTechPhone:  +1-404-269-7626 
+OrgTechEmail:  Roderick.Waldron@cox.com
+OrgTechRef:    https://whois.arin.net/rest/poc/RWA196-ARIN
+
+OrgTechHandle: BERUB3-ARIN
+OrgTechName:   Berube, Tori 
+OrgTechPhone:  +1-404-269-4416 
+OrgTechEmail:  tori.berube@cox.com
+OrgTechRef:    https://whois.arin.net/rest/poc/BERUB3-ARIN
+
+OrgTechHandle: NIA16-ARIN
+OrgTechName:   National IP Administrator
+OrgTechPhone:  +1-404-269-4416 
+OrgTechEmail:  tiffany.coleman@cox.com
+OrgTechRef:    https://whois.arin.net/rest/poc/NIA16-ARIN
+
+RTechHandle: IC146-ARIN
+RTechName:   Cox Communications Inc
+RTechPhone:  +1-404-269-7626 
+RTechEmail:  abuse@cox.net
+RTechRef:    https://whois.arin.net/rest/poc/IC146-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+x_notes: 2017-07-15 14:47:43 - TIAA Enrollment Registration Multiple Failed SSN Attempts During Fraud Event
+created_at: 2017-07-15 14:47:43
+host_type: ISP Telecomm

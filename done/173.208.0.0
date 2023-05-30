@@ -1,0 +1,241 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results, please report at
+# http://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+
+#
+# The following results may also be obtained via:
+# http://whois.arin.net/rest/nets;q=173.208.0.0?showDetails=true&showARIN=false&ext=netref2
+#
+
+
+# start
+
+NetRange:       173.208.0.0 - 173.208.15.255
+CIDR:           173.208.0.0/20
+NetName:        NETBLK-UBIQUITY-CHICAGO-173-208-0-0
+NetHandle:      NET-173-208-0-0-2
+Parent:         NETBLK-NOBIS-TECHNOLOGY-GROUP-07 (NET-173-208-0-0-1)
+NetType:        Reallocated
+OriginAS:       AS15003
+Organization:   Ubiquity Server Solutions Chicago (NTGL-1)
+RegDate:        2009-12-18
+Updated:        2009-12-18
+Comment:        Addresses in this block are non-portable.
+Comment:        For security issues, abuse reports, and
+Comment:        technical issues, please contact the
+Comment:        Nobis Technology Group NOC at admin@nobistech.net
+Ref:            http://whois.arin.net/rest/net/NET-173-208-0-0-2
+
+OrgName:        Ubiquity Server Solutions Chicago
+OrgId:          NTGL-1
+Address:        350 East Cermak Road
+City:           Chicago
+StateProv:      IL
+PostalCode:     60616
+Country:        US
+RegDate:        2008-03-05
+Updated:        2011-01-10
+Comment:        +++++++++++++++++++++++++++
+Comment:        Ubiquity Server Solutions
+Comment:        http://www.ubiquityservers.com
+Comment:        Chicago, IL
+Comment:        +++++++++++++++++++++++++++
+Comment:        
+Comment:        For all inquiries relating
+Comment:        to network abuse, network
+Comment:        security, DMCA, trademark,
+Comment:        legal compliance, and law 
+Comment:        enforcement requests, contact
+Comment:        abuse@nobistech.net via e-mail
+Comment:        or via postal mail as follows:
+Comment:        
+Comment:        Nobis Technology Group
+Comment:        ATTN IP Network Operations
+Comment:        6930 East Chauncey Lane
+Comment:        Suite 150
+Comment:        Phoenix, AZ 85054
+Ref:            http://whois.arin.net/rest/org/NTGL-1
+
+ReferralServer: rwhois://rwhois.nobistech.net:4321
+
+OrgTechHandle: AIA12-ARIN
+OrgTechName:   ARIN IP Admin
+OrgTechPhone:  +1-480-212-1710 
+OrgTechEmail:  arin@nobistech.net
+OrgTechRef:    http://whois.arin.net/rest/poc/AIA12-ARIN
+
+OrgNOCHandle: NOC2466-ARIN
+OrgNOCName:   NOC
+OrgNOCPhone:  +1-480-212-1710 
+OrgNOCEmail:  admin@nobistech.net
+OrgNOCRef:    http://whois.arin.net/rest/poc/NOC2466-ARIN
+
+OrgAbuseHandle: ABUSE1601-ARIN
+OrgAbuseName:   Abuse
+OrgAbusePhone:  +1-480-212-1710 
+OrgAbuseEmail:  abuse@nobistech.net
+OrgAbuseRef:    http://whois.arin.net/rest/poc/ABUSE1601-ARIN
+
+RTechHandle: AIA12-ARIN
+RTechName:   ARIN IP Admin
+RTechPhone:  +1-480-212-1710 
+RTechEmail:  arin@nobistech.net
+RTechRef:    http://whois.arin.net/rest/poc/AIA12-ARIN
+
+RAbuseHandle: AIA12-ARIN
+RAbuseName:   ARIN IP Admin
+RAbusePhone:  +1-480-212-1710 
+RAbuseEmail:  arin@nobistech.net
+RAbuseRef:    http://whois.arin.net/rest/poc/AIA12-ARIN
+
+RNOCHandle: AIA12-ARIN
+RNOCName:   ARIN IP Admin
+RNOCPhone:  +1-480-212-1710 
+RNOCEmail:  arin@nobistech.net
+RNOCRef:    http://whois.arin.net/rest/poc/AIA12-ARIN
+
+# end
+
+
+# start
+
+NetRange:       173.208.0.0 - 173.208.127.255
+CIDR:           173.208.0.0/17
+NetName:        NETBLK-NOBIS-TECHNOLOGY-GROUP-07
+NetHandle:      NET-173-208-0-0-1
+Parent:         NET173 (NET-173-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS15003
+Organization:   Nobis Technology Group, LLC (NTGL)
+RegDate:        2009-12-17
+Updated:        2012-03-02
+Comment:        ++++++++++++++++++++++++++++++++++
+Comment:        Nobis Technology Group, LLC
+Comment:        http://www.nobistech.net
+Comment:        For inquiries and complaints
+Comment:        about any Nobis IP address
+Comment:        space please contact our NOC
+Comment:        via e-mail at admin@nobistech.net
+Comment:        ++++++++++++++++++++++++++++++++++
+Ref:            http://whois.arin.net/rest/net/NET-173-208-0-0-1
+
+OrgName:        Nobis Technology Group, LLC
+OrgId:          NTGL
+Address:        5350 East High Street
+Address:        Suite 300
+City:           Phoenix
+StateProv:      AZ
+PostalCode:     85054
+Country:        US
+RegDate:        2007-01-30
+Updated:        2014-11-03
+Comment:        +++++++++++++++++++++++++++
+Comment:        Nobis Technology Group, LLC
+Comment:        http://www.nobistech.net
+Comment:        +++++++++++++++++++++++++++
+Comment:        
+Comment:        For all inquiries relating
+Comment:        to network abuse, network
+Comment:        security, DMCA, trademark,
+Comment:        legal compliance, and law 
+Comment:        enforcement requests, contact
+Comment:        abuse@nobistech.net via e-mail
+Comment:        or via postal mail as follows:
+Comment:        
+Comment:        Nobis Technology Group
+Comment:        ATTN IP Network Operations
+Comment:        5350 East High Street
+Comment:        Suite 300
+Comment:        Phoenix, AZ 85054
+Ref:            http://whois.arin.net/rest/org/NTGL
+
+ReferralServer: rwhois://rwhois.nobistech.net:4321
+
+OrgTechHandle: AIA12-ARIN
+OrgTechName:   ARIN IP Admin
+OrgTechPhone:  +1-480-212-1710 
+OrgTechEmail:  arin@nobistech.net
+OrgTechRef:    http://whois.arin.net/rest/poc/AIA12-ARIN
+
+OrgNOCHandle: NOC2466-ARIN
+OrgNOCName:   NOC
+OrgNOCPhone:  +1-480-212-1710 
+OrgNOCEmail:  admin@nobistech.net
+OrgNOCRef:    http://whois.arin.net/rest/poc/NOC2466-ARIN
+
+OrgAbuseHandle: ABUSE1601-ARIN
+OrgAbuseName:   Abuse
+OrgAbusePhone:  +1-480-212-1710 
+OrgAbuseEmail:  abuse@nobistech.net
+OrgAbuseRef:    http://whois.arin.net/rest/poc/ABUSE1601-ARIN
+
+RTechHandle: AIA12-ARIN
+RTechName:   ARIN IP Admin
+RTechPhone:  +1-480-212-1710 
+RTechEmail:  arin@nobistech.net
+RTechRef:    http://whois.arin.net/rest/poc/AIA12-ARIN
+
+RAbuseHandle: ABUSE1601-ARIN
+RAbuseName:   Abuse
+RAbusePhone:  +1-480-212-1710 
+RAbuseEmail:  abuse@nobistech.net
+RAbuseRef:    http://whois.arin.net/rest/poc/ABUSE1601-ARIN
+
+RNOCHandle: NOC2466-ARIN
+RNOCName:   NOC
+RNOCPhone:  +1-480-212-1710 
+RNOCEmail:  admin@nobistech.net
+RNOCRef:    http://whois.arin.net/rest/poc/NOC2466-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results, please report at
+# http://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+
+
+Found a referral to rwhois.nobistech.net:4321.
+
+%rwhois V-1.0,V-1.5:00090h:00 rwhois.nobistech.net (Ubersmith RWhois Server V-2.3.0)
+autharea=173.208.0.0/20
+xautharea=173.208.0.0/20
+network:Class-Name:network
+network:Auth-Area:173.208.0.0/20
+network:ID:NET-27349.173.208.0.0/24
+network:Network-Name:Reserved - Backbone
+network:IP-Network:173.208.0.0/24
+network:IP-Network-Block:173.208.0.0 - 173.208.0.255
+network:Org-Name:Ubiquity Global Network Management Center
+network:Street-Address:6930 E Chauncey Lane Ste 150
+network:City:Phoenix
+network:State:AZ
+network:Postal-Code:85054
+network:Country-Code:US
+network:Tech-Contact:MAINT-27349.173.208.0.0/24
+network:Created:20110310013842000
+network:Updated:20110310013842000
+network:Updated-By:admin@nobistech.net
+contact:POC-Name:Ubiquity GNMC Operations Team
+contact:POC-Email:support@ubiquityhosting.com
+contact:POC-Phone:4802121710
+contact:Tech-Name:Ubiquity GNMC Operations Team
+contact:Tech-Email:support@ubiquityhosting.com
+contact:Tech-Phone:4802121710
+contact:Abuse-Name:Ubiquity Abuse Team
+contact:Abuse-Email:support@ubiquityhosting.com
+contact:Abuse-Phone:
+%ok
+host_type: VPS Hosting

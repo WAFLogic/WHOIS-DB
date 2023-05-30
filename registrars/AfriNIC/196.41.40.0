@@ -1,0 +1,35 @@
+source: AfriNIC
+% This is the AfriNIC Whois server.
+
+%note:  this output has been filtered.
+%       To receive output for a database update  use the  -B  flag.
+
+% Information related to  196.41.40.0 - 196.41.40.7 
+
+% No abuse contact registered for 196.41.40.0 - 196.41.40.7
+
+netname:         STARTEL-DSM
+descr:           Holiday Inn - ONE
+country:         TZ
+adminc:         NM25-AFRINIC
+techc:          NM25-AFRINIC
+status:          ASSIGNED PA
+remarks:         Holiday Inn
+mntby:          TF-196-41-32-0-196-41-63-255-MNT
+parent:          196.41.32.0 - 196.41.63.255
+
+person:          Nyangu Meghji
+nichdl:         NM25-AFRINIC
+address:         Off Maktaba Street 1st Floor GAK Patel Building
+address:         Dar Es Salaam
+address:         Tanzania
+phone:           +255784711626
+
+
+
+host:  196.41.40.0
+inetnum_01: 196.41.40.0/29
+netmask_01: 255.255.255.248
+hostmin_01: 196.41.40.1
+hostmax_01: 196.41.40.6
+netcount_01: 6

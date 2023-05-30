@@ -1,0 +1,56 @@
+source: LACNIC
+
+% Joint Whois - whois.lacnic.net
+%  This server accepts single ASN  IPv4 or IPv6 queries
+
+
+
+% Copyright LACNIC lacnic.net
+%  The data below is provided for information purposes
+%  and to assist persons in obtaining information about or
+%  related to AS and IP numbers registrations
+%  By submitting a whois query  you agree to use this data
+%  only for lawful purposes.
+%  2014-12-05 17:18:44 ( brst 02: 00 )
+
+autnum:      N/A
+owner:        Media Commerce Partners S.A
+ownerid:      CO-CUOC1-LACNIC
+responsible:  Sandro Faber Bolivar
+address:      Av Circunvalar  1 -54  
+address:      -- - Pereira - RI
+country:      CO
+phone:        +57 6 3261010 [118]
+ownerc:      SFB
+techc:       SFB
+abuse:      SFB
+inetrev:      190.121.148/24
+nserver:      NAME1.MEDIACOMMERCE.COM.CO  
+nsstat:       20141202 AA
+nslastaa:     20141202
+nserver:      NAME2.MEDIACOMMERCE.COM.CO  
+nsstat:       20141202 AA
+nslastaa:     20141202
+created:      20110715
+changed:      20110715
+
+nichdl:      SFB
+person:       Víctor Fabián Serna Villa
+address:      AV 30 DE AGOSTO N 87-787  1  54
+address:      6601 - Pereira - Ri
+country:      CO
+phone:        +57 6 3112700 [1095]
+created:      20110714
+changed:      20140410
+
+% whois.lacnic.net accepts only direct match queries.
+% types of queriesare:  POCs  ownerid  CIDR blocks  IP
+% and AS numbers.
+
+host:  190.121.148.0
+email: interconexion@MEDIACOMMERCE.NET.CO
+inetnum_01: 190.121.144/20
+netmask_01: 255.255.240.0
+hostmin_01: 192.168.0.1
+hostmax_01: 192.168.15.254
+netcount_01: 4094

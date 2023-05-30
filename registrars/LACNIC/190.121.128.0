@@ -1,0 +1,63 @@
+source: LACNIC
+
+% Joint Whois - whois.lacnic.net
+%  This server accepts single ASN  IPv4 or IPv6 queries
+
+
+
+% Copyright LACNIC lacnic.net
+%  The data below is provided for information purposes
+%  and to assist persons in obtaining information about or
+%  related to AS and IP numbers registrations
+%  By submitting a whois query  you agree to use this data
+%  only for lawful purposes.
+%  2014-12-05 17:35:54 ( brst 02: 00 )
+
+owner:        Fundacion Universitaria de San Gil
+ownerid:      CO-FUSG-LACNIC
+responsible:  Lida Castro
+address:      San Gil Charala  68679  
+address:       - Casanare - 
+country:      CO
+phone:        +57 7 7245757 []
+ownerc:      LFM2
+techc:       JBF
+abuse:      JBF
+created:      20110623
+changed:      20110623
+
+nichdl:      JBF
+person:       Jenny Beltran Flórez
+address:      Av Circunvalar No 1 -54  1  54
+address:      6601 - Pereira - Ri
+country:      CO
+phone:        +57 6 3311125 [1004]
+created:      20060824
+changed:      20110701
+
+nichdl:      LFM2
+person:       Luis Fernando Millán Morales
+address:      Cra 7 14-34    
+address:       - SAN GIL - 
+country:      CO
+phone:        +57 7 7245757 [220]
+created:      20111205
+changed:      20111205
+
+% whois.lacnic.net accepts only direct match queries.
+% types of queriesare:  POCs  ownerid  CIDR blocks  IP
+% and AS numbers.
+
+host:  190.121.128.0
+email: aprovisionamiento@MEDIACOMMERCE.NET.CO
+email: redes@UNISANGIL.EDU.CO
+inetnum_01: 190.121.128.0/29
+inetnum_02: 190.121.128/20
+netmask_01: 255.255.255.248
+hostmin_01: 190.121.128.1
+hostmax_01: 190.121.128.6
+netcount_01: 6
+netmask_02: 255.255.240.0
+hostmin_02: 192.168.0.1
+hostmax_02: 192.168.15.254
+netcount_02: 4094

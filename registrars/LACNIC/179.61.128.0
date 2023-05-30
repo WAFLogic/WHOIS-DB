@@ -1,0 +1,60 @@
+source: LACNIC
+
+% Joint Whois - whois.lacnic.net
+%  This server accepts single ASN  IPv4 or IPv6 queries
+
+
+
+% Copyright LACNIC lacnic.net
+%  The data below is provided for information purposes
+%  and to assist persons in obtaining information about or
+%  related to AS and IP numbers registrations
+%  By submitting a whois query  you agree to use this data
+%  only for lawful purposes.
+%  2014-12-05 16:55:32 ( brst 02: 00 )
+
+autnum:      AS61440
+abuse:      VIG28
+owner:        Digital Energy Technologies Chile SpA
+ownerid:      CL-DETC-LACNIC
+responsible:  Vincentas Grinius
+address:      Moneda  970  Piso 5
+address:      8320313 - Santiago - 
+country:      CL
+phone:        +56 226 382322 []
+ownerc:      VIG28
+techc:       VIG28
+abuse:      VIG28
+inetrev:      179.61.128/24
+nserver:      NS5.AS61440.NET  
+nsstat:       20141203 AA
+nslastaa:     20141203
+nserver:      NS6.AS61440.NET  
+nsstat:       20141203 AA
+nslastaa:     20141203
+nserver:      NS7.AS61440.NET  
+nsstat:       20141203 AA
+nslastaa:     20141203
+created:      20140106
+changed:      20140106
+
+nichdl:      VIG28
+person:       Network Operating Center
+address:      Moneda  970  Piso 5
+address:      8320313 - Santiago - RM
+country:      CL
+phone:        +56 229 382322 []
+created:      20130508
+changed:      20140108
+
+% whois.lacnic.net accepts only direct match queries.
+% types of queriesare:  POCs  ownerid  CIDR blocks  IP
+% and AS numbers.
+
+host:  179.61.128.0
+email: noc@AS61440.NET
+inetnum_01: 179.61.128/17
+netmask_01: 255.255.128.0
+hostmin_01: 192.168.0.1
+hostmax_01: 192.168.127.254
+netcount_01: 32766

@@ -1,0 +1,159 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results, please report at
+# http://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+
+#
+# The following results may also be obtained via:
+# http://whois.arin.net/rest/nets;q=140.109.57.11?showDetails=true&showARIN=false&ext=netref2
+#
+
+NetRange:       140.109.0.0 - 140.138.255.255
+CIDR:           140.128.0.0/13, 140.136.0.0/15, 140.138.0.0/16, 140.112.0.0/12, 140.110.0.0/15, 140.109.0.0/16
+NetName:        APNIC-ERX-140-109-0-0
+NetHandle:      NET-140-109-0-0-1
+Parent:         NET140 (NET-140-0-0-0-0)
+NetType:        Early Registrations, Transferred to APNIC
+OriginAS:       
+Organization:   Asia Pacific Network Information Centre (APNIC)
+RegDate:        2003-07-14
+Updated:        2009-10-08
+Comment:        This IP address range is not registered in the ARIN database.
+Comment:        This range was transferred to the APNIC Whois Database as
+Comment:        part of the ERX (Early Registration Transfer) project.
+Comment:        For details, refer to the APNIC Whois Database via
+Comment:        WHOIS.APNIC.NET or http://wq.apnic.net/apnic-bin/whois.pl
+Comment:        
+Comment:        ** IMPORTANT NOTE: APNIC is the Regional Internet Registry
+Comment:        for the Asia Pacific region.  APNIC does not operate networks
+Comment:        using this IP address range and is not able to investigate
+Comment:        spam or abuse reports relating to these addresses.  For more
+Comment:        help, refer to http://www.apnic.net/apnic-info/whois_search2/abuse-and-spamming
+Ref:            http://whois.arin.net/rest/net/NET-140-109-0-0-1
+
+OrgName:        Asia Pacific Network Information Centre
+OrgId:          APNIC
+Address:        PO Box 3646
+City:           South Brisbane
+StateProv:      QLD
+PostalCode:     4101
+Country:        AU
+RegDate:        
+Updated:        2012-01-24
+Ref:            http://whois.arin.net/rest/org/APNIC
+
+ReferralServer: whois://whois.apnic.net
+
+OrgAbuseHandle: AWC12-ARIN
+OrgAbuseName:   APNIC Whois Contact
+OrgAbusePhone:  +61 7 3858 3188 
+OrgAbuseEmail:  search-apnic-not-arin@apnic.net
+OrgAbuseRef:    http://whois.arin.net/rest/poc/AWC12-ARIN
+
+OrgTechHandle: AWC12-ARIN
+OrgTechName:   APNIC Whois Contact
+OrgTechPhone:  +61 7 3858 3188 
+OrgTechEmail:  search-apnic-not-arin@apnic.net
+OrgTechRef:    http://whois.arin.net/rest/poc/AWC12-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results, please report at
+# http://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+
+
+Found a referral to whois.apnic.net.
+
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '140.109.0.0 - 140.111.255.255'
+
+inetnum:        140.109.0.0 - 140.111.255.255
+netname:        TANET-BNETS
+descr:          imported inetnum object for MOEC
+country:        TW
+admin-c:        ZDL3-AP
+tech-c:         ZDL3-AP
+status:         ALLOCATED PORTABLE
+notify:         color@twnmoe10.edu.tw
+mnt-by:         MAINT-TW-TWNIC
+changed:        hostmaster@arin.net 20020131
+changed:        hm-changed@apnic.net 20030616
+changed:        hm-changed@apnic.net 20040926
+changed:        hm-changed@apnic.net 20041214
+changed:        hm-changed@apnic.net 20050119
+source:         APNIC
+
+person:         Zi Di Liu
+address:        Ministry of EducationComputerCenter
+                12th Floor No. 106 Section 2,Ho-ping
+country:        TW
+phone:          +886-2-27377010
+fax-no:         +886-2-27377043
+e-mail:         color@twnmoe10.edu.tw
+nic-hdl:        ZDL3-AP
+remarks:        ----------
+remarks:        imported from ARIN object:
+remarks:
+remarks:        poc-handle:  ZL2-ARIN
+remarks:        is-role:     N
+remarks:        last-name:   Liu
+remarks:        first-name:  Zi-Di
+remarks:        street:      Ministry of EducationComputerCenter
+                12th Floor No. 106 Section 2,Ho-ping
+remarks:        country:     TW
+remarks:        mailbox:     color@twnmoe10.edu.tw
+remarks:        fax-phone:   886-2-27377043
+remarks:        bus-phone:   +886-2-27377010
+remarks:        reg-date:    1970-01-01
+remarks:        changed:     hostmaster@arin.poc 20020131
+remarks:        source:      ARIN
+remarks:
+remarks:        ----------
+notify:         color@twnmoe10.edu.tw
+mnt-by:         MNT-ERX-MINEDCOMCENT-NON-TW
+changed:        hostmaster@arin.poc 20020131
+changed:        hm-changed@apnic.net 20030616
+source:         APNIC
+
+% Information related to '140.109.0.0/16AS9264'
+
+route:          140.109.0.0/16
+descr:          ASNET
+descr:          Academic Sinica
+descr:          The most preeminent academic institution in Taiwan, the Republic of China
+descr:          No.128, Sec. 2, Academia Rd., Nangang District, Taipei City 115, Taiwan (R.O.C.)
+descr:          International connection maintained by Academia Sinica Computing Centre(ASCC)
+country:        TW
+origin:         AS9264
+remarks:        ----------------------------------------------
+remarks:        This route object was created because some
+remarks:        ASNET peers filter based on these objects and
+remarks:        this route may be rejected if this object is
+remarks:        not created.
+remarks:        ----------------------------------------------
+remarks:        Please contact peering at ascc.net if you have
+remarks:        any questions regarding this object.
+remarks:        ----------------------------------------------
+notify:         ethern@ascc.net
+mnt-by:         MAINT-TW-TWNIC
+changed:        hm-changed@apnic.net 20050125
+changed:        hostmaster@twnic.net.tw 20070522
+source:         APNIC
+
+% This query was served by the APNIC Whois Service version 1.69.1-APNICv1r0 (WHOIS3)
+
+
+x_notes: Brute Force Auth attacker. Part of 38k of IPs launching massive attack for several months at Choice Hotels in 2013-2014
+host_type: Education University

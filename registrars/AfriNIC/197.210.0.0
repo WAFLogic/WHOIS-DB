@@ -1,0 +1,68 @@
+source: AfriNIC
+% This is the AfriNIC Whois server.
+
+%note:  this output has been filtered.
+%       To receive output for a database update  use the  -B  flag.
+
+% Information related to  197.210.0.0 - 197.210.255.255 
+
+% No abuse contact registered for 197.210.0.0 - 197.210.255.255
+
+netname:         MTN-Nigeria
+descr:           MTN Nigeria
+country:         NG
+org:             ORG-MN1-AFRINIC
+adminc:         CN6-AFRINIC
+techc:          AE32-AFRINIC
+status:          ALLOCATED PA
+mntby:          AFRINIC-HM-MNT
+mntlower:       MTNNIGERA1-MNT
+parent:          197.0.0.0 - 197.255.255.255
+
+organisation:    ORG-MN1-AFRINIC
+orgname:        MTN Nigeria
+orgtype:        LIR
+country:         NG
+address:         Yellodrome building  adeola hopewell street  Victoria island
+address:         Victoria island
+phone:           +08039029004
+phone:           +08031230141
+adminc:         BRM1-AFRINIC
+techc:          ISP1-AFRINIC
+mntref:         AFRINIC-HM-MNT
+mntref:         MTNNIGERA1-MNT
+mntby:          AFRINIC-HM-MNT
+
+person:          Atte Enyenihi
+nichdl:         AE32-AFRINIC
+address:         MTN Nigeria Communications Limited
+address:         Plot 1612 Adeola Hopewell Street
+address:         Victoria Island
+address:         Lagos State
+address:         Nigeria
+address:         lagos
+address:         Nigeria
+address:         Lagos
+address:         Nigeria
+phone:           +2348032009260
+
+person:          Chukwunonso Nkenke
+nichdl:         CN6-AFRINIC
+address:         MTN Nigeria Communications Limited
+address:         Plot 1612 Adeola Hopewell Street
+address:         Victoria Island
+address:         Lagos State
+address:         Nigeria
+address:         Lagos
+address:         Nigeria
+phone:           +2348032005038
+mntby:          MTNNIGERA1-MNT
+
+
+
+host:  197.210.0.0
+inetnum_01: 197.210.0.0/16
+netmask_01: 255.255.0.0
+hostmin_01: 197.210.0.1
+hostmax_01: 197.210.255.254
+netcount_01: 65534

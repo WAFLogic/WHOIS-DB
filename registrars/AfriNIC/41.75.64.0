@@ -1,0 +1,50 @@
+source: AfriNIC
+% This is the AfriNIC Whois server.
+
+%note:  this output has been filtered.
+%       To receive output for a database update  use the  -B  flag.
+
+% Information related to  41.75.64.0 - 41.75.64.255 
+
+% No abuse contact registered for 41.75.64.0 - 41.75.64.255
+
+netname:         INETSERVICES64
+descr:           Yattoo Services Hosting
+country:         CG
+adminc:         JH6-AFRINIC
+techc:          JL8-AFRINIC
+techc:          HR4-AFRINIC
+status:          ASSIGNED PA
+mntby:          OFIS
+parent:          41.75.64.0 - 41.75.79.255
+
+person:          Heiko Rehm
+address:         Rue Charles de Gaulle
+Pointe Noire
+Republic of Congo
+phone:           +2426708080
+faxno:          +2426708080
+nichdl:         HR4-AFRINIC
+
+person:          julien heuze
+address:         317 Avenue Charles de Gaulle
+address:         Pointe Noire
+address:         Republic of Congo
+phone:           +242 958 20 92
+nichdl:         jh6-afrinic
+
+person:          jeremie lecocq
+address:         317 Avenue Charles de Gaulle
+address:         Pointe Noire
+address:         Republic of Congo
+phone:           +242 670 83 83
+nichdl:         jl8-afrinic
+
+
+
+host:  41.75.64.0
+inetnum_01: 41.75.64.0/24
+netmask_01: 255.255.255.0
+hostmin_01: 41.75.64.1
+hostmax_01: 41.75.64.254
+netcount_01: 254

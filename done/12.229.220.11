@@ -1,0 +1,237 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results, please report at
+# http://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+
+#
+# The following results may also be obtained via:
+# http://whois.arin.net/rest/nets;q=12.229.220.11?showDetails=true&showARIN=false&ext=netref2
+#
+
+
+# start
+
+NetRange:       12.0.0.0 - 12.255.255.255
+CIDR:           12.0.0.0/8
+NetName:        ATT
+NetHandle:      NET-12-0-0-0-1
+Parent:         NET12 (NET-12-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       
+Organization:   AT&T Services, Inc. (ATTW-Z)
+RegDate:        1983-08-23
+Updated:        2013-12-19
+Comment:        For abuse issues contact abuse@att.net
+Ref:            http://whois.arin.net/rest/net/NET-12-0-0-0-1
+
+OrgName:        AT&T Services, Inc.
+OrgId:          ATTW-Z
+Address:        200 S. Laurel AVE.
+City:           MIDDLETOWN
+StateProv:      NJ
+PostalCode:     07748
+Country:        US
+RegDate:        2009-12-18
+Updated:        2013-01-18
+Comment:        Contact AT&T Abuse ( abuse@att.net ) for policy abuse issues.
+Comment:        All policy abuse issues sent to other POCs will be disregarded.
+Ref:            http://whois.arin.net/rest/org/ATTW-Z
+
+OrgAbuseHandle: ATTAB-ARIN
+OrgAbuseName:   ATT Abuse
+OrgAbusePhone:  +1-919-319-8130 
+OrgAbuseEmail:  abuse@att.net
+OrgAbuseRef:    http://whois.arin.net/rest/poc/ATTAB-ARIN
+
+OrgTechHandle: ICC-ARIN
+OrgTechName:   IP Team
+OrgTechPhone:  +1-732-844-5564 
+OrgTechEmail:  m.byju@att.com
+OrgTechRef:    http://whois.arin.net/rest/poc/ICC-ARIN
+
+OrgTechHandle: IPSWI-ARIN
+OrgTechName:   IP SWIP
+OrgTechPhone:  +1-888-613-6330 
+OrgTechEmail:  swipid@icorefep2.noc.att.com
+OrgTechRef:    http://whois.arin.net/rest/poc/IPSWI-ARIN
+
+OrgTechHandle: JB3310-ARIN
+OrgTechName:   Borkenhagen, Jay C.
+OrgTechPhone:  +1-732-368-6004 
+OrgTechEmail:  jayb@att.com
+OrgTechRef:    http://whois.arin.net/rest/poc/JB3310-ARIN
+
+RTechHandle: IAA17-ARIN
+RTechName:   IP Address Administration
+RTechPhone:  +1-732-420-2071 
+RTechEmail:  addrmgt@qsun.att.com
+RTechRef:    http://whois.arin.net/rest/poc/IAA17-ARIN
+
+# end
+
+
+# start
+
+NetRange:       12.229.220.0 - 12.229.220.255
+CIDR:           12.229.220.0/24
+NetName:        ACC-COMM84-220
+NetHandle:      NET-12-229-220-0-1
+Parent:         ATTWORLD-MIS-229-216 (NET-12-229-216-0-2)
+NetType:        Reassigned
+OriginAS:       
+Organization:   ACC-COMMUNICATIONS ETC INC (AE-1142)
+RegDate:        2014-04-08
+Updated:        2014-04-08
+Ref:            http://whois.arin.net/rest/net/NET-12-229-220-0-1
+
+OrgName:        ACC-COMMUNICATIONS ETC INC
+OrgId:          AE-1142
+Address:        5655 CHRISTOVAL RD
+City:           SAN ANGELO
+StateProv:      TX
+PostalCode:     76904
+Country:        US
+RegDate:        2014-04-08
+Updated:        2014-04-08
+Ref:            http://whois.arin.net/rest/org/AE-1142
+
+OrgTechHandle: SHRUM10-ARIN
+OrgTechName:   shrum, chris 
+OrgTechPhone:  +1-325-658-7484 
+OrgTechEmail:  chris@cometcinc.com
+OrgTechRef:    http://whois.arin.net/rest/poc/SHRUM10-ARIN
+
+OrgAbuseHandle: SHRUM10-ARIN
+OrgAbuseName:   shrum, chris 
+OrgAbusePhone:  +1-325-658-7484 
+OrgAbuseEmail:  chris@cometcinc.com
+OrgAbuseRef:    http://whois.arin.net/rest/poc/SHRUM10-ARIN
+
+# end
+
+
+# start
+
+NetRange:       12.229.216.0 - 12.229.223.255
+CIDR:           12.229.216.0/21
+NetName:        ATTWORLD-MIS-229-216
+NetHandle:      NET-12-229-216-0-2
+Parent:         ATTWORLD-MIS-229-216 (NET-12-229-216-0-1)
+NetType:        Reallocated
+OriginAS:       AS7018
+Organization:   AT&T Services, Inc. (ATTW)
+RegDate:        2011-03-30
+Updated:        2011-03-30
+Ref:            http://whois.arin.net/rest/net/NET-12-229-216-0-2
+
+OrgName:        AT&T Services, Inc.
+OrgId:          ATTW
+Address:        200 S. Laurel AVE.
+City:           MIDDLETOWN
+StateProv:      NJ
+PostalCode:     07748
+Country:        US
+RegDate:        
+Updated:        2013-01-18
+Comment:        Contact AT&T Abuse ( abuse@att.net ) for policy abuse issues.
+Comment:        All policy abuse issues sent to other POCs will be disregarded.
+Ref:            http://whois.arin.net/rest/org/ATTW
+
+OrgTechHandle: ICC-ARIN
+OrgTechName:   IP Team
+OrgTechPhone:  +1-732-844-5564 
+OrgTechEmail:  m.byju@att.com
+OrgTechRef:    http://whois.arin.net/rest/poc/ICC-ARIN
+
+OrgAbuseHandle: ATTAB-ARIN
+OrgAbuseName:   ATT Abuse
+OrgAbusePhone:  +1-919-319-8130 
+OrgAbuseEmail:  abuse@att.net
+OrgAbuseRef:    http://whois.arin.net/rest/poc/ATTAB-ARIN
+
+OrgTechHandle: JB3310-ARIN
+OrgTechName:   Borkenhagen, Jay C.
+OrgTechPhone:  +1-732-368-6004 
+OrgTechEmail:  jayb@att.com
+OrgTechRef:    http://whois.arin.net/rest/poc/JB3310-ARIN
+
+OrgTechHandle: IPSWI-ARIN
+OrgTechName:   IP SWIP
+OrgTechPhone:  +1-888-613-6330 
+OrgTechEmail:  swipid@icorefep2.noc.att.com
+OrgTechRef:    http://whois.arin.net/rest/poc/IPSWI-ARIN
+
+# end
+
+
+# start
+
+NetRange:       12.229.216.0 - 12.229.223.255
+CIDR:           12.229.216.0/21
+NetName:        ATTWORLD-MIS-229-216
+NetHandle:      NET-12-229-216-0-1
+Parent:         ATT (NET-12-0-0-0-1)
+NetType:        Reallocated
+OriginAS:       AS7018
+Organization:   AT&T Services, Inc. (ATTW)
+RegDate:        2011-03-17
+Updated:        2011-03-17
+Ref:            http://whois.arin.net/rest/net/NET-12-229-216-0-1
+
+
+OrgName:        AT&T Services, Inc.
+OrgId:          ATTW
+Address:        200 S. Laurel AVE.
+City:           MIDDLETOWN
+StateProv:      NJ
+PostalCode:     07748
+Country:        US
+RegDate:        
+Updated:        2013-01-18
+Comment:        Contact AT&T Abuse ( abuse@att.net ) for policy abuse issues.
+Comment:        All policy abuse issues sent to other POCs will be disregarded.
+Ref:            http://whois.arin.net/rest/org/ATTW
+
+OrgTechHandle: ICC-ARIN
+OrgTechName:   IP Team
+OrgTechPhone:  +1-732-844-5564 
+OrgTechEmail:  m.byju@att.com
+OrgTechRef:    http://whois.arin.net/rest/poc/ICC-ARIN
+
+OrgAbuseHandle: ATTAB-ARIN
+OrgAbuseName:   ATT Abuse
+OrgAbusePhone:  +1-919-319-8130 
+OrgAbuseEmail:  abuse@att.net
+OrgAbuseRef:    http://whois.arin.net/rest/poc/ATTAB-ARIN
+
+OrgTechHandle: JB3310-ARIN
+OrgTechName:   Borkenhagen, Jay C.
+OrgTechPhone:  +1-732-368-6004 
+OrgTechEmail:  jayb@att.com
+OrgTechRef:    http://whois.arin.net/rest/poc/JB3310-ARIN
+
+OrgTechHandle: IPSWI-ARIN
+OrgTechName:   IP SWIP
+OrgTechPhone:  +1-888-613-6330 
+OrgTechEmail:  swipid@icorefep2.noc.att.com
+OrgTechRef:    http://whois.arin.net/rest/poc/IPSWI-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results, please report at
+# http://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+x_notes: Brute Force Auth attacker. Part of 38k of IPs launching massive attack for several months at Choice Hotels in 2013-2014
+host_type: ISP Telecomm

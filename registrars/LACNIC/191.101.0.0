@@ -1,0 +1,63 @@
+source: LACNIC
+
+% Joint Whois - whois.lacnic.net
+%  This server accepts single ASN  IPv4 or IPv6 queries
+
+
+
+% Copyright LACNIC lacnic.net
+%  The data below is provided for information purposes
+%  and to assist persons in obtaining information about or
+%  related to AS and IP numbers registrations
+%  By submitting a whois query  you agree to use this data
+%  only for lawful purposes.
+%  2014-12-05 16:44:56 ( brst 02: 00 )
+
+owner:        Digital Energy Technologies Ltd
+ownerid:      US-DETL-LACNIC
+responsible:  Petras Sinkevicius
+address:      LA SALLE ST  427  S
+address:      60605 - Chicago - IL
+country:      US
+phone:        +1 888 8042926 []
+ownerc:      MOJ4
+techc:       MOJ4
+abuse:      VIG28
+created:      20140401
+changed:      20140905
+
+nichdl:      MOJ4
+person:       Network Operating Center
+address:      LA SALLE ST  427  
+address:      60605 - Chicago - IL
+country:      US
+phone:        +1  8042926 []
+created:      20140723
+changed:      20140905
+
+nichdl:      VIG28
+person:       Network Operating Center
+address:      Moneda  970  Piso 5
+address:      8320313 - Santiago - RM
+country:      CL
+phone:        +56 229 382322 []
+created:      20130508
+changed:      20140108
+
+% whois.lacnic.net accepts only direct match queries.
+% types of queriesare:  POCs  ownerid  CIDR blocks  IP
+% and AS numbers.
+
+host:  191.101.0.0
+email: noc@AS61440.NET
+email: noc@AS61440.NET
+inetnum_01: 191.101.0/21
+inetnum_02: 191.101/16
+netmask_01: 255.255.248.0
+hostmin_01: 192.168.0.1
+hostmax_01: 192.168.7.254
+netcount_01: 2046
+netmask_02: 255.255.0.0
+hostmin_02: 192.168.0.1
+hostmax_02: 192.168.255.254
+netcount_02: 65534

@@ -1,0 +1,100 @@
+source: AfriNIC
+% [whois.apnic.net]
+% whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to  171.0.0.0 - 171.255.255.255 
+
+netname:         ERX-NETBLOCK
+descr:           Early registration addresses
+remarks:         ------------------------------------------------------
+remarks:       important: 
+remarks: 
+remarks:         Networks in this range were allocated by InterNIC
+remarks:         prior to the formation of Regional Internet
+remarks:        registries( rirs ):  AfriNIC  APNIC  ARIN  LACNIC and RIPE NCC.
+remarks: 
+remarks:         Address ranges from this historical space have now
+remarks:        been transferred to the appropriate rirdatabase.remarks: 
+remarks:         If your search has returned this record  it means the
+remarks:         address range is not administered by APNIC.
+remarks: 
+remarks:        instead  please search one of the followingdatabases: 
+remarks: 
+remarks:         - AfriNIC ( Africa )
+remarks:        website: http://www.afrinic.net/
+remarks:        commandline:  whois.afrinic.net
+remarks: 
+remarks:         - ARIN ( Northern America )
+remarks:        website: http://www.arin.net/
+remarks:        commandline:  whois.arin.net
+remarks: 
+remarks:         - LACNIC ( Latin America and the Carribean )
+remarks:        website: http://www.lacnic.net/
+remarks:        commandline:  whois.lacnic.net
+remarks: 
+remarks:         - RIPE NCC ( Europe )
+remarks:        website: http://www.ripe.net/
+remarks:        commandline:  whois.ripe.net
+remarks: 
+remarks:         For information on the Early Registration Transfer
+remarks:        ( erx ) project see: 
+remarks: 
+remarks:        http://www.apnic.net/db/erx
+remarks: 
+remarks:         ------------------------------------------------------
+country:         AU
+adminc:         IANA1-AP
+techc:          IANA1-AP
+mntby:          APNIC-HM
+mntlower:       APNIC-HM
+mntirt:         IRT-APNIC-AP
+status:          ALLOCATED PORTABLE
+changed:         hm-changed@apnic.net 20030404
+changed:         hm-changed@apnic.net 20040926
+changed:         hm-changed@apnic.net 20110209
+
+irt:             IRT-APNIC-AP
+address:         Brisbane  Australia
+abuse:   security@apnic.net
+adminc:         HM20-AP
+techc:          NO4-AP
+remarks:         APNIC is a Regional Internet Registry.
+remarks:         We do not operate the referring network and
+remarks:         is unable to investigate complaints of network abuse.
+remarks:         For more information  see www.apnic.net/irt
+mntby:          APNIC-HM
+changed:         hm-changed@apnic.net 20101111
+changed:         hm-changed@apnic.net 20110124
+
+role:            Internet Assigned Numbers Authority
+address:        see http://www.iana.org.
+country:         US
+phone:           +1-310-823-9358
+adminc:         IANA1-AP
+techc:          IANA1-AP
+nichdl:         IANA1-AP
+remarks:         For more information on IANA services
+remarks:        go to iana web site@http://www.iana.org.
+mntby:          MAINT-APNIC-AP
+changed:         helpdesk@apnic.net 20110811
+changed:         hm-changed@apnic.net 20111206
+
+% This query was served by the APNIC Whois Service version 1.69.1-APNICv1r0 ( WHOIS4 )
+
+
+host:  171.161.160.10
+email: hm-changed@apnic.net
+email: hm-changed@apnic.net
+email: hm-changed@apnic.net
+email: helpdesk@apnic.net
+email: security@apnic.net
+email: hm-changed@apnic.net
+email: hm-changed@apnic.net
+email: nobody@apnic.net
+email: helpdesk@apnic.net
+email: hm-changed@apnic.net
+inetnum_01: 171.0.0.0/8
+netmask_01: 255.0.0.0
+hostmin_01: 171.0.0.1
+hostmax_01: 171.255.255.254
+netcount_01: 16777214

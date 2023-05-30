@@ -1,0 +1,37 @@
+source: AfriNIC
+% This is the AfriNIC Whois server.
+
+%note:  this output has been filtered.
+%       To receive output for a database update  use the  -B  flag.
+
+% Information related to  41.74.177.0 - 41.74.177.255 
+
+% No abuse contact registered for 41.74.177.0 - 41.74.177.255
+
+netname:         RSAWEB
+descr:           Network Resources - Datacentre1 & 2
+country:         ZA
+adminc:         RH4-AFRINIC
+techc:          RH4-AFRINIC
+status:          ASSIGNED PA
+mntby:          RSA-MNT
+parent:          41.74.176.0 - 41.74.191.255
+
+person:          RSAWeb Hostmaster
+nichdl:         RH4-AFRINIC
+address:         Suite 3 Private Bag X1005
+address:         Claremont
+address:         7735
+address:         Cape Town
+address:         South Africa
+phone:           +27214626798
+faxno:          +27214626794
+
+
+
+host:  41.74.177.0
+inetnum_01: 41.74.177.0/24
+netmask_01: 255.255.255.0
+hostmin_01: 41.74.177.1
+hostmax_01: 41.74.177.254
+netcount_01: 254

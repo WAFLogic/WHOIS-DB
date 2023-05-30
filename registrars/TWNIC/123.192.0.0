@@ -1,0 +1,47 @@
+source: TWNIC
+% [whois.apnic.net]
+% whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to  123.192.0.0 - 123.195.255.255 
+
+netname:         TUNGHO-NET
+descr:           TUNG HO MULTIMEDIA CO. Ltd.
+descr:           6F No.42  Kuanchien Rd.  Chungcheng  District .
+descr:           Taipei Taiwan 100
+country:         TW
+adminc:         VL198-AP
+techc:          VL198-AP
+status:          ALLOCATED PORTABLE
+mntby:          MAINT-TW-TWNIC
+mntlower:       MAINT-TW-TWNIC
+mntroutes:      MAINT-TW-TWNIC
+remarks:         -+-+-+-+-+-+-+-+-+-+-+-++-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+remarks:         This object can only be updated by APNIC hostmasters.
+remarks:         To update this object  please contact APNIC
+remarks:         hostmasters and include your organisation s account
+remarks:         name in the subject line.
+remarks:         -+-+-+-+-+-+-+-+-+-+-+-++-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+changed:         hm-changed@apnic.net 20061222
+
+person:          vincent Lin
+nichdl:         VL198-AP
+address:         6F No.42  Kuanchien Rd.  Chungcheng  District  Taipei City  Taiwan  R.O.C.
+address:         Taipei City  100  R.O.C
+phone:           +886-2-8791-0168 ext. 1228
+faxno:          +886-2-8791-2255
+country:         TW
+changed:         hostmaster@twnic.net.tw 20070730
+mntby:          MAINT-TW-TWNIC
+
+% This query was served by the APNIC Whois Service version 1.69.1-APNICv1r0 ( WHOIS3 )
+
+
+host:  123.192.0.0
+email: hm-changed@apnic.net
+email: cm.manager@ethome.com.tw
+email: hostmaster@twnic.net.tw
+inetnum_01: 123.192.0.0/14
+netmask_01: 255.252.0.0
+hostmin_01: 123.192.0.1
+hostmax_01: 123.195.255.254
+netcount_01: 262142

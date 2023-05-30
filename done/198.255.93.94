@@ -1,0 +1,219 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+
+#
+# The following results may also be obtained via:
+# https://whois.arin.net/rest/nets;q=198.255.93.94?showDetails=true&showARIN=false&showNonArinTopLevelNet=false&ext=netref2
+#
+
+
+# start
+
+NetRange:       198.255.0.0 - 198.255.127.255
+CIDR:           198.255.0.0/17
+NetName:        FDCSERVERS
+NetHandle:      NET-198-255-0-0-1
+Parent:         NET198 (NET-198-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS174, AS30058, AS6461
+Organization:   FDCservers.net (FDCSE)
+RegDate:        2013-07-09
+Updated:        2015-11-09
+Ref:            https://whois.arin.net/rest/net/NET-198-255-0-0-1
+
+
+OrgName:        FDCservers.net
+OrgId:          FDCSE
+Address:        141 W Jackson Blvd. #1135
+City:           Chicago
+StateProv:      IL
+PostalCode:     60604
+Country:        US
+RegDate:        2003-05-20
+Updated:        2017-01-28
+Ref:            https://whois.arin.net/rest/org/FDCSE
+
+ReferralServer:  rwhois://rwhois.fdcservers.net:4321
+
+OrgTechHandle: ABUSE438-ARIN
+OrgTechName:   ABUSE department
+OrgTechPhone:  +1-312-423-6675 
+OrgTechEmail:  abuse@fdcservers.net
+OrgTechRef:    https://whois.arin.net/rest/poc/ABUSE438-ARIN
+
+OrgAbuseHandle: ABUSE438-ARIN
+OrgAbuseName:   ABUSE department
+OrgAbusePhone:  +1-312-423-6675 
+OrgAbuseEmail:  abuse@fdcservers.net
+OrgAbuseRef:    https://whois.arin.net/rest/poc/ABUSE438-ARIN
+
+OrgNOCHandle: ABUSE438-ARIN
+OrgNOCName:   ABUSE department
+OrgNOCPhone:  +1-312-423-6675 
+OrgNOCEmail:  abuse@fdcservers.net
+OrgNOCRef:    https://whois.arin.net/rest/poc/ABUSE438-ARIN
+
+# end
+
+
+# start
+
+NetRange:       198.255.92.0 - 198.255.93.255
+CIDR:           198.255.92.0/23
+NetName:        FDCSERVERS-DENVERENT
+NetHandle:      NET-198-255-92-0-1
+Parent:         FDCSERVERS (NET-198-255-0-0-1)
+NetType:        Reallocated
+OriginAS:       AS30058
+Organization:   FDCservers.net (FDCSE-17)
+RegDate:        2016-06-23
+Updated:        2016-06-23
+Ref:            https://whois.arin.net/rest/net/NET-198-255-92-0-1
+
+
+OrgName:        FDCservers.net
+OrgId:          FDCSE-17
+Address:        4643 S Ulster St
+City:           Denver
+StateProv:      CO
+PostalCode:     80237
+Country:        US
+RegDate:        2015-04-23
+Updated:        2015-04-23
+Ref:            https://whois.arin.net/rest/org/FDCSE-17
+
+ReferralServer:  rwhois://rwhois.fdcservers.net:4321
+
+OrgAbuseHandle: ABUSE438-ARIN
+OrgAbuseName:   ABUSE department
+OrgAbusePhone:  +1-312-423-6675 
+OrgAbuseEmail:  abuse@fdcservers.net
+OrgAbuseRef:    https://whois.arin.net/rest/poc/ABUSE438-ARIN
+
+OrgTechHandle: ABUSE438-ARIN
+OrgTechName:   ABUSE department
+OrgTechPhone:  +1-312-423-6675 
+OrgTechEmail:  abuse@fdcservers.net
+OrgTechRef:    https://whois.arin.net/rest/poc/ABUSE438-ARIN
+
+# end
+
+
+# start
+
+NetRange:       198.255.93.88 - 198.255.93.95
+CIDR:           198.255.93.88/29
+NetName:        BRAINSTORM-NETWORK-INC
+NetHandle:      NET-198-255-93-88-1
+Parent:         FDCSERVERS-DENVERENT (NET-198-255-92-0-1)
+NetType:        Reassigned
+OriginAS:       AS174, AS30058
+Organization:   BrainStorm Network Inc (BN-361)
+RegDate:        2016-10-05
+Updated:        2016-10-05
+Comment:        All abuse reports should be sent to our abuse 
+Comment:        email: info@oneprovider.com
+Ref:            https://whois.arin.net/rest/net/NET-198-255-93-88-1
+
+
+OrgName:        BrainStorm Network Inc
+OrgId:          BN-361
+Address:        3210 jacques bureau
+City:           Laval
+StateProv:      QC
+PostalCode:     H7P 0A9
+Country:        CA
+RegDate:        2016-05-26
+Updated:        2016-05-26
+Ref:            https://whois.arin.net/rest/org/BN-361
+
+
+OrgTechHandle: ABUSE5508-ARIN
+OrgTechName:   Abuse department
+OrgTechPhone:  +1-514-220-3085 
+OrgTechEmail:  info@oneprovider.com
+OrgTechRef:    https://whois.arin.net/rest/poc/ABUSE5508-ARIN
+
+OrgAbuseHandle: ABUSE5508-ARIN
+OrgAbuseName:   Abuse department
+OrgAbusePhone:  +1-514-220-3085 
+OrgAbuseEmail:  info@oneprovider.com
+OrgAbuseRef:    https://whois.arin.net/rest/poc/ABUSE5508-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+
+
+Found a referral to rwhois.fdcservers.net:4321.
+
+%rwhois V-1.5:003fff:00 rwhois.fdcservers.net (by Network Solutions, Inc. V-1.5.9.6)
+network:Auth-Area:198.255.0.0/17
+network:Class-Name:network
+network:OrgName:My Tech Consultants
+network:OrgID;I:FDC-7624
+network:Address:175 Sydenham Hill
+network:City:London
+network:PostalCode:SE23 3PH
+network:Country:GB
+network:NetRange:198.255.93.88 - 198.255.93.95
+network:CIDR:198.255.93.88/29
+network:NetName:FDC-7624-198.255.93.88
+network:OrgAbuseHandle:ABUSE438-ARIN
+network:OrgAbuseName:Abuse Department
+network:OrgAbusePhone:+1-312-423-6675
+network:OrgAbuseEmail:abuse@fdcservers.net
+network:OrgNOCHandle:ABUSE438-ARIN
+network:OrgNOCName:Tech Support
+network:OrgNOCPhone:+1-312-423-6675
+network:OrgNOCEmail:abuse@fdcservers.net
+network:OrgTechHandle:ABUSE438-ARIN
+network:OrgTechName:Tech Support
+network:OrgTechPhone:+1-312-423-6675
+network:OrgTechEmail:abuse@fdcservers.net
+
+network:Auth-Area:198.255.0.0/17
+network:Class-Name:network
+network:OrgName:FDCservers.net
+network:OrgID;I:FDCSE
+network:Address:141 W Jackson Blvd. #1135
+network:City:Chicago
+network:StateProv:IL
+network:PostalCode:60604
+network:Country:US
+network:NetRange:198.255.0.0 - 198.255.127.255
+network:CIDR:198.255.0.0/17
+network:NetName:FDCSERVERS
+network:OrgAbuseHandle:ABUSE438-ARIN
+network:OrgAbuseName:Abuse Department
+network:OrgAbusePhone:+1-312-423-6675
+network:OrgAbuseEmail:abuse@fdcservers.net
+network:OrgNOCHandle:ABUSE438-ARIN
+network:OrgNOCName:Tech Support
+network:OrgNOCPhone:+1-312-423-6675
+network:OrgNOCEmail:abuse@fdcservers.net
+network:OrgTechHandle:ABUSE438-ARIN
+network:OrgTechName:Tech Support
+network:OrgTechPhone:+1-312-423-6675
+network:OrgTechEmail:abuse@fdcservers.net
+
+%ok
+x_notes: 2017-07-15 14:47:43 - TIAA Enrollment Registration Multiple Failed SSN Attempts During Fraud Event
+created_at: 2017-07-15 14:47:43
+host_type: VPS Hosting

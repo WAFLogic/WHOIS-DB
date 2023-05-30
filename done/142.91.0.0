@@ -1,0 +1,197 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results, please report at
+# http://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+
+#
+# The following results may also be obtained via:
+# http://whois.arin.net/rest/nets;q=142.91.0.0?showDetails=true&showARIN=false&ext=netref2
+#
+
+
+# start
+
+NetRange:       142.91.0.0 - 142.91.255.255
+CIDR:           142.91.0.0/16
+NetName:        NETBLK-NOBIS-TECHNOLOGY-GROUP-12
+NetHandle:      NET-142-91-0-0-1
+Parent:         NET142 (NET-142-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS15003
+Organization:   Nobis Technology Group, LLC (NTGL)
+RegDate:        2012-06-08
+Updated:        2012-06-08
+Ref:            http://whois.arin.net/rest/net/NET-142-91-0-0-1
+
+OrgName:        Nobis Technology Group, LLC
+OrgId:          NTGL
+Address:        5350 East High Street
+Address:        Suite 300
+City:           Phoenix
+StateProv:      AZ
+PostalCode:     85054
+Country:        US
+RegDate:        2007-01-30
+Updated:        2014-11-03
+Comment:        +++++++++++++++++++++++++++
+Comment:        Nobis Technology Group, LLC
+Comment:        http://www.nobistech.net
+Comment:        +++++++++++++++++++++++++++
+Comment:        
+Comment:        For all inquiries relating
+Comment:        to network abuse, network
+Comment:        security, DMCA, trademark,
+Comment:        legal compliance, and law 
+Comment:        enforcement requests, contact
+Comment:        abuse@nobistech.net via e-mail
+Comment:        or via postal mail as follows:
+Comment:        
+Comment:        Nobis Technology Group
+Comment:        ATTN IP Network Operations
+Comment:        5350 East High Street
+Comment:        Suite 300
+Comment:        Phoenix, AZ 85054
+Ref:            http://whois.arin.net/rest/org/NTGL
+
+ReferralServer: rwhois://rwhois.nobistech.net:4321
+
+OrgNOCHandle: NOC2466-ARIN
+OrgNOCName:   NOC
+OrgNOCPhone:  +1-480-212-1710 
+OrgNOCEmail:  admin@nobistech.net
+OrgNOCRef:    http://whois.arin.net/rest/poc/NOC2466-ARIN
+
+OrgAbuseHandle: ABUSE1601-ARIN
+OrgAbuseName:   Abuse
+OrgAbusePhone:  +1-480-212-1710 
+OrgAbuseEmail:  abuse@nobistech.net
+OrgAbuseRef:    http://whois.arin.net/rest/poc/ABUSE1601-ARIN
+
+OrgTechHandle: AIA12-ARIN
+OrgTechName:   ARIN IP Admin
+OrgTechPhone:  +1-480-212-1710 
+OrgTechEmail:  arin@nobistech.net
+OrgTechRef:    http://whois.arin.net/rest/poc/AIA12-ARIN
+
+# end
+
+
+# start
+
+NetRange:       142.91.0.0 - 142.91.7.255
+CIDR:           142.91.0.0/21
+NetName:        NETBLK-UBIQUITY-LOS-ANGELES-142-91-0-0
+NetHandle:      NET-142-91-0-0-2
+Parent:         NETBLK-NOBIS-TECHNOLOGY-GROUP-12 (NET-142-91-0-0-1)
+NetType:        Reallocated
+OriginAS:       AS15003
+Organization:   Ubiquity Server Solutions Los Angeles (NTGL-4)
+RegDate:        2012-06-09
+Updated:        2012-06-09
+Comment:        Addresses in this block are non-portable.
+Comment:        For security issues, abuse reports, and
+Comment:        technical issues, please contact the
+Comment:        Nobis Technology Group NOC at admin@nobistech.net
+Ref:            http://whois.arin.net/rest/net/NET-142-91-0-0-2
+
+OrgName:        Ubiquity Server Solutions Los Angeles
+OrgId:          NTGL-4
+Address:        530 West 6th Street
+City:           Los Angeles
+StateProv:      CA
+PostalCode:     90014
+Country:        US
+RegDate:        2008-03-05
+Updated:        2011-01-10
+Comment:        +++++++++++++++++++++++++++
+Comment:        Ubiquity Server Solutions
+Comment:        http://www.ubiquityservers.com
+Comment:        Los Angeles, CA
+Comment:        +++++++++++++++++++++++++++
+Comment:        
+Comment:        For all inquiries relating
+Comment:        to network abuse, network
+Comment:        security, DMCA, trademark,
+Comment:        legal compliance, and law 
+Comment:        enforcement requests, contact
+Comment:        abuse@nobistech.net via e-mail
+Comment:        or via postal mail as follows:
+Comment:        
+Comment:        Nobis Technology Group
+Comment:        ATTN IP Network Operations
+Comment:        6930 East Chauncey Lane
+Comment:        Suite 150
+Comment:        Phoenix, AZ 85054
+Ref:            http://whois.arin.net/rest/org/NTGL-4
+
+ReferralServer: rwhois://rwhois.nobistech.net:4321
+
+OrgTechHandle: AIA12-ARIN
+OrgTechName:   ARIN IP Admin
+OrgTechPhone:  +1-480-212-1710 
+OrgTechEmail:  arin@nobistech.net
+OrgTechRef:    http://whois.arin.net/rest/poc/AIA12-ARIN
+
+OrgAbuseHandle: ABUSE1601-ARIN
+OrgAbuseName:   Abuse
+OrgAbusePhone:  +1-480-212-1710 
+OrgAbuseEmail:  abuse@nobistech.net
+OrgAbuseRef:    http://whois.arin.net/rest/poc/ABUSE1601-ARIN
+
+OrgNOCHandle: NOC2466-ARIN
+OrgNOCName:   NOC
+OrgNOCPhone:  +1-480-212-1710 
+OrgNOCEmail:  admin@nobistech.net
+OrgNOCRef:    http://whois.arin.net/rest/poc/NOC2466-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results, please report at
+# http://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+
+
+Found a referral to rwhois.nobistech.net:4321.
+
+%rwhois V-1.0,V-1.5:00090h:00 rwhois.nobistech.net (Ubersmith RWhois Server V-2.3.0)
+autharea=142.91.0.0/24
+xautharea=142.91.0.0/24
+network:Class-Name:network
+network:Auth-Area:142.91.0.0/24
+network:ID:NET-47881.142.91.0.0/31
+network:Network-Name:Reserved - Networking use -  142.91.0.0/24
+network:IP-Network:142.91.0.0/31
+network:IP-Network-Block:142.91.0.0 - 142.91.0.1
+network:Org-Name:Ubiquity Hosting Solutions
+network:Street-Address:6930 E Chauncey Ln Suite 150
+network:City:Phoenix
+network:State:AZ
+network:Postal-Code:85054
+network:Country-Code:US
+network:Tech-Contact:MAINT-47881.142.91.0.0/31
+network:Created:20130418215150000
+network:Updated:20130418215150000
+network:Updated-By:admin@nobistech.net
+contact:POC-Name:Nobis Network Administration Team
+contact:POC-Email:admin@nobistech.net
+contact:POC-Phone:admin@nobistech.net
+contact:Tech-Name:Nobis Network Administration Team
+contact:Tech-Email:admin@nobistech.net
+contact:Tech-Phone:admin@nobistech.net
+contact:Abuse-Name:Nobis Network Abuse Team
+contact:Abuse-Email:abuse@nobistech.net
+contact:Abuse-Phone:abuse@nobistech.net
+%ok
+host_type: VPS Hosting

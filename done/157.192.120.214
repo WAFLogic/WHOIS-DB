@@ -1,0 +1,164 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+
+#
+# The following results may also be obtained via:
+# https://whois.arin.net/rest/nets;q=157.192.120.214?showDetails=true&showARIN=false&showNonArinTopLevelNet=false&ext=netref2
+#
+
+NetRange:       157.192.0.0 - 157.192.255.255
+CIDR:           157.192.0.0/16
+NetName:        APNIC-ERX-157-192-0-0
+NetHandle:      NET-157-192-0-0-1
+Parent:         NET157 (NET-157-0-0-0-0)
+NetType:        Early Registrations, Transferred to APNIC
+OriginAS:       
+Organization:   Asia Pacific Network Information Centre (APNIC)
+RegDate:        2004-04-07
+Updated:        2009-10-08
+Comment:        This IP address range is not registered in the ARIN database.
+Comment:        This range was transferred to the APNIC Whois Database as
+Comment:        part of the ERX (Early Registration Transfer) project.
+Comment:        For details, refer to the APNIC Whois Database via
+Comment:        WHOIS.APNIC.NET or http://wq.apnic.net/apnic-bin/whois.pl
+Comment:        
+Comment:        ** IMPORTANT NOTE: APNIC is the Regional Internet Registry
+Comment:        for the Asia Pacific region.  APNIC does not operate networks
+Comment:        using this IP address range and is not able to investigate
+Comment:        spam or abuse reports relating to these addresses.  For more
+Comment:        help, refer to http://www.apnic.net/apnic-info/whois_search2/abuse-and-spamming
+Ref:            https://whois.arin.net/rest/net/NET-157-192-0-0-1
+
+ResourceLink:  http://wq.apnic.net/whois-search/static/search.html
+ResourceLink:  whois.apnic.net
+
+OrgName:        Asia Pacific Network Information Centre
+OrgId:          APNIC
+Address:        PO Box 3646
+City:           South Brisbane
+StateProv:      QLD
+PostalCode:     4101
+Country:        AU
+RegDate:        
+Updated:        2012-01-24
+Ref:            https://whois.arin.net/rest/org/APNIC
+
+ReferralServer:  whois://whois.apnic.net
+ResourceLink:  http://wq.apnic.net/whois-search/static/search.html
+
+OrgTechHandle: AWC12-ARIN
+OrgTechName:   APNIC Whois Contact
+OrgTechPhone:  +61 7 3858 3188 
+OrgTechEmail:  search-apnic-not-arin@apnic.net
+OrgTechRef:    https://whois.arin.net/rest/poc/AWC12-ARIN
+
+OrgAbuseHandle: AWC12-ARIN
+OrgAbuseName:   APNIC Whois Contact
+OrgAbusePhone:  +61 7 3858 3188 
+OrgAbuseEmail:  search-apnic-not-arin@apnic.net
+OrgAbuseRef:    https://whois.arin.net/rest/poc/AWC12-ARIN
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+
+
+Found a referral to whois.apnic.net.
+
+% [whois.apnic.net]
+% Whois data copyright terms    http://www.apnic.net/db/dbcopyright.html
+
+% Information related to '157.192.0.0 - 157.192.255.255'
+
+inetnum:        157.192.0.0 - 157.192.255.255
+netname:        FCC
+descr:          Rakuten Communications Corp.
+descr:          Rakuten Crimson House, 1-14-1 Tamagawa,
+descr:          Setagaya-ku, Tokyo 158-0094, Japan
+admin-c:        JNIC1-AP
+tech-c:         JNIC1-AP
+remarks:        Email address for spam or abuse complaints abuse@sannet.ne.jp
+country:        JP
+mnt-by:         MAINT-JPNIC
+mnt-lower:      MAINT-JPNIC
+mnt-irt:        IRT-JPNIC-JP
+status:         ALLOCATED PORTABLE
+changed:        ip-apnic@nic.ad.jp 20100330
+changed:        hm-changed@apnic.net 20100330
+changed:        ip-apnic@nic.ad.jp 20100409
+changed:        ip-apnic@nic.ad.jp 20111031
+changed:        ip-apnic@nic.ad.jp 20140107
+changed:        ip-apnic@nic.ad.jp 20151109
+changed:        ip-apnic@nic.ad.jp 20160121
+source:         APNIC
+
+irt:            IRT-JPNIC-JP
+address:        Urbannet-Kanda Bldg 4F, 3-6-2 Uchi-Kanda
+address:        Chiyoda-ku, Tokyo 101-0047, Japan
+e-mail:         hostmaster@nic.ad.jp
+abuse-mailbox:  hostmaster@nic.ad.jp
+admin-c:        JNIC1-AP
+tech-c:         JNIC1-AP
+auth:           # Filtered
+mnt-by:         MAINT-JPNIC
+changed:        abuse@apnic.net 20101108
+changed:        hm-changed@apnic.net 20101111
+changed:        ip-apnic@nic.ad.jp 20140702
+source:         APNIC
+
+role:           Japan Network Information Center
+address:        Urbannet-Kanda Bldg 4F
+address:        3-6-2 Uchi-Kanda
+address:        Chiyoda-ku, Tokyo 101-0047,Japan
+country:        JP
+phone:          +81-3-5297-2311
+fax-no:         +81-3-5297-2312
+e-mail:         hostmaster@nic.ad.jp
+admin-c:        JI13-AP
+tech-c:         JE53-AP
+nic-hdl:        JNIC1-AP
+mnt-by:         MAINT-JPNIC
+changed:        hm-changed@apnic.net 20041222
+changed:        hm-changed@apnic.net 20050324
+changed:        ip-apnic@nic.ad.jp 20051027
+changed:        ip-apnic@nic.ad.jp 20120828
+source:         APNIC
+
+% Information related to '157.192.0.0 - 157.192.255.255'
+
+inetnum:        157.192.0.0 - 157.192.255.255
+netname:        FCC-CIDR-BLK-JP
+descr:          Rakuten Communications Corp.
+remarks:        Email address for spam or abuse complaints : abuse@sannet.ne.jp
+country:        JP
+admin-c:        JP00018865
+tech-c:         JP00018865
+remarks:        This information has been partially mirrored by APNIC from
+remarks:        JPNIC. To obtain more specific information, please use the
+remarks:        JPNIC WHOIS Gateway at
+remarks:        http://www.nic.ad.jp/en/db/whois/en-gateway.html or
+remarks:        whois.nic.ad.jp for WHOIS client. (The WHOIS client
+remarks:        defaults to Japanese output, use the /e switch for English
+remarks:        output)
+changed:        apnic-ftp@nic.ad.jp 20111031
+changed:        apnic-ftp@nic.ad.jp 20160121
+source:         JPNIC
+
+% This query was served by the APNIC Whois Service version 1.69.1-APNICv1r0 (UNDEFINED)
+
+
+x_notes: 2017-06-19 - ProjectBAIU.org site brute force attackers that are locked out
+host_type: ISP Telecomm
