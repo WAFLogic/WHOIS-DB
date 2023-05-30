@@ -1,0 +1,218 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+
+#
+# The following results may also be obtained via:
+# https://whois.arin.net/rest/nets;q=68.195.216.163?showDetails=true&showARIN=false&showNonArinTopLevelNet=false&ext=netref2
+#
+
+
+# start
+
+NetRange:       68.195.192.0 - 68.195.255.255
+CIDR:           68.195.192.0/18
+NetName:        OOL-STATIC-68-195-192-0-18
+NetHandle:      NET-68-195-192-0-1
+Parent:         NETBLK-OOL-5BLK (NET-68-192-0-0-1)
+NetType:        Reallocated
+OriginAS:       AS6128
+Organization:   Static IP Services (CSCHO-2)
+RegDate:        2007-08-08
+Updated:        2007-08-08
+Ref:            https://whois.arin.net/rest/net/NET-68-195-192-0-1
+
+
+OrgName:        Static IP Services
+OrgId:          CSCHO-2
+Address:        111 New South Rd
+City:           Hicksville
+StateProv:      NY
+PostalCode:     11801
+Country:        US
+RegDate:        2007-07-05
+Updated:        2011-09-24
+Ref:            https://whois.arin.net/rest/org/CSCHO-2
+
+
+OrgTechHandle: SIS16-ARIN
+OrgTechName:   Static IP Services
+OrgTechPhone:  +1-516-803-3000 
+OrgTechEmail:  hostmaster@cv.net
+OrgTechRef:    https://whois.arin.net/rest/poc/SIS16-ARIN
+
+OrgAbuseHandle: SIS16-ARIN
+OrgAbuseName:   Static IP Services
+OrgAbusePhone:  +1-516-803-3000 
+OrgAbuseEmail:  hostmaster@cv.net
+OrgAbuseRef:    https://whois.arin.net/rest/poc/SIS16-ARIN
+
+RTechHandle: SIS16-ARIN
+RTechName:   Static IP Services
+RTechPhone:  +1-516-803-3000 
+RTechEmail:  hostmaster@cv.net
+RTechRef:    https://whois.arin.net/rest/poc/SIS16-ARIN
+
+# end
+
+
+# start
+
+NetRange:       68.192.0.0 - 68.199.255.255
+CIDR:           68.192.0.0/13
+NetName:        NETBLK-OOL-5BLK
+NetHandle:      NET-68-192-0-0-1
+Parent:         NET68 (NET-68-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       
+Organization:   Optimum Online (OPTO)
+RegDate:        2003-01-29
+Updated:        2012-03-02
+Ref:            https://whois.arin.net/rest/net/NET-68-192-0-0-1
+
+
+OrgName:        Optimum Online
+OrgId:          OPTO
+Address:        111 new south RD
+City:           Hicksville
+StateProv:      NY
+PostalCode:     11801
+Country:        US
+RegDate:        1999-07-29
+Updated:        2011-12-20
+Ref:            https://whois.arin.net/rest/org/OPTO
+
+
+OrgTechHandle: OH4-ORG-ARIN
+OrgTechName:   OOL Hostmaster
+OrgTechPhone:  +1-516-803-3000 
+OrgTechEmail:  hostmaster@cv.net
+OrgTechRef:    https://whois.arin.net/rest/poc/OH4-ORG-ARIN
+
+OrgAbuseHandle: OOLAB-ARIN
+OrgAbuseName:   OOL Hostmaster
+OrgAbusePhone:  +1-516-803-2400 
+OrgAbuseEmail:  abuse@cv.net
+OrgAbuseRef:    https://whois.arin.net/rest/poc/OOLAB-ARIN
+
+RTechHandle: OH4-ORG-ARIN
+RTechName:   OOL Hostmaster
+RTechPhone:  +1-516-803-3000 
+RTechEmail:  hostmaster@cv.net
+RTechRef:    https://whois.arin.net/rest/poc/OH4-ORG-ARIN
+
+# end
+
+
+# start
+
+NetRange:       68.195.208.0 - 68.195.223.255
+CIDR:           68.195.208.0/20
+NetName:        OOL-STATIC-CT-68-195-208-0-20
+NetHandle:      NET-68-195-208-0-1
+Parent:         OOL-STATIC-68-195-192-0-18 (NET-68-195-192-0-1)
+NetType:        Reallocated
+OriginAS:       AS6128
+Organization:   Static IP Services (CSCHO-2)
+RegDate:        2007-12-06
+Updated:        2007-12-06
+Ref:            https://whois.arin.net/rest/net/NET-68-195-208-0-1
+
+
+
+OrgName:        Static IP Services
+OrgId:          CSCHO-2
+Address:        111 New South Rd
+City:           Hicksville
+StateProv:      NY
+PostalCode:     11801
+Country:        US
+RegDate:        2007-07-05
+Updated:        2011-09-24
+Ref:            https://whois.arin.net/rest/org/CSCHO-2
+
+
+OrgTechHandle: SIS16-ARIN
+OrgTechName:   Static IP Services
+OrgTechPhone:  +1-516-803-3000 
+OrgTechEmail:  hostmaster@cv.net
+OrgTechRef:    https://whois.arin.net/rest/poc/SIS16-ARIN
+
+OrgAbuseHandle: SIS16-ARIN
+OrgAbuseName:   Static IP Services
+OrgAbusePhone:  +1-516-803-3000 
+OrgAbuseEmail:  hostmaster@cv.net
+OrgAbuseRef:    https://whois.arin.net/rest/poc/SIS16-ARIN
+
+RTechHandle: SIS16-ARIN
+RTechName:   Static IP Services
+RTechPhone:  +1-516-803-3000 
+RTechEmail:  hostmaster@cv.net
+RTechRef:    https://whois.arin.net/rest/poc/SIS16-ARIN
+
+# end
+
+
+# start
+
+NetRange:       68.195.216.160 - 68.195.216.167
+CIDR:           68.195.216.160/29
+NetName:        OOL-STATIC-FFLDCT-68-195-216-160-29
+NetHandle:      NET-68-195-216-160-1
+Parent:         OOL-STATIC-CT-68-195-208-0-20 (NET-68-195-208-0-1)
+NetType:        Reassigned
+OriginAS:       AS6128
+Customer:       CSC HOLDINGS, Inc. - Static IP Services (C06024028)
+RegDate:        2016-02-02
+Updated:        2016-02-02
+Ref:            https://whois.arin.net/rest/net/NET-68-195-216-160-1
+
+
+CustName:       CSC HOLDINGS, Inc. - Static IP Services
+Address:        111 New South Road
+City:           Hicksville
+StateProv:      NY
+PostalCode:     11803
+Country:        US
+RegDate:        2016-02-02
+Updated:        2016-02-02
+Ref:            https://whois.arin.net/rest/customer/C06024028
+
+OrgTechHandle: SIS16-ARIN
+OrgTechName:   Static IP Services
+OrgTechPhone:  +1-516-803-3000 
+OrgTechEmail:  hostmaster@cv.net
+OrgTechRef:    https://whois.arin.net/rest/poc/SIS16-ARIN
+
+OrgAbuseHandle: SIS16-ARIN
+OrgAbuseName:   Static IP Services
+OrgAbusePhone:  +1-516-803-3000 
+OrgAbuseEmail:  hostmaster@cv.net
+OrgAbuseRef:    https://whois.arin.net/rest/poc/SIS16-ARIN
+
+RTechHandle: SIS16-ARIN
+RTechName:   Static IP Services
+RTechPhone:  +1-516-803-3000 
+RTechEmail:  hostmaster@cv.net
+RTechRef:    https://whois.arin.net/rest/poc/SIS16-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results, please report at
+# https://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+x_notes: 2017-07-15 14:47:43 - TIAA Enrollment Registration Multiple Failed SSN Attempts During Fraud Event
+created_at: 2017-07-15 14:47:43

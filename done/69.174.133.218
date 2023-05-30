@@ -1,0 +1,202 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results, please report at
+# http://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+
+#
+# The following results may also be obtained via:
+# http://whois.arin.net/rest/nets;q=69.174.133.218?showDetails=true&showARIN=false&ext=netref2
+#
+
+
+# start
+
+NetRange:       69.174.133.216 - 69.174.133.223
+CIDR:           69.174.133.216/29
+NetName:        CINER-3-69-174-133-216-29
+NetHandle:      NET-69-174-133-216-1
+Parent:         NETBLK-CMN-IPV4-CIDR-01 (NET-69-174-128-0-1)
+NetType:        Reassigned
+OriginAS:       AS30600
+Customer:       SUPER 8 (C04861596)
+RegDate:        2014-01-30
+Updated:        2014-01-30
+Ref:            http://whois.arin.net/rest/net/NET-69-174-133-216-1
+
+CustName:       SUPER 8
+Address:        308 DEMAREE DR
+City:           MADISON
+StateProv:      IN
+PostalCode:     47250
+Country:        US
+RegDate:        2014-01-30
+Updated:        2014-01-30
+Ref:            http://whois.arin.net/rest/customer/C04861596
+
+OrgTechHandle: ZINTD-ARIN
+OrgTechName:   Zint, Derek 
+OrgTechPhone:  +1-812-213-1031 
+OrgTechEmail:  derek.zint@metronetinc.com
+OrgTechRef:    http://whois.arin.net/rest/poc/ZINTD-ARIN
+
+OrgTechHandle: CAMPB195-ARIN
+OrgTechName:   Campbell, John 
+OrgTechPhone:  +1-913-754-3330 
+OrgTechEmail:  campbell@qservicesco.com
+OrgTechRef:    http://whois.arin.net/rest/poc/CAMPB195-ARIN
+
+OrgAbuseHandle: ABUSE2202-ARIN
+OrgAbuseName:   Abuse Master
+OrgAbusePhone:  +1-877-407-3224 
+OrgAbuseEmail:  abuse@metronetinc.com
+OrgAbuseRef:    http://whois.arin.net/rest/poc/ABUSE2202-ARIN
+
+OrgTechHandle: HCM2-ARIN
+OrgTechName:   hostmaster for Cinergy Metronet
+OrgTechPhone:  +1-877-407-3224 
+OrgTechEmail:  CMN-hostmaster@cinergymetronet.com
+OrgTechRef:    http://whois.arin.net/rest/poc/HCM2-ARIN
+
+OrgNOCHandle: NOC3544-ARIN
+OrgNOCName:   Network Operations Center
+OrgNOCPhone:  +1-877-407-3224 
+OrgNOCEmail:  CMN-Technicalsupport@metronetinc.com
+OrgNOCRef:    http://whois.arin.net/rest/poc/NOC3544-ARIN
+
+OrgTechHandle: TGI47-ARIN
+OrgTechName:   Gimmel, Tim 
+OrgTechPhone:  +1-812-456-4750 
+OrgTechEmail:  tim.gimmel@metronetinc.com
+OrgTechRef:    http://whois.arin.net/rest/poc/TGI47-ARIN
+
+RAbuseHandle: ABUSE2202-ARIN
+RAbuseName:   Abuse Master
+RAbusePhone:  +1-877-407-3224 
+RAbuseEmail:  abuse@metronetinc.com
+RAbuseRef:    http://whois.arin.net/rest/poc/ABUSE2202-ARIN
+
+RTechHandle: TGI47-ARIN
+RTechName:   Gimmel, Tim 
+RTechPhone:  +1-812-456-4750 
+RTechEmail:  tim.gimmel@metronetinc.com
+RTechRef:    http://whois.arin.net/rest/poc/TGI47-ARIN
+
+RNOCHandle: NOC3544-ARIN
+RNOCName:   Network Operations Center
+RNOCPhone:  +1-877-407-3224 
+RNOCEmail:  CMN-Technicalsupport@metronetinc.com
+RNOCRef:    http://whois.arin.net/rest/poc/NOC3544-ARIN
+
+RTechHandle: HCM2-ARIN
+RTechName:   hostmaster for Cinergy Metronet
+RTechPhone:  +1-877-407-3224 
+RTechEmail:  CMN-hostmaster@cinergymetronet.com
+RTechRef:    http://whois.arin.net/rest/poc/HCM2-ARIN
+
+# end
+
+
+# start
+
+NetRange:       69.174.128.0 - 69.174.175.255
+CIDR:           69.174.128.0/19, 69.174.160.0/20
+NetName:        NETBLK-CMN-IPV4-CIDR-01
+NetHandle:      NET-69-174-128-0-1
+Parent:         NET69 (NET-69-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS30600
+Organization:   Cinergy Metronet, Inc. (CINER-3)
+RegDate:        2009-04-29
+Updated:        2012-03-02
+Ref:            http://whois.arin.net/rest/net/NET-69-174-128-0-1
+
+OrgName:        Cinergy Metronet, Inc.
+OrgId:          CINER-3
+Address:        3701 Communications Way
+City:           Evansville
+StateProv:      IN
+PostalCode:     47715
+Country:        US
+RegDate:        2009-03-11
+Updated:        2014-12-01
+Ref:            http://whois.arin.net/rest/org/CINER-3
+
+OrgTechHandle: ZINTD-ARIN
+OrgTechName:   Zint, Derek 
+OrgTechPhone:  +1-812-213-1031 
+OrgTechEmail:  derek.zint@metronetinc.com
+OrgTechRef:    http://whois.arin.net/rest/poc/ZINTD-ARIN
+
+OrgTechHandle: CAMPB195-ARIN
+OrgTechName:   Campbell, John 
+OrgTechPhone:  +1-913-754-3330 
+OrgTechEmail:  campbell@qservicesco.com
+OrgTechRef:    http://whois.arin.net/rest/poc/CAMPB195-ARIN
+
+OrgAbuseHandle: ABUSE2202-ARIN
+OrgAbuseName:   Abuse Master
+OrgAbusePhone:  +1-877-407-3224 
+OrgAbuseEmail:  abuse@metronetinc.com
+OrgAbuseRef:    http://whois.arin.net/rest/poc/ABUSE2202-ARIN
+
+OrgTechHandle: HCM2-ARIN
+OrgTechName:   hostmaster for Cinergy Metronet
+OrgTechPhone:  +1-877-407-3224 
+OrgTechEmail:  CMN-hostmaster@cinergymetronet.com
+OrgTechRef:    http://whois.arin.net/rest/poc/HCM2-ARIN
+
+OrgNOCHandle: NOC3544-ARIN
+OrgNOCName:   Network Operations Center
+OrgNOCPhone:  +1-877-407-3224 
+OrgNOCEmail:  CMN-Technicalsupport@metronetinc.com
+OrgNOCRef:    http://whois.arin.net/rest/poc/NOC3544-ARIN
+
+OrgTechHandle: TGI47-ARIN
+OrgTechName:   Gimmel, Tim 
+OrgTechPhone:  +1-812-456-4750 
+OrgTechEmail:  tim.gimmel@metronetinc.com
+OrgTechRef:    http://whois.arin.net/rest/poc/TGI47-ARIN
+
+RAbuseHandle: ABUSE2202-ARIN
+RAbuseName:   Abuse Master
+RAbusePhone:  +1-877-407-3224 
+RAbuseEmail:  abuse@metronetinc.com
+RAbuseRef:    http://whois.arin.net/rest/poc/ABUSE2202-ARIN
+
+RTechHandle: TGI47-ARIN
+RTechName:   Gimmel, Tim 
+RTechPhone:  +1-812-456-4750 
+RTechEmail:  tim.gimmel@metronetinc.com
+RTechRef:    http://whois.arin.net/rest/poc/TGI47-ARIN
+
+RNOCHandle: NOC3544-ARIN
+RNOCName:   Network Operations Center
+RNOCPhone:  +1-877-407-3224 
+RNOCEmail:  CMN-Technicalsupport@metronetinc.com
+RNOCRef:    http://whois.arin.net/rest/poc/NOC3544-ARIN
+
+RTechHandle: HCM2-ARIN
+RTechName:   hostmaster for Cinergy Metronet
+RTechPhone:  +1-877-407-3224 
+RTechEmail:  CMN-hostmaster@cinergymetronet.com
+RTechRef:    http://whois.arin.net/rest/poc/HCM2-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results, please report at
+# http://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+x_notes: Brute Force Auth attacker. Part of 38k of IPs launching massive attack for several months at Choice Hotels in 2013-2014
+host_type: ISP Telecomm

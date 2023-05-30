@@ -1,0 +1,258 @@
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results, please report at
+# http://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+
+#
+# The following results may also be obtained via:
+# http://whois.arin.net/rest/nets;q=72.37.242.0?showDetails=true&showARIN=false&ext=netref2
+#
+
+
+# start
+
+NetRange:       72.37.242.0 - 72.37.243.255
+CIDR:           72.37.242.0/23
+NetName:        MZIMA03-CUST-NOBISTECHNOLOGYLLC07
+NetHandle:      NET-72-37-242-0-1
+Parent:         NETBLK-PACKETEXCHANGE-V4-03 (NET-72-37-128-0-1)
+NetType:        Reallocated
+OriginAS:       AS25973
+Organization:   Nobis Technology Group, LLC (NTGL)
+RegDate:        2007-07-06
+Updated:        2007-07-06
+Ref:            http://whois.arin.net/rest/net/NET-72-37-242-0-1
+
+OrgName:        Nobis Technology Group, LLC
+OrgId:          NTGL
+Address:        5350 East High Street
+Address:        Suite 300
+City:           Phoenix
+StateProv:      AZ
+PostalCode:     85054
+Country:        US
+RegDate:        2007-01-30
+Updated:        2014-11-03
+Comment:        +++++++++++++++++++++++++++
+Comment:        Nobis Technology Group, LLC
+Comment:        http://www.nobistech.net
+Comment:        +++++++++++++++++++++++++++
+Comment:        
+Comment:        For all inquiries relating
+Comment:        to network abuse, network
+Comment:        security, DMCA, trademark,
+Comment:        legal compliance, and law 
+Comment:        enforcement requests, contact
+Comment:        abuse@nobistech.net via e-mail
+Comment:        or via postal mail as follows:
+Comment:        
+Comment:        Nobis Technology Group
+Comment:        ATTN IP Network Operations
+Comment:        5350 East High Street
+Comment:        Suite 300
+Comment:        Phoenix, AZ 85054
+Ref:            http://whois.arin.net/rest/org/NTGL
+
+ReferralServer: rwhois://rwhois.nobistech.net:4321
+
+OrgTechHandle: AIA12-ARIN
+OrgTechName:   ARIN IP Admin
+OrgTechPhone:  +1-480-212-1710 
+OrgTechEmail:  arin@nobistech.net
+OrgTechRef:    http://whois.arin.net/rest/poc/AIA12-ARIN
+
+OrgNOCHandle: NOC2466-ARIN
+OrgNOCName:   NOC
+OrgNOCPhone:  +1-480-212-1710 
+OrgNOCEmail:  admin@nobistech.net
+OrgNOCRef:    http://whois.arin.net/rest/poc/NOC2466-ARIN
+
+OrgAbuseHandle: ABUSE1601-ARIN
+OrgAbuseName:   Abuse
+OrgAbusePhone:  +1-480-212-1710 
+OrgAbuseEmail:  abuse@nobistech.net
+OrgAbuseRef:    http://whois.arin.net/rest/poc/ABUSE1601-ARIN
+
+RTechHandle: NOC2466-ARIN
+RTechName:   NOC
+RTechPhone:  +1-480-212-1710 
+RTechEmail:  admin@nobistech.net
+RTechRef:    http://whois.arin.net/rest/poc/NOC2466-ARIN
+
+# end
+
+
+# start
+
+NetRange:       72.37.242.0 - 72.37.242.7
+CIDR:           72.37.242.0/29
+NetName:        NETBLK-UBIQUITY-72-37-242-0
+NetHandle:      NET-72-37-242-0-2
+Parent:         MZIMA03-CUST-NOBISTECHNOLOGYLLC07 (NET-72-37-242-0-1)
+NetType:        Reallocated
+OriginAS:       AS15003
+Organization:   Ubiquity Server Solutions Chicago (NTGL-1)
+RegDate:        2012-09-12
+Updated:        2012-09-12
+Comment:        Addresses in this block are non-portable.
+Comment:        For security issues, abuse reports, and
+Comment:        technical issues, please contact the
+Comment:        Nobis Technology Group NOC at admin@nobistech.net
+Ref:            http://whois.arin.net/rest/net/NET-72-37-242-0-2
+
+OrgName:        Ubiquity Server Solutions Chicago
+OrgId:          NTGL-1
+Address:        350 East Cermak Road
+City:           Chicago
+StateProv:      IL
+PostalCode:     60616
+Country:        US
+RegDate:        2008-03-05
+Updated:        2011-01-10
+Comment:        +++++++++++++++++++++++++++
+Comment:        Ubiquity Server Solutions
+Comment:        http://www.ubiquityservers.com
+Comment:        Chicago, IL
+Comment:        +++++++++++++++++++++++++++
+Comment:        
+Comment:        For all inquiries relating
+Comment:        to network abuse, network
+Comment:        security, DMCA, trademark,
+Comment:        legal compliance, and law 
+Comment:        enforcement requests, contact
+Comment:        abuse@nobistech.net via e-mail
+Comment:        or via postal mail as follows:
+Comment:        
+Comment:        Nobis Technology Group
+Comment:        ATTN IP Network Operations
+Comment:        6930 East Chauncey Lane
+Comment:        Suite 150
+Comment:        Phoenix, AZ 85054
+Ref:            http://whois.arin.net/rest/org/NTGL-1
+
+ReferralServer: rwhois://rwhois.nobistech.net:4321
+
+OrgTechHandle: AIA12-ARIN
+OrgTechName:   ARIN IP Admin
+OrgTechPhone:  +1-480-212-1710 
+OrgTechEmail:  arin@nobistech.net
+OrgTechRef:    http://whois.arin.net/rest/poc/AIA12-ARIN
+
+OrgNOCHandle: NOC2466-ARIN
+OrgNOCName:   NOC
+OrgNOCPhone:  +1-480-212-1710 
+OrgNOCEmail:  admin@nobistech.net
+OrgNOCRef:    http://whois.arin.net/rest/poc/NOC2466-ARIN
+
+OrgAbuseHandle: ABUSE1601-ARIN
+OrgAbuseName:   Abuse
+OrgAbusePhone:  +1-480-212-1710 
+OrgAbuseEmail:  abuse@nobistech.net
+OrgAbuseRef:    http://whois.arin.net/rest/poc/ABUSE1601-ARIN
+
+# end
+
+
+# start
+
+NetRange:       72.37.128.0 - 72.37.255.255
+CIDR:           72.37.128.0/17
+NetName:        NETBLK-PACKETEXCHANGE-V4-03
+NetHandle:      NET-72-37-128-0-1
+Parent:         NET72 (NET-72-0-0-0-0)
+NetType:        Direct Allocation
+OriginAS:       AS25973
+Organization:   PacketExchange, Inc (PACKE-25)
+RegDate:        2005-03-17
+Updated:        2012-02-24
+Ref:            http://whois.arin.net/rest/net/NET-72-37-128-0-1
+
+OrgName:        PacketExchange, Inc
+OrgId:          PACKE-25
+Address:        GTT Communications, Inc.
+Address:        8484 Westpark Drive
+Address:        Suite 720
+City:           McLean
+StateProv:      VA
+PostalCode:     22102
+Country:        US
+RegDate:        2008-02-26
+Updated:        2014-04-16
+Ref:            http://whois.arin.net/rest/org/PACKE-25
+
+OrgAbuseHandle: GAD46-ARIN
+OrgAbuseName:   GTT Abuse Department
+OrgAbusePhone:  +1-703-442-5500 
+OrgAbuseEmail:  abuse@gtt.net
+OrgAbuseRef:    http://whois.arin.net/rest/poc/GAD46-ARIN
+
+OrgTechHandle: AS3251-ARIN
+OrgTechName:   AS3257 Netguard
+OrgTechPhone:  +49 6102 8235 389 
+OrgTechEmail:  netguard@tinet.net
+OrgTechRef:    http://whois.arin.net/rest/poc/AS3251-ARIN
+
+OrgNOCHandle: GNOC16-ARIN
+OrgNOCName:   GTT Network Operations Center
+OrgNOCPhone:  +1-866-250-3887 
+OrgNOCEmail:  noc@gtt.net
+OrgNOCRef:    http://whois.arin.net/rest/poc/GNOC16-ARIN
+
+OrgTechHandle: GNOC16-ARIN
+OrgTechName:   GTT Network Operations Center
+OrgTechPhone:  +1-866-250-3887 
+OrgTechEmail:  noc@gtt.net
+OrgTechRef:    http://whois.arin.net/rest/poc/GNOC16-ARIN
+
+# end
+
+
+
+#
+# ARIN WHOIS data and services are subject to the Terms of Use
+# available at: https://www.arin.net/whois_tou.html
+#
+# If you see inaccuracies in the results, please report at
+# http://www.arin.net/public/whoisinaccuracy/index.xhtml
+#
+
+
+
+Found a referral to rwhois.nobistech.net:4321.
+
+%rwhois V-1.0,V-1.5:00090h:00 rwhois.nobistech.net (Ubersmith RWhois Server V-2.3.0)
+autharea=72.37.242.0/24
+xautharea=72.37.242.0/24
+network:Class-Name:network
+network:Auth-Area:72.37.242.0/24
+network:ID:NET-32159.72.37.242.0/29
+network:Network-Name:Secondary Assignment Ticket: POB-465-16380
+network:IP-Network:72.37.242.0/29
+network:IP-Network-Block:72.37.242.0 - 72.37.242.7
+network:Org-Name:WiTopia, Inc.
+network:Street-Address:11654 Plaza America Dr, #316
+network:City:Reston
+network:State:VA
+network:Postal-Code:20190
+network:Country-Code:US
+network:Tech-Contact:MAINT-32159.72.37.242.0/29
+network:Created:20111116165213000
+network:Updated:20111116165327000
+network:Updated-By:admin@nobistech.net
+contact:POC-Name:Steve Shippa
+contact:POC-Email:steve@witopia.net
+contact:POC-Phone:703-431-9455
+contact:Tech-Name:Nobis Network Administration Team
+contact:Tech-Email:admin@nobistech.net
+contact:Tech-Phone:admin@nobistech.net
+contact:Abuse-Name:Nobis Network Abuse Team
+contact:Abuse-Email:abuse@nobistech.net
+contact:Abuse-Phone:abuse@nobistech.net
+%ok
+host_type: VPS Hosting
+host_type: ISP Telecomm
